@@ -1,0 +1,166 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>サマリApacheとは &#8212; LINUX 1.0.0 ドキュメント</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">LINUX 1.0.0 ドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">サマリApacheとは</a></li>
+<li><a class="reference internal" href="#id1">ハンズオン</a><ul>
+<li><a class="reference internal" href="#id2">Apacheのインストール</a></li>
+<li><a class="reference internal" href="#id3">2.Apache起動してみる</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Apache-000.intro.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="apache">
+<h1>サマリApacheとは<a class="headerlink" href="#apache" title="このヘッドラインへのパーマリンク">¶</a></h1>
+</div>
+<div class="section" id="id1">
+<h1>ハンズオン<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id2">
+<h2>Apacheのインストール<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>1.Apacheをインストールする。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#Apacheをインストール</span>
+yum install httpd
+
+<span class="c1">#インストールされていることを確認</span>
+yum list installed <span class="p">|</span> grep httpd
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id3">
+<h2>2.Apache起動してみる<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>1.Apacheのサービスを起動する。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#Apacheのサービス状態を確認</span>
+systemctl status httpd
+
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded <span class="o">(</span>/usr/lib/systemd/system/httpd.service<span class="p">;</span> disabled<span class="p">;</span> vendor preset: disabled<span class="o">)</span>
+   Active: inactive <span class="o">(</span>dead<span class="o">)</span> <span class="c1">#Apacheは停止しています。</span>
+     Docs: man:httpd<span class="o">(</span><span class="m">8</span><span class="o">)</span>
+           man:apachectl<span class="o">(</span><span class="m">8</span><span class="o">)</span>
+
+<span class="c1">#Apacheのサービスを起動</span>
+systemctl start httpd
+
+<span class="c1">#Apacheのサービス状態を確認</span>
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded <span class="o">(</span>/usr/lib/systemd/system/httpd.service<span class="p">;</span> disabled<span class="p">;</span> vendor preset: disabled<span class="o">)</span>
+   Active: active <span class="o">(</span>running<span class="o">)</span> since 水 <span class="m">2017</span>-10-18 <span class="m">13</span>:07:47 UTC<span class="p">;</span> 22s ago
+     Docs: man:httpd<span class="o">(</span><span class="m">8</span><span class="o">)</span>
+           man:apachectl<span class="o">(</span><span class="m">8</span><span class="o">)</span>
+ Main PID: <span class="m">1242</span> <span class="o">(</span>httpd<span class="o">)</span>
+   Status: <span class="s2">&quot;Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec&quot;</span>
+   CGroup: /system.slice/httpd.service
+           ├─1242 /usr/sbin/httpd -DFOREGROUND
+           ├─1243 /usr/sbin/httpd -DFOREGROUND
+           ├─1244 /usr/sbin/httpd -DFOREGROUND
+           ├─1245 /usr/sbin/httpd -DFOREGROUND
+           ├─1246 /usr/sbin/httpd -DFOREGROUND
+           └─1247 /usr/sbin/httpd -DFOREGROUND
+
+<span class="m">10</span>月 <span class="m">18</span> <span class="m">13</span>:07:47 testserver systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: Starting The Apache HTTP Server...
+<span class="m">10</span>月 <span class="m">18</span> <span class="m">13</span>:07:47 testserver httpd<span class="o">[</span><span class="m">1242</span><span class="o">]</span>: AH00558: httpd: Could not reliably...e
+<span class="m">10</span>月 <span class="m">18</span> <span class="m">13</span>:07:47 testserver systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: Started The Apache HTTP Server.
+Hint: Some lines were ellipsized, use -l to show in full.
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">LINUX 1.0.0 ドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, TERUYA.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3 で生成しました。
+    </div>
+  </body>
+</html>

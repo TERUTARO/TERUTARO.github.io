@@ -1,0 +1,43 @@
+============================
+事前準備
+============================
+
+terminalソフトの導入
+============================
+teratermを導入しましょう！
+| 
+| 
+| 
+
+ssh公開鍵の保存
+============================
+
+次のダウンロードリンクから、公開鍵を取得してください。
+
+| 
+
+:download:`ここをクリック <./certificate/testcertificate.pem>`
+
+| 
+| 
+| 
+
+接続
+============================
+以下の情報用いて接続しましょう。
+
+
+	..csv-table:: 
+		
+		:header: "接続情報","IPアドレス"
+		
+			ssh -i "asata0000aws0000key0000p.pem" ec2-user@ec2-54-212-241-81.us-west-2.compute.amazonaws.com
+			ssh -i "asata0000aws0000key0000p.pem" ec2-user@ec2-54-187-4-128.us-west-2.compute.amazonaws.com
+			ssh -i "asata0000aws0000key0000p.pem" ec2-user@ec2-54-213-239-107.us-west-2.compute.amazonaws.com
+			ssh -i "asata0000aws0000key0000p.pem" ec2-user@ec2-54-201-71-188.us-west-2.compute.amazonaws.com	
+	
+
+
+
+
+

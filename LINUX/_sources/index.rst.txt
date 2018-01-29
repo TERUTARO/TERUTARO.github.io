@@ -1,0 +1,24 @@
+.. LINUX documentation master file, created by
+   sphinx-quickstart on Mon Oct 16 08:07:06 2017.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to LINUX's documentation!
+=================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+ 
+   info
+   001-hostname
+   Apache-001.BasicConfiguration
+   006-MySQL
+   Sphinx-000.intro
+:
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

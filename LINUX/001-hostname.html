@@ -1,0 +1,622 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ホスト名の変更 &#8212; LINUX 1.0.0 ドキュメント</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="prev" title="事前準備" href="info.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="info.html" title="事前準備"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">LINUX 1.0.0 ドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ホスト名の変更</a><ul>
+<li><a class="reference internal" href="#id2">サマリー　〜ファイル編〜</a><ul>
+<li><a class="reference internal" href="#etc-sysconfig-network">/etc/sysconfig/network</a></li>
+<li><a class="reference internal" href="#etc-hosts">/etc/hosts</a></li>
+<li><a class="reference internal" href="#etc-hostname">/etc/hostname</a></li>
+<li><a class="reference internal" href="#etc-cloud-cloud-cfg">/etc/cloud/cloud.cfg</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id3">サマリー　〜コマンド編〜</a><ul>
+<li><a class="reference internal" href="#cat">catコマンド</a></li>
+<li><a class="reference internal" href="#cp">cpコマンド</a></li>
+<li><a class="reference internal" href="#ping">pingコマンド</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4">ハンズオン</a><ul>
+<li><a class="reference internal" href="#id5">スーパーユーザーになる</a></li>
+<li><a class="reference internal" href="#id6">/etc/sysconfig/networkの編集</a></li>
+<li><a class="reference internal" href="#id7">/etc/hostsの編集</a></li>
+<li><a class="reference internal" href="#id8">/etc/hostnameの編集</a></li>
+<li><a class="reference internal" href="#id9">/etc/cloud/cloud.cfgの編集</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="info.html"
+                        title="前の章へ">事前準備</a></p>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/001-hostname.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>ホスト名の変更<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id2">
+<h2>サマリー　〜ファイル編〜<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="etc-sysconfig-network">
+<h3>/etc/sysconfig/network<a class="headerlink" href="#etc-sysconfig-network" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>サーバがネットワーク通信に必要な情報が記載されています。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="etc-hosts">
+<h3>/etc/hosts<a class="headerlink" href="#etc-hosts" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>サーバ自身で内部アクセスが必要である場合には、<strong>/etc/hosts</strong> ファイルを編集します。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="etc-hostname">
+<h3>/etc/hostname<a class="headerlink" href="#etc-hostname" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>サーバのホスト名を永続的に変更するには、<strong>/etc/hostnameファイル</strong> を編集します。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="etc-cloud-cloud-cfg">
+<h3>/etc/cloud/cloud.cfg<a class="headerlink" href="#etc-cloud-cloud-cfg" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>EC2インスタンスでは、永続的なホスト名を設定すために、上述した3つのファイルとは別に/etc/cloud/cloud.cfgファイルを編集する必要があります。
+当該ファイルを編集していない場合、再起動後に編集したファイル名がデフォルト値に上書きされてしまいます。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>サマリー　〜コマンド編〜<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>では以下のコマンドを扱いします。</p>
+<div class="section" id="cat">
+<h3>catコマンド<a class="headerlink" href="#cat" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ファイル内容を確認するコマンドです。
+ファイル内容を確認するコマンドとしてはviewコマンドやmoreコマンドなどがあり、
+使い勝手はそちらの方が良いですが、さらっとログに残せることもあり、
+私はしばしばcatを使用します。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<blockquote>
+<div><table border="1" class="docutils" id="id10">
+<caption><span class="caption-text">参考URL</span><a class="headerlink" href="#id10" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">header:</th><td class="field-body">「cat【コマンド】」</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="http://wa3.i-3-i.info/word11190.html">http://wa3.i-3-i.info/word11190.html</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>古くは分割したファイルを再結合する際に用いられており
+、splitコマンドとかで分割したファイルに</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="cp">
+<h3>cpコマンド<a class="headerlink" href="#cp" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ファイルをコピーするコマンドです。
+個人的にはバックアップ用途でしか使用しないため、オプションは「a」オプションを使用する頻度が多いです。</p>
+<blockquote>
+<div><table border="1" class="docutils" id="id11">
+<caption><span class="caption-text">参考URL</span><a class="headerlink" href="#id11" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">header:</th><td class="field-body">「cp【コマンド】」</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="http://wa3.i-3-i.info/word11167.html">http://wa3.i-3-i.info/word11167.html</a></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="ping">
+<h3>pingコマンド<a class="headerlink" href="#ping" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>pingコマンドはネットワークの疎通を確認したいホストに対して発行し、そのパケット
+の到達具合により、相手の状態を判断するコマンドです。</p>
+<blockquote>
+<div><table border="1" class="docutils" id="id12">
+<caption><span class="caption-text">参考URL</span><a class="headerlink" href="#id12" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">header:</th><td class="field-body">「ping【コマンド】」</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="http://wa3.i-3-i.info/word124.html">http://wa3.i-3-i.info/word124.html</a></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>ハンズオン<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>それではホスト名を設定してみよう！</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="id5">
+<h3>スーパーユーザーになる<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>1.何はともあれスーパーユーザーになろう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span>sudo su
+
+<span class="o">[</span>ec2-user@ip-172-31-39-135 ~<span class="o">]</span>$ sudo su
+<span class="o">[</span>root@ip-XXX-XXX-XXX-XXX ec2-user<span class="o">]</span><span class="c1">#　&lt;- このようにプロンプトが変化していること。</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id6">
+<h3>/etc/sysconfig/networkの編集<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>1./etc/sysconfig/ディレクトリへ移動します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#指定ディレクトリへ移動</span>
+<span class="nb">cd</span> /etc/sysconfig
+
+<span class="c1">#カレントディレクトリを確認</span>
+<span class="nb">pwd</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>2./etc/sysconfig/network/ファイルの中身を見てみましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#ファイル内容を確認</span>
+cat ./network
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>3.バックアップを取得します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#保存先ディレクトリを作成</span>
+mkdir reg-ConfigBackup
+
+<span class="c1">#保存先ディレクトリへバックアップを作成</span>
+cp -a network ./reg-ConfigBackup/network_yyyymmdd
+
+<span class="c1">#保存先ディレクトリにバックアップがとれていることを確認</span>
+ls -lh ./reg-ConfigBackup/
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>4.ファイルを編集します。
+ファイルの編集にはviエディタを使用します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span>vi network
+<span class="c1">#ファイルが開けましたら「a」キーを押下してください。</span>
+<span class="c1">#コマンドモードからインサートモードへ移行します。</span>
+</pre></div>
+</div>
+<p>[編集前]</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="nv">NETWORKING</span><span class="o">=</span>yes
+<span class="nv">NOZEROCONF</span><span class="o">=</span>yes
+</pre></div>
+</div>
+<p>[編集後]</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="nv">NETWORKING</span><span class="o">=</span>yes
+<span class="nv">NOZEROCONF</span><span class="o">=</span>yes
+<span class="nv">HOSTNAME</span><span class="o">=</span>ホスト名
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>編集が完了できたら、編集内容を保存して閉じます。「esc」キーを押下してください。インサートモードからコマンドモードに移行します。
+コマンドモードに移行できましたら、「:wq!」と入力し、「Enter」キーを押下してください。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>5.編集内容を確認します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#ファイル内容を確認</span>
+cat network
+
+<span class="c1">#ファイル内容を比較</span>
+diff network ./reg-ConfigBackup/network_yyyymmdd
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id7">
+<h3>/etc/hostsの編集<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>1.pingコマンドを実行してみましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span>ping hostname
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>2./etc/ディレクトリへ移動します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#指定ディレクトリへ移動</span>
+<span class="nb">cd</span> /etc/
+
+<span class="c1">#カレントディレクトリを確認</span>
+<span class="nb">pwd</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>3./etc/hosts/ファイルの中身を見てみましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#ファイル内容を確認</span>
+cat /etc/hosts
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>4.バックアップを取得します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#保存先ディレクトリを作成</span>
+mkdir reg-ConfigBackup
+
+<span class="c1">#保存先ディレクトリへバックアップを作成</span>
+cp -a hosts ./reg-ConfigBackup/hosts_yyyymmdd
+
+<span class="c1">#保存先ディレクトリにバックアップがとれていることを確認</span>
+ls -lh ./reg-ConfigBackup/
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>5.ファイルを編集します。
+ファイルの編集にはviエディタを使用します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span>vi hosts
+<span class="c1">#ファイルが開けましたら「a」キーを押下してください。</span>
+<span class="c1">#コマンドモードからインサートモードへ移行します。</span>
+</pre></div>
+</div>
+<p>[編集前]</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="m">127</span>.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1 localhost localhost.localdomain localhost6 localhost6.localdomain6
+</pre></div>
+</div>
+<p>[編集後]</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="m">127</span>.0.0.1 ホスト名 ホスト名.localdomain localhost4 localhost4.localdomain4
+::1 localhost localhost.localdomain localhost6 localhost6.localdomain6
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>5.編集内容を確認します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#ファイル内容を確認</span>
+cat
+
+<span class="c1">#ファイル内容を比較</span>
+diff hosts ./reg-ConfigBackup/hosts_yyyymmdd
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>編集が完了できたら、編集内容を保存して閉じます。「esc」キーを押下してください。インサートモードからコマンドモードに移行します。 コマンドモードに移行できましたら、「:wq!」と入力し、「Enter」キーを押下してください。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3>/etc/hostnameの編集<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>1.hostnameコマンドを実行してみましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#ホスト名を確認</span>
+hostname
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>2./etc/hostame/ファイルの中身を見てみましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#ファイル内容を確認</span>
+cat /etc/hostname
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>3.バックアップを取得します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#保存先ディレクトリの有無を確認</span>
+ls -lh <span class="p">|</span> grep reg-ConfigBackup
+
+<span class="c1">#保存先ディレクトリへバックアップを作成</span>
+cp -a hostname ./reg-ConfigBackup/hostname_yyyymmdd
+
+<span class="c1">#保存先ディレクトリにバックアップがとれていることを確認</span>
+ls -lh ./reg-ConfigBackup/
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>4.ファイルを編集します。
+ファイルの編集にはviエディタを使用します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span>vi hostname
+<span class="c1">#ファイルが開けましたら「a」キーを押下してください。</span>
+<span class="c1">#コマンドモードからインサートモードへ移行します。</span>
+</pre></div>
+</div>
+<p>[編集前]</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>ip-172-31-39-135.us-west-2.compute.internal
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>[編集後]</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>ホスト名
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>5.編集内容を確認します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span>diff hostname ./reg-ConfigBackup/hostname_yyyymmdd
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3>/etc/cloud/cloud.cfgの編集<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<blockquote>
+<div><p>1./etc/cloud/ディレクトリへ移動します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#指定ディレクトリへ移動</span>
+<span class="nb">cd</span> /etc/cloud/
+
+<span class="c1">#カレントディレクトリを確</span>
+<span class="nb">pwd</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+<p>2./etc/cloud/cloud.cfgファイルの中身を見てみましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#ファイル内容を確認</span>
+cat /etc/cloud/cloud.cfg
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>3.バックアップを取得します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#保存先ディレクトリ作成</span>
+mkdir reg-ConfigBackup
+
+<span class="c1">#保存先ディレクトリへバックアップを作成</span>
+cp -a cloud.cfg ./reg-ConfigBackup/cloud.cfg_yyyymmdd
+
+<span class="c1">#保存先ディレクトリにバックアップがとれていることを確認</span>
+ls -lh ./reg-ConfigBackup/
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>4.ファイルを編集します。
+ファイルの編集にはviエディタを使用します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span>vi cloud.cfg
+<span class="c1">#ファイルが開けましたら「a」キーを押下してください。</span>
+<span class="c1">#コマンドモードからインサートモードへ移行します。</span>
+</pre></div>
+</div>
+<p>[編集後]</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#末尾に以下追加</span>
+preserve_hostname: <span class="nb">true</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>編集が完了できたら、編集内容を保存して閉じます。「esc」キーを押下してください。インサートモードからコマンドモードに移行します。 コマンドモードに移行できましたら、「:wq!」と入力し、「Enter」キーを押下してください。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>4.編集内容を確認します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#ファイル内容を確認</span>
+cat cloud.cfg
+
+<span class="c1">#保存先ディレクトリにバックアップを作成</span>
+diff cloud.cfg ./reg-ConfigBackup/cloud.dfg_yyyymmdd
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="info.html" title="事前準備"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">LINUX 1.0.0 ドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, TERUYA.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3 で生成しました。
+    </div>
+  </body>
+</html>

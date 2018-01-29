@@ -1,0 +1,438 @@
+==============================
+ホスト名の変更
+==============================
+
+サマリー　〜ファイル編〜
+==============================
+
+/etc/sysconfig/network 
+-----------------------------
+サーバがネットワーク通信に必要な情報が記載されています。
+
+| 
+
+/etc/hosts
+-----------------
+サーバ自身で内部アクセスが必要である場合には、**/etc/hosts** ファイルを編集します。
+
+| 
+
+/etc/hostname
+---------------------
+サーバのホスト名を永続的に変更するには、**/etc/hostnameファイル** を編集します。
+
+| 
+
+/etc/cloud/cloud.cfg
+---------------------
+EC2インスタンスでは、永続的なホスト名を設定すために、上述した3つのファイルとは別に/etc/cloud/cloud.cfgファイルを編集する必要があります。
+当該ファイルを編集していない場合、再起動後に編集したファイル名がデフォルト値に上書きされてしまいます。
+
+| 
+| 
+
+サマリー　〜コマンド編〜
+=========================
+では以下のコマンドを扱いします。
+
+
+catコマンド
+-----------
+ファイル内容を確認するコマンドです。
+ファイル内容を確認するコマンドとしてはviewコマンドやmoreコマンドなどがあり、
+使い勝手はそちらの方が良いですが、さらっとログに残せることもあり、
+私はしばしばcatを使用します。
+
+| 
+
+	.. csv-table:: 参考URL 
+
+		:header: "cat【コマンド】"
+		
+		"http://wa3.i-3-i.info/word11190.html"
+| 	　	
+
+古くは分割したファイルを再結合する際に用いられており
+、splitコマンドとかで分割したファイルに	
+	
+| 
+
+cpコマンド
+----------
+ファイルをコピーするコマンドです。
+個人的にはバックアップ用途でしか使用しないため、オプションは「a」オプションを使用する頻度が多いです。
+
+	.. csv-table:: 参考URL
+		
+		:header: "cp【コマンド】"
+		
+		"http://wa3.i-3-i.info/word11167.html"
+	
+	| 
+
+pingコマンド
+------------
+pingコマンドはネットワークの疎通を確認したいホストに対して発行し、そのパケット
+の到達具合により、相手の状態を判断するコマンドです。
+
+	.. csv-table:: 参考URL
+		
+		:header: "ping【コマンド】"
+		
+		"http://wa3.i-3-i.info/word124.html"
+
+	| 
+	
+
+ハンズオン
+=============================
+それではホスト名を設定してみよう！
+
+| 
+
+スーパーユーザーになる
+-----------------------------
+
+1.何はともあれスーパーユーザーになろう。
+
+	.. code-block:: shell
+		
+		sudo su 
+		
+		[ec2-user@ip-172-31-39-135 ~]$ sudo su
+		[root@ip-XXX-XXX-XXX-XXX ec2-user]#　<- このようにプロンプトが変化していること。
+	| 
+	
+
+
+
+
+/etc/sysconfig/networkの編集
+-----------------------------
+
+1./etc/sysconfig/ディレクトリへ移動します。
+
+	.. code-block:: shell
+		
+		#指定ディレクトリへ移動
+		cd /etc/sysconfig
+		
+		#カレントディレクトリを確認
+		pwd
+		
+
+
+2./etc/sysconfig/network/ファイルの中身を見てみましょう。
+	
+	.. code-block:: shell
+	
+		#ファイル内容を確認
+		cat ./network
+
+	|  
+
+
+3.バックアップを取得します。
+
+	.. code-block:: shell
+		
+		#保存先ディレクトリを作成
+		mkdir reg-ConfigBackup
+		
+		#保存先ディレクトリへバックアップを作成
+		cp -a network ./reg-ConfigBackup/network_yyyymmdd
+		
+		#保存先ディレクトリにバックアップがとれていることを確認
+		ls -lh ./reg-ConfigBackup/
+	| 
+
+
+4.ファイルを編集します。
+ファイルの編集にはviエディタを使用します。
+
+	.. code-block:: shell
+	
+		vi network
+		#ファイルが開けましたら「a」キーを押下してください。
+		#コマンドモードからインサートモードへ移行します。
+		
+	[編集前]
+
+	.. code-block:: shell
+		
+		NETWORKING=yes
+		NOZEROCONF=yes
+		
+
+	[編集後]
+
+	.. code-block:: shell
+		
+		NETWORKING=yes
+		NOZEROCONF=yes
+		HOSTNAME=ホスト名
+		
+	| 
+	
+編集が完了できたら、編集内容を保存して閉じます。「esc」キーを押下してください。インサートモードからコマンドモードに移行します。
+コマンドモードに移行できましたら、「:wq!」と入力し、「Enter」キーを押下してください。
+	
+| 
+	
+5.編集内容を確認します。
+	
+	.. code-block:: shell 
+		
+		#ファイル内容を確認
+		cat network
+		
+		#ファイル内容を比較
+		diff network ./reg-ConfigBackup/network_yyyymmdd
+		
+	| 
+	
+
+/etc/hostsの編集
+-------------------
+
+1.pingコマンドを実行してみましょう。
+
+	.. code-block:: shell
+
+		ping hostname
+
+	| 
+
+2./etc/ディレクトリへ移動します。
+
+	.. code-block:: shell
+		
+		#指定ディレクトリへ移動
+		cd /etc/
+		
+		#カレントディレクトリを確認
+		pwd
+
+	| 
+
+3./etc/hosts/ファイルの中身を見てみましょう。
+	
+	.. code-block:: shell
+		
+		#ファイル内容を確認
+		cat /etc/hosts
+
+	|  
+
+
+4.バックアップを取得します。	
+
+	.. code-block:: shell
+		
+		#保存先ディレクトリを作成
+		mkdir reg-ConfigBackup
+		
+		#保存先ディレクトリへバックアップを作成
+		cp -a hosts ./reg-ConfigBackup/hosts_yyyymmdd
+		
+		#保存先ディレクトリにバックアップがとれていることを確認
+		ls -lh ./reg-ConfigBackup/
+	| 
+
+
+5.ファイルを編集します。
+ファイルの編集にはviエディタを使用します。
+
+	.. code-block:: shell
+	
+		vi hosts
+		#ファイルが開けましたら「a」キーを押下してください。
+		#コマンドモードからインサートモードへ移行します。
+		
+	[編集前]
+
+	.. code-block:: shell
+		
+		127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+		::1 localhost localhost.localdomain localhost6 localhost6.localdomain6
+		
+
+	[編集後]
+
+	.. code-block:: shell
+		
+		127.0.0.1 ホスト名 ホスト名.localdomain localhost4 localhost4.localdomain4
+		::1 localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+	| 
+	
+5.編集内容を確認します。
+	
+	.. code-block:: shell 
+		
+		#ファイル内容を確認
+		cat 
+		
+		#ファイル内容を比較
+		diff hosts ./reg-ConfigBackup/hosts_yyyymmdd
+		
+	| 
+
+編集が完了できたら、編集内容を保存して閉じます。「esc」キーを押下してください。インサートモードからコマンドモードに移行します。 コマンドモードに移行できましたら、「:wq!」と入力し、「Enter」キーを押下してください。
+
+| 
+| 
+| 
+	
+/etc/hostnameの編集
+--------------------
+
+1.hostnameコマンドを実行してみましょう。
+
+	.. code-block:: shell 
+		
+		#ホスト名を確認
+		hostname 
+
+	| 
+
+2./etc/hostame/ファイルの中身を見てみましょう。
+	
+	.. code-block:: shell
+		
+		#ファイル内容を確認
+		cat /etc/hostname
+
+	|  
+
+
+3.バックアップを取得します。
+	
+	.. code-block:: shell
+		
+		#保存先ディレクトリの有無を確認
+		ls -lh | grep reg-ConfigBackup 
+		
+		#保存先ディレクトリへバックアップを作成
+		cp -a hostname ./reg-ConfigBackup/hostname_yyyymmdd
+		
+		#保存先ディレクトリにバックアップがとれていることを確認
+		ls -lh ./reg-ConfigBackup/
+	| 
+
+
+4.ファイルを編集します。
+ファイルの編集にはviエディタを使用します。
+
+	.. code-block:: shell
+	
+		vi hostname
+		#ファイルが開けましたら「a」キーを押下してください。
+		#コマンドモードからインサートモードへ移行します。
+		
+	[編集前]
+	
+	.. code-block:: shell
+		
+		ip-172-31-39-135.us-west-2.compute.internal
+	
+ 	| 	
+
+	[編集後]
+	
+	.. code-block:: shell
+		
+		ホスト名
+
+	| 
+	
+5.編集内容を確認します。
+	
+	.. code-block:: shell 
+		
+		diff hostname ./reg-ConfigBackup/hostname_yyyymmdd
+		
+	| 
+	
+| 
+| 
+| 	
+
+/etc/cloud/cloud.cfgの編集
+----------------------------
+ 1./etc/cloud/ディレクトリへ移動します。
+
+	.. code-block:: shell
+		
+ 		#指定ディレクトリへ移動
+		cd /etc/cloud/
+		
+		#カレントディレクトリを確
+		pwd
+
+
+2./etc/cloud/cloud.cfgファイルの中身を見てみましょう。
+	
+	.. code-block:: shell
+		
+		#ファイル内容を確認
+		cat /etc/cloud/cloud.cfg
+
+	|  
+
+
+3.バックアップを取得します。
+
+	.. code-block:: shell
+		
+		#保存先ディレクトリ作成
+		mkdir reg-ConfigBackup
+		
+		#保存先ディレクトリへバックアップを作成
+		cp -a cloud.cfg ./reg-ConfigBackup/cloud.cfg_yyyymmdd
+		
+		#保存先ディレクトリにバックアップがとれていることを確認
+		ls -lh ./reg-ConfigBackup/
+	| 
+
+
+4.ファイルを編集します。
+ファイルの編集にはviエディタを使用します。
+
+	.. code-block:: shell
+	
+		vi cloud.cfg
+		#ファイルが開けましたら「a」キーを押下してください。
+		#コマンドモードからインサートモードへ移行します。
+		
+
+	[編集後]
+
+	.. code-block:: shell
+		
+		#末尾に以下追加
+		preserve_hostname: true
+
+	| 
+
+編集が完了できたら、編集内容を保存して閉じます。「esc」キーを押下してください。インサートモードからコマンドモードに移行します。 コマンドモードに移行できましたら、「:wq!」と入力し、「Enter」キーを押下してください。
+
+| 
+| 
+| 
+	
+4.編集内容を確認します。
+	
+	.. code-block:: shell 
+		
+		#ファイル内容を確認
+		cat cloud.cfg 
+		
+		#保存先ディレクトリにバックアップを作成
+		diff cloud.cfg ./reg-ConfigBackup/cloud.dfg_yyyymmdd
+		
+	| 
+	
+
+
+

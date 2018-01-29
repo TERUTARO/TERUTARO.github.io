@@ -1,0 +1,159 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>事前準備 &#8212; LINUX 1.0.0 ドキュメント</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="Apacheの基本設定" href="Apache-001.BasicConfiguration.html" />
+    <link rel="prev" title="Welcome to LINUX’s documentation!" href="index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="Apache-001.BasicConfiguration.html" title="Apacheの基本設定"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to LINUX’s documentation!"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">LINUX 1.0.0 ドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">事前準備</a><ul>
+<li><a class="reference internal" href="#terminal">terminalソフトの導入</a></li>
+<li><a class="reference internal" href="#ssh">ssh公開鍵の保存</a></li>
+<li><a class="reference internal" href="#id2">接続</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="index.html"
+                        title="前の章へ">Welcome to LINUX’s documentation!</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="Apache-001.BasicConfiguration.html"
+                        title="次の章へ">Apacheの基本設定</a></p>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/info.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>事前準備<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="terminal">
+<h2>terminalソフトの導入<a class="headerlink" href="#terminal" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>teratermを導入しましょう！
+|
+|
+|</p>
+</div>
+<div class="section" id="ssh">
+<h2>ssh公開鍵の保存<a class="headerlink" href="#ssh" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>次のダウンロードリンクから、公開鍵を取得してください。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><a class="reference download internal" href="_downloads/testcertificate.pem" download=""><code class="xref download docutils literal"><span class="pre">ここをクリック</span></code></a></p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>接続<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下の情報用いて接続しましょう。</p>
+<blockquote>
+<div><p>..csv-table:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">header</span><span class="p">:</span> <span class="s2">&quot;接続情報&quot;</span><span class="p">,</span><span class="s2">&quot;IPアドレス&quot;</span>
+
+        <span class="n">ssh</span> <span class="o">-</span><span class="n">i</span> <span class="s2">&quot;asata0000aws0000key0000p.pem&quot;</span> <span class="n">ec2</span><span class="o">-</span><span class="n">user</span><span class="nd">@ec2</span><span class="o">-</span><span class="mi">54</span><span class="o">-</span><span class="mi">212</span><span class="o">-</span><span class="mi">241</span><span class="o">-</span><span class="mf">81.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">compute</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+        <span class="n">ssh</span> <span class="o">-</span><span class="n">i</span> <span class="s2">&quot;asata0000aws0000key0000p.pem&quot;</span> <span class="n">ec2</span><span class="o">-</span><span class="n">user</span><span class="nd">@ec2</span><span class="o">-</span><span class="mi">54</span><span class="o">-</span><span class="mi">187</span><span class="o">-</span><span class="mi">4</span><span class="o">-</span><span class="mf">128.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">compute</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+        <span class="n">ssh</span> <span class="o">-</span><span class="n">i</span> <span class="s2">&quot;asata0000aws0000key0000p.pem&quot;</span> <span class="n">ec2</span><span class="o">-</span><span class="n">user</span><span class="nd">@ec2</span><span class="o">-</span><span class="mi">54</span><span class="o">-</span><span class="mi">213</span><span class="o">-</span><span class="mi">239</span><span class="o">-</span><span class="mf">107.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">compute</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+        <span class="n">ssh</span> <span class="o">-</span><span class="n">i</span> <span class="s2">&quot;asata0000aws0000key0000p.pem&quot;</span> <span class="n">ec2</span><span class="o">-</span><span class="n">user</span><span class="nd">@ec2</span><span class="o">-</span><span class="mi">54</span><span class="o">-</span><span class="mi">201</span><span class="o">-</span><span class="mi">71</span><span class="o">-</span><span class="mf">188.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">compute</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="Apache-001.BasicConfiguration.html" title="Apacheの基本設定"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to LINUX’s documentation!"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">LINUX 1.0.0 ドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, TERUYA.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3 で生成しました。
+    </div>
+  </body>
+</html>

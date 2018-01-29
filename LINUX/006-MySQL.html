@@ -1,0 +1,454 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ハンズオン &#8212; LINUX 1.0.0 ドキュメント</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="prev" title="Apacheの設定" href="005.1-Appache.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="005.1-Appache.html" title="Apacheの設定"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">LINUX 1.0.0 ドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ハンズオン</a><ul>
+<li><a class="reference internal" href="#id2">スーパーユーザーになる</a></li>
+<li><a class="reference internal" href="#mysql">MySQLのインストール</a></li>
+<li><a class="reference internal" href="#id3">MySQLを起動してみる</a></li>
+<li><a class="reference internal" href="#id4">MySQLの自動起動設定</a></li>
+<li><a class="reference internal" href="#id5">初期パスワードの変更</a></li>
+<li><a class="reference internal" href="#id6">データベースの作成</a></li>
+<li><a class="reference internal" href="#id7">レコード(データ)の追加</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="005.1-Appache.html"
+                        title="前の章へ">Apacheの設定</a></p>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/006-MySQL.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>ハンズオン<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id2">
+<h2>スーパーユーザーになる<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>1.なにはともあれスーパーユーザーに昇格します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span>sudo su
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="mysql">
+<h2>MySQLのインストール<a class="headerlink" href="#mysql" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>1.MySQL関連のパッケージを全てインストールします
+。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#パッケージバージョンを確認</span>
+<span class="c1">#特にこだわりなければ最新のものをインストールしてはいかがでしょうか。</span>
+yum list <span class="p">|</span> grep mysql*
+
+apr-util-mysql.x86_64                 <span class="m">1</span>.4.1-4.17.amzn1              amzn-main
+collectd-mysql.x86_64                 <span class="m">5</span>.7.1-3.19.amzn1              amzn-main
+dovecot-mysql.x86_64                  <span class="m">1</span>:2.2.10-5.17.amzn1           amzn-main
+exim-mysql.x86_64                     <span class="m">4</span>.88-2.11.amzn1               amzn-main
+freeradius-mysql.x86_64               <span class="m">2</span>.2.6-7.16.amzn1              amzn-main
+libdbi-dbd-mysql.x86_64               <span class="m">0</span>.8.3-5.1.5.amzn1             amzn-main
+lighttpd-mod_mysql_vhost.x86_64       <span class="m">1</span>.4.41-1.34.amzn1             amzn-main
+mod_auth_mysql.x86_64                 <span class="m">1</span>:3.0.0-18.10.amzn1           amzn-main
+mysql.noarch                          <span class="m">5</span>.5-1.6.amzn1                 amzn-main
+mysql-bench.noarch                    <span class="m">5</span>.5-1.6.amzn1                 amzn-main
+mysql-common.noarch                   <span class="m">5</span>.5-1.6.amzn1                 amzn-main
+mysql-config.x86_64                   <span class="m">5</span>.5.57-1.18.amzn1             amzn-main
+mysql-connector-java.noarch           <span class="m">1</span>:5.1.12-2.10.amzn1           amzn-main
+mysql-connector-odbc.x86_64           <span class="m">5</span>.1.11-1.12.amzn1             amzn-main
+mysql-devel.noarch                    <span class="m">5</span>.5-1.6.amzn1                 amzn-main
+mysql-embedded.noarch                 <span class="m">5</span>.5-1.6.amzn1                 amzn-main
+mysql-embedded-devel.noarch           <span class="m">5</span>.5-1.6.amzn1                 amzn-main
+mysql-libs.noarch                     <span class="m">5</span>.5-1.6.amzn1                 amzn-main
+mysql-server.noarch                   <span class="m">5</span>.5-1.6.amzn1                 amzn-main
+mysql-test.noarch                     <span class="m">5</span>.5-1.6.amzn1                 amzn-main
+mysql51.x86_64                        <span class="m">5</span>.1.73-8.72.amzn1             amzn-main
+mysql51-bench.x86_64                  <span class="m">5</span>.1.73-8.72.amzn1             amzn-main
+mysql51-common.x86_64                 <span class="m">5</span>.1.73-8.72.amzn1             amzn-main
+mysql51-devel.x86_64                  <span class="m">5</span>.1.73-8.72.amzn1             amzn-main
+mysql51-embedded.x86_64               <span class="m">5</span>.1.73-8.72.amzn1             amzn-main
+mysql51-embedded-devel.x86_64         <span class="m">5</span>.1.73-8.72.amzn1             amzn-main
+mysql51-libs.i686                     <span class="m">5</span>.1.73-8.72.amzn1             amzn-main
+mysql51-libs.x86_64                   <span class="m">5</span>.1.73-8.72.amzn1             amzn-main
+mysql51-server.x86_64                 <span class="m">5</span>.1.73-8.72.amzn1             amzn-main
+mysql51-test.x86_64                   <span class="m">5</span>.1.73-8.72.amzn1             amzn-main
+mysql55.x86_64                        <span class="m">5</span>.5.57-1.18.amzn1             amzn-main
+mysql55-bench.x86_64                  <span class="m">5</span>.5.57-1.18.amzn1             amzn-main
+mysql55-devel.x86_64                  <span class="m">5</span>.5.57-1.18.amzn1             amzn-main
+mysql55-embedded.x86_64               <span class="m">5</span>.5.57-1.18.amzn1             amzn-main
+mysql55-embedded-devel.x86_64         <span class="m">5</span>.5.57-1.18.amzn1             amzn-main
+mysql55-libs.i686                     <span class="m">5</span>.5.57-1.18.amzn1             amzn-main
+mysql55-libs.x86_64                   <span class="m">5</span>.5.57-1.18.amzn1             amzn-main
+mysql55-server.x86_64                 <span class="m">5</span>.5.57-1.18.amzn1             amzn-main
+mysql55-test.x86_64                   <span class="m">5</span>.5.57-1.18.amzn1             amzn-main
+mysql56.x86_64                        <span class="m">5</span>.6.37-1.26.amzn1             amzn-main
+mysql56-bench.x86_64                  <span class="m">5</span>.6.37-1.26.amzn1             amzn-main
+mysql56-common.i686                   <span class="m">5</span>.6.37-1.26.amzn1             amzn-main
+mysql56-common.x86_64                 <span class="m">5</span>.6.37-1.26.amzn1             amzn-main
+mysql56-devel.x86_64                  <span class="m">5</span>.6.37-1.26.amzn1             amzn-main
+mysql56-embedded.x86_64               <span class="m">5</span>.6.37-1.26.amzn1             amzn-main
+mysql56-embedded-devel.x86_64         <span class="m">5</span>.6.37-1.26.amzn1             amzn-main
+mysql56-errmsg.x86_64                 <span class="m">5</span>.6.37-1.26.amzn1             amzn-main
+mysql56-libs.i686                     <span class="m">5</span>.6.37-1.26.amzn1             amzn-main
+mysql56-libs.x86_64                   <span class="m">5</span>.6.37-1.26.amzn1             amzn-main
+mysql56-server.x86_64                 <span class="m">5</span>.6.37-1.26.amzn1             amzn-main
+mysql56-test.x86_64                   <span class="m">5</span>.6.37-1.26.amzn1             amzn-main
+mysql57.x86_64                        <span class="m">5</span>.7.18-2.3.amzn1              amzn-main
+mysql57-common.i686                   <span class="m">5</span>.7.18-2.3.amzn1              amzn-main
+mysql57-common.x86_64                 <span class="m">5</span>.7.18-2.3.amzn1              amzn-main
+mysql57-devel.x86_64                  <span class="m">5</span>.7.18-2.3.amzn1              amzn-main
+mysql57-embedded.x86_64               <span class="m">5</span>.7.18-2.3.amzn1              amzn-main
+mysql57-embedded-devel.x86_64         <span class="m">5</span>.7.18-2.3.amzn1              amzn-main
+mysql57-errmsg.x86_64                 <span class="m">5</span>.7.18-2.3.amzn1              amzn-main
+mysql57-libs.i686                     <span class="m">5</span>.7.18-2.3.amzn1              amzn-main
+mysql57-libs.x86_64                   <span class="m">5</span>.7.18-2.3.amzn1              amzn-main
+mysql57-server.x86_64                 <span class="m">5</span>.7.18-2.3.amzn1              amzn-main
+mysql57-test.x86_64                   <span class="m">5</span>.7.18-2.3.amzn1              amzn-main
+nagios-plugins-mysql.x86_64           <span class="m">1</span>.4.16-5.8.amzn1              amzn-main
+php-mysql.x86_64                      <span class="m">5</span>.3.29-1.8.amzn1              amzn-main
+php-mysqlnd.x86_64                    <span class="m">5</span>.3.29-1.8.amzn1              amzn-main
+php54-mysql.x86_64                    <span class="m">5</span>.4.45-1.75.amzn1             amzn-main
+php54-mysqlnd.x86_64                  <span class="m">5</span>.4.45-1.75.amzn1             amzn-main
+php55-mysqlnd.x86_64                  <span class="m">5</span>.5.38-2.119.amzn1            amzn-main
+php56-mysqlnd.x86_64                  <span class="m">5</span>.6.31-1.134.amzn1            amzn-main
+php70-mysqlnd.x86_64                  <span class="m">7</span>.0.21-1.24.amzn1             amzn-main
+php71-mysqlnd.x86_64                  <span class="m">7</span>.1.7-1.27.amzn1              amzn-updates
+rsyslog-mysql.x86_64                  <span class="m">5</span>.8.10-9.26.amzn1             amzn-main
+ruby-mysql.x86_64                     <span class="m">2</span>.8.2-1.11.amzn1              amzn-main
+
+
+<span class="c1">#mysql57関連のパッケージをインストール</span>
+yum install mysql57*
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>2.インストールされているかどうかを確認しましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span>yum list installed <span class="p">|</span> grep mysql*
+
+<span class="c1">#こんな感じに出力されればインストールできてます。</span>
+mysql-config.x86_64                   <span class="m">5</span>.5.57-1.18.amzn1            @amzn-main
+mysql57.x86_64                        <span class="m">5</span>.7.18-2.3.amzn1             @amzn-main
+mysql57-common.x86_64                 <span class="m">5</span>.7.18-2.3.amzn1             @amzn-main
+mysql57-devel.x86_64                  <span class="m">5</span>.7.18-2.3.amzn1             @amzn-main
+mysql57-embedded.x86_64               <span class="m">5</span>.7.18-2.3.amzn1             @amzn-main
+mysql57-embedded-devel.x86_64         <span class="m">5</span>.7.18-2.3.amzn1             @amzn-main
+mysql57-errmsg.x86_64                 <span class="m">5</span>.7.18-2.3.amzn1             @amzn-main
+mysql57-libs.x86_64                   <span class="m">5</span>.7.18-2.3.amzn1             @amzn-main
+mysql57-server.x86_64                 <span class="m">5</span>.7.18-2.3.amzn1             @amzn-main
+mysql57-test.x86_64                   <span class="m">5</span>.7.18-2.3.amzn1             @amzn-main
+
+
+http://dev.mysql.com/get/mysql57-community-release-el7-7.noarch.rpm
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id3">
+<h2>MySQLを起動してみる<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>1.MySQLのサービスを起動する。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#MySQLのサービス状態を確認</span>
+systemctl status mysqld
+
+<span class="c1">#MySQLのサービスを起動</span>
+systemctl start mysqld
+
+<span class="c1">#MySQLのサービス状態を確認</span>
+systemctl status mysqld
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id4">
+<h2>MySQLの自動起動設定<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>1.systemctlコマンドにてmysqldを自動起動設定にする。</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id5">
+<h2>初期パスワードの変更<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>1.mysqlにログインします。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#mysqlにrootでログインします。</span>
+<span class="c1">#この時にパスワードを聞かれますが、なにも入力せずEnterしてください。</span>
+mysql -u root -p
+
+<span class="c1">#パスワードを設定</span>
+ <span class="nb">set</span> password <span class="k">for</span> root@localhost<span class="o">=</span>password<span class="o">(</span><span class="s1">&#39;パスワード&#39;</span><span class="o">)</span><span class="p">;</span>
+
+<span class="c1">#一度ログアウト</span>
+quit
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>2.再ログインしてパスワードが設定されていることを確認</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#ログイン</span>
+mysql -u root -p
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id6">
+<h2>データベースの作成<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>1.MySQLへログイン</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#mysqlへログイン</span>
+mysql -u root -p
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>2.データベースを作成しましょう。
+今回は下表のようなデータベースを作成します。</p>
+<blockquote>
+<div>DB名:test</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span>mysql&gt; show databases<span class="p">;</span>
++--------------------+
+<span class="p">|</span> Database           <span class="p">|</span>
++--------------------+
+<span class="p">|</span> information_schema <span class="p">|</span>
+<span class="p">|</span> mysql              <span class="p">|</span>
+<span class="p">|</span> performance_schema <span class="p">|</span>
+<span class="p">|</span> sys                <span class="p">|</span>
++--------------------+
+<span class="m">4</span> rows in <span class="nb">set</span> <span class="o">(</span><span class="m">0</span>.01 sec<span class="o">)</span>
+
+mysql&gt;
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>では新たにデータベースを作成しましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#&quot;test&quot;という名前のデータベースを作成</span>
+create database test<span class="p">;</span>
+
+mysql&gt; create database test<span class="p">;</span>
+Query OK, <span class="m">1</span> row affected <span class="o">(</span><span class="m">0</span>.00 sec<span class="o">)</span>
+
+show databases<span class="p">;</span>
+
+mysql&gt; show databases<span class="p">;</span>
++--------------------+
+<span class="p">|</span> Database           <span class="p">|</span>
++--------------------+
+<span class="p">|</span> information_schema <span class="p">|</span>
+<span class="p">|</span> mysql              <span class="p">|</span>
+<span class="p">|</span> performance_schema <span class="p">|</span>
+<span class="p">|</span> sys                <span class="p">|</span>
+<span class="p">|</span> <span class="nb">test</span>               <span class="p">|</span>
++--------------------+
+<span class="m">5</span> rows in <span class="nb">set</span> <span class="o">(</span><span class="m">0</span>.01 sec<span class="o">)</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>次に、testデータベースに接続してみましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#&quot;test&quot;データベースに接続</span>
+use test<span class="p">;</span>
+
+<span class="c1">#Changeとかでる。</span>
+Database changed
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>これで接続できました。
+では次にカラムを追加しましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span>＃<span class="s2">&quot;user&quot;</span>という名称のテーブルを作成
+create table user<span class="p">;</span>
+
+<span class="c1">#カラムを一気に設定しましょう。</span>
+create table user <span class="o">(</span>id int auto_increment primary key,username varchar<span class="o">(</span><span class="m">255</span><span class="o">)</span>,dibision varchar<span class="o">(</span><span class="m">255</span><span class="o">)</span>,age char<span class="o">(</span><span class="m">200</span><span class="o">))</span><span class="p">;</span>
+
+<span class="c1">#できたかを確認</span>
+<span class="c1">#&quot;user&quot;という名称のテーブルができているように見えますね。</span>
+mysql&gt; show tables<span class="p">;</span>
++----------------+
+<span class="p">|</span> Tables_in_test <span class="p">|</span>
++----------------+
+<span class="p">|</span> user           <span class="p">|</span>
++----------------+
+<span class="m">1</span> row in <span class="nb">set</span> <span class="o">(</span><span class="m">0</span>.00 sec<span class="o">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>レコード(データ)の追加<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>1.次のコマンドでレコードを追加していきましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#&quot;inert&quot;コマンドで追加していきます。</span>
+<span class="c1">#渡辺さんを追加</span>
+insert into user<span class="o">(</span>username,dibision,age<span class="o">)</span>
+values<span class="o">(</span><span class="s1">&#39;watanabe&#39;</span>,<span class="s1">&#39;infra&#39;</span>,<span class="s1">&#39;30&#39;</span><span class="o">)</span><span class="p">;</span>
+
+<span class="c1">#森田さんを追加</span>
+insert into user<span class="o">(</span>username,dibision,age<span class="o">)</span>
+values<span class="o">(</span><span class="s1">&#39;morita&#39;</span>,<span class="s1">&#39;infra&#39;</span>,<span class="s1">&#39;23&#39;</span><span class="o">)</span><span class="p">;</span>
+
+<span class="c1">#川島さんを追加</span>
+insert into user<span class="o">(</span>username,dibision,age<span class="o">)</span>
+values<span class="o">(</span><span class="s1">&#39;kawashima&#39;</span>,<span class="s1">&#39;kikaku-unyo&#39;</span>,<span class="s1">&#39;29&#39;</span><span class="o">)</span><span class="p">;</span>
+
+<span class="c1">#照屋さんを追加</span>
+insert into user<span class="o">(</span>username,dibision,age<span class="o">)</span>
+values<span class="o">(</span><span class="s1">&#39;teruya&#39;</span>,<span class="s1">&#39;kikaku-unyo&#39;</span>,<span class="s1">&#39;26&#39;</span><span class="o">)</span><span class="p">;</span>
+
+
+<span class="c1">#追加レコード内容を確認</span>
+<span class="k">select</span> *from user<span class="p">;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>2.レコード内容にミスがあった場合は次の様にして修正しましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#updateコマンドで内容を更新</span>
+update user <span class="nb">set</span> <span class="nv">username</span> <span class="o">=</span> watanabe where <span class="nv">id</span> <span class="o">=</span> <span class="m">1</span><span class="p">;</span>
+
+<span class="c1">#変更内容を確認</span>
+<span class="k">select</span> *from user<span class="p">;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="005.1-Appache.html" title="Apacheの設定"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">LINUX 1.0.0 ドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, TERUYA.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3 で生成しました。
+    </div>
+  </body>
+</html>

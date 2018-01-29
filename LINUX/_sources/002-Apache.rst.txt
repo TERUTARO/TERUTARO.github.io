@@ -1,0 +1,73 @@
+=========================
+Apacheの設定
+=========================
+
+サマリ
+=========================
+代表的なWEBサービスミドルウェアの一つです。
+サービス名は"httpd"です。
+
+
+
+ハンズオン
+=========================
+
+スーパーユーザーになる
+-------------------------
+
+1.何はともあれスーパーユーザーに昇格します。
+
+	.. code-block:: shell
+		
+		sudo su
+
+
+
+Apacheのインストール
+-------------------------
+
+1.Apacheをインストールします。
+
+	.. code-block:: shell
+		
+		yum install httpd
+	
+	| 
+
+2.インストールされているかどうかを確認しましょう。
+	
+	.. code-block:: shell
+	
+		yum list installed | grep httpd
+		
+		#こんな感じに出力されれればインストールできてます。
+		httpd.x86_64                             2.2.34-1.15.amzn1            @amzn-main
+		httpd-tools.x86_64                       2.2.34-1.15.amzn1            @amzn-main
+
+
+
+DNS登録名を確認してみる。
+=========================
+
+1.名前解決できるかを確認します。
+
+	.. code-block:: shell
+		
+		nslookup domeinname
+	
+	| 
+
+domainnameはそれぞれ以下を参照してください。
+
+	.. csv-table:: 
+	
+		:header: "使用サーバー","domainname"
+		
+		"testServer01","test1.teruya.okinawa"
+		"testServer02","test2.teruya.okinawa"
+		"testServer03","test3.teruya.okinawa"
+		"testServer04","test4.teruya.okinawa"
+
+
+
+

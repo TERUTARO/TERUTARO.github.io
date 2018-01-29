@@ -1,0 +1,354 @@
+===========================
+ハンズオン
+===========================
+
+スーパーユーザーになる
+===========================
+
+1.なにはともあれスーパーユーザーに昇格します。
+
+	.. code-block:: shell
+			
+		sudo su 
+	
+	| 
+
+
+MySQLのインストール
+==========================
+
+1.MySQL関連のパッケージを全てインストールします
+。
+
+	.. code-block:: shell
+		
+		#パッケージバージョンを確認
+		#特にこだわりなければ最新のものをインストールしてはいかがでしょうか。
+		yum list | grep mysql*
+		
+		apr-util-mysql.x86_64                 1.4.1-4.17.amzn1              amzn-main   
+		collectd-mysql.x86_64                 5.7.1-3.19.amzn1              amzn-main   
+		dovecot-mysql.x86_64                  1:2.2.10-5.17.amzn1           amzn-main   
+		exim-mysql.x86_64                     4.88-2.11.amzn1               amzn-main   
+		freeradius-mysql.x86_64               2.2.6-7.16.amzn1              amzn-main   
+		libdbi-dbd-mysql.x86_64               0.8.3-5.1.5.amzn1             amzn-main   
+		lighttpd-mod_mysql_vhost.x86_64       1.4.41-1.34.amzn1             amzn-main   
+		mod_auth_mysql.x86_64                 1:3.0.0-18.10.amzn1           amzn-main   
+		mysql.noarch                          5.5-1.6.amzn1                 amzn-main   
+		mysql-bench.noarch                    5.5-1.6.amzn1                 amzn-main   
+		mysql-common.noarch                   5.5-1.6.amzn1                 amzn-main   
+		mysql-config.x86_64                   5.5.57-1.18.amzn1             amzn-main   
+		mysql-connector-java.noarch           1:5.1.12-2.10.amzn1           amzn-main   
+		mysql-connector-odbc.x86_64           5.1.11-1.12.amzn1             amzn-main   
+		mysql-devel.noarch                    5.5-1.6.amzn1                 amzn-main   
+		mysql-embedded.noarch                 5.5-1.6.amzn1                 amzn-main   
+		mysql-embedded-devel.noarch           5.5-1.6.amzn1                 amzn-main   
+		mysql-libs.noarch                     5.5-1.6.amzn1                 amzn-main   
+		mysql-server.noarch                   5.5-1.6.amzn1                 amzn-main   
+		mysql-test.noarch                     5.5-1.6.amzn1                 amzn-main   
+		mysql51.x86_64                        5.1.73-8.72.amzn1             amzn-main   
+		mysql51-bench.x86_64                  5.1.73-8.72.amzn1             amzn-main   
+		mysql51-common.x86_64                 5.1.73-8.72.amzn1             amzn-main   
+		mysql51-devel.x86_64                  5.1.73-8.72.amzn1             amzn-main   
+		mysql51-embedded.x86_64               5.1.73-8.72.amzn1             amzn-main   
+		mysql51-embedded-devel.x86_64         5.1.73-8.72.amzn1             amzn-main   
+		mysql51-libs.i686                     5.1.73-8.72.amzn1             amzn-main   
+		mysql51-libs.x86_64                   5.1.73-8.72.amzn1             amzn-main   
+		mysql51-server.x86_64                 5.1.73-8.72.amzn1             amzn-main   
+		mysql51-test.x86_64                   5.1.73-8.72.amzn1             amzn-main   
+		mysql55.x86_64                        5.5.57-1.18.amzn1             amzn-main   
+		mysql55-bench.x86_64                  5.5.57-1.18.amzn1             amzn-main   
+		mysql55-devel.x86_64                  5.5.57-1.18.amzn1             amzn-main   
+		mysql55-embedded.x86_64               5.5.57-1.18.amzn1             amzn-main   
+		mysql55-embedded-devel.x86_64         5.5.57-1.18.amzn1             amzn-main   
+		mysql55-libs.i686                     5.5.57-1.18.amzn1             amzn-main   
+		mysql55-libs.x86_64                   5.5.57-1.18.amzn1             amzn-main   
+		mysql55-server.x86_64                 5.5.57-1.18.amzn1             amzn-main   
+		mysql55-test.x86_64                   5.5.57-1.18.amzn1             amzn-main   
+		mysql56.x86_64                        5.6.37-1.26.amzn1             amzn-main   
+		mysql56-bench.x86_64                  5.6.37-1.26.amzn1             amzn-main   
+		mysql56-common.i686                   5.6.37-1.26.amzn1             amzn-main   
+		mysql56-common.x86_64                 5.6.37-1.26.amzn1             amzn-main   
+		mysql56-devel.x86_64                  5.6.37-1.26.amzn1             amzn-main   
+		mysql56-embedded.x86_64               5.6.37-1.26.amzn1             amzn-main   
+		mysql56-embedded-devel.x86_64         5.6.37-1.26.amzn1             amzn-main   
+		mysql56-errmsg.x86_64                 5.6.37-1.26.amzn1             amzn-main   
+		mysql56-libs.i686                     5.6.37-1.26.amzn1             amzn-main   
+		mysql56-libs.x86_64                   5.6.37-1.26.amzn1             amzn-main   
+		mysql56-server.x86_64                 5.6.37-1.26.amzn1             amzn-main   
+		mysql56-test.x86_64                   5.6.37-1.26.amzn1             amzn-main   
+		mysql57.x86_64                        5.7.18-2.3.amzn1              amzn-main   
+		mysql57-common.i686                   5.7.18-2.3.amzn1              amzn-main   
+		mysql57-common.x86_64                 5.7.18-2.3.amzn1              amzn-main   
+		mysql57-devel.x86_64                  5.7.18-2.3.amzn1              amzn-main   
+		mysql57-embedded.x86_64               5.7.18-2.3.amzn1              amzn-main   
+		mysql57-embedded-devel.x86_64         5.7.18-2.3.amzn1              amzn-main   
+		mysql57-errmsg.x86_64                 5.7.18-2.3.amzn1              amzn-main   
+		mysql57-libs.i686                     5.7.18-2.3.amzn1              amzn-main   
+		mysql57-libs.x86_64                   5.7.18-2.3.amzn1              amzn-main   
+		mysql57-server.x86_64                 5.7.18-2.3.amzn1              amzn-main   
+		mysql57-test.x86_64                   5.7.18-2.3.amzn1              amzn-main   
+		nagios-plugins-mysql.x86_64           1.4.16-5.8.amzn1              amzn-main   
+		php-mysql.x86_64                      5.3.29-1.8.amzn1              amzn-main   
+		php-mysqlnd.x86_64                    5.3.29-1.8.amzn1              amzn-main   
+		php54-mysql.x86_64                    5.4.45-1.75.amzn1             amzn-main   
+		php54-mysqlnd.x86_64                  5.4.45-1.75.amzn1             amzn-main   
+		php55-mysqlnd.x86_64                  5.5.38-2.119.amzn1            amzn-main   
+		php56-mysqlnd.x86_64                  5.6.31-1.134.amzn1            amzn-main   
+		php70-mysqlnd.x86_64                  7.0.21-1.24.amzn1             amzn-main   
+		php71-mysqlnd.x86_64                  7.1.7-1.27.amzn1              amzn-updates
+		rsyslog-mysql.x86_64                  5.8.10-9.26.amzn1             amzn-main   
+		ruby-mysql.x86_64                     2.8.2-1.11.amzn1              amzn-main   
+
+		
+		#mysql57関連のパッケージをインストール
+		yum install mysql57*
+		
+	| 
+
+2.インストールされているかどうかを確認しましょう。
+	
+	.. code-block:: shell
+	
+		yum list installed | grep mysql*
+
+		#こんな感じに出力されればインストールできてます。
+		mysql-config.x86_64                   5.5.57-1.18.amzn1            @amzn-main   
+		mysql57.x86_64                        5.7.18-2.3.amzn1             @amzn-main   
+		mysql57-common.x86_64                 5.7.18-2.3.amzn1             @amzn-main   
+		mysql57-devel.x86_64                  5.7.18-2.3.amzn1             @amzn-main   
+		mysql57-embedded.x86_64               5.7.18-2.3.amzn1             @amzn-main   
+		mysql57-embedded-devel.x86_64         5.7.18-2.3.amzn1             @amzn-main   
+		mysql57-errmsg.x86_64                 5.7.18-2.3.amzn1             @amzn-main   
+		mysql57-libs.x86_64                   5.7.18-2.3.amzn1             @amzn-main   
+		mysql57-server.x86_64                 5.7.18-2.3.amzn1             @amzn-main   
+		mysql57-test.x86_64                   5.7.18-2.3.amzn1             @amzn-main   
+
+		
+		http://dev.mysql.com/get/mysql57-community-release-el7-7.noarch.rpm
+		
+		
+	| 
+
+
+MySQLを起動してみる
+==========================================
+
+1.MySQLのサービスを起動する。
+
+	.. code-block:: shell
+		
+		#MySQLのサービス状態を確認
+		systemctl status mysqld
+		
+		#MySQLのサービスを起動
+		systemctl start mysqld
+		
+		#MySQLのサービス状態を確認
+		systemctl status mysqld
+	
+	| 
+
+
+MySQLの自動起動設定
+====================
+
+1.systemctlコマンドにてmysqldを自動起動設定にする。
+		
+		.. coed-block:: shell 
+				
+			#mysqldの自動起動設定を確認
+			systemctl is-enabled mysqld
+			
+			#mysqldの自動起動を設定
+			systemctl enable mysqld
+			
+			#mysqldの自動起動設定を確認
+			systemctl is-enabled mysqld
+			
+		| 
+
+
+
+初期パスワードの変更
+========================
+1.mysqlにログインします。
+		
+	.. code-block:: shell
+		
+		#mysqlにrootでログインします。
+		#この時にパスワードを聞かれますが、なにも入力せずEnterしてください。
+		mysql -u root -p
+
+		#パスワードを設定
+		 set password for root@localhost=password('パスワード');
+			
+		#一度ログアウト
+		quit
+	
+	| 
+
+
+2.再ログインしてパスワードが設定されていることを確認
+		
+	.. code-block:: shell
+		
+		#ログイン
+		mysql -u root -p
+		
+	
+	| 
+
+	
+
+データベースの作成
+==================
+
+1.MySQLへログイン
+	
+	.. code-block:: shell
+		
+		#mysqlへログイン
+		mysql -u root -p 
+		
+	| 
+
+2.データベースを作成しましょう。
+今回は下表のようなデータベースを作成します。
+
+	
+	DB名:test 	
+	
+	+---------------+---------------+---------------+---------------+
+	|id		|username	|dibision	|age		|
+	+---------------+---------------+---------------+---------------+
+	|1		|渡辺		|インフラ	|30		|
+	+---------------+---------------+---------------+---------------+
+	|2		|森田		|インフラ	|23		|
+	+---------------+---------------+---------------+---------------+
+	|3		|川島		|企画		|29		|
+	+---------------+---------------+---------------+---------------+
+	|4		|照屋		|無所属		|26		|
+	+---------------+---------------+---------------+---------------+
+| 
+
+	.. code-block:: shell
+	
+		mysql> show databases;
+		+--------------------+
+		| Database           |
+		+--------------------+
+		| information_schema |
+		| mysql              |
+		| performance_schema |
+		| sys                |
+		+--------------------+
+		4 rows in set (0.01 sec)
+
+		mysql>
+	| 
+
+では新たにデータベースを作成しましょう。
+
+	.. code-block:: shell
+		
+		#"test"という名前のデータベースを作成
+		create database test;
+			
+		mysql> create database test;
+		Query OK, 1 row affected (0.00 sec)
+
+		show databases;
+		
+		mysql> show databases;
+		+--------------------+
+		| Database           |
+		+--------------------+
+		| information_schema |
+		| mysql              |
+		| performance_schema |
+		| sys                |
+		| test               |
+		+--------------------+
+		5 rows in set (0.01 sec)		
+	| 
+
+次に、testデータベースに接続してみましょう。
+
+	.. code-block:: shell
+		
+		#"test"データベースに接続
+		use test;
+
+		#Changeとかでる。
+		Database changed 
+	| 
+
+これで接続できました。
+では次にカラムを追加しましょう。
+		
+ 	.. code-block:: shell 
+		
+		＃"user"という名称のテーブルを作成
+		create table user;
+		
+		#カラムを一気に設定しましょう。
+		create table user (id int auto_increment primary key,username varchar(255),dibision varchar(255),age char(200));
+		
+		#できたかを確認
+		#"user"という名称のテーブルができているように見えますね。
+		mysql> show tables;
+		+----------------+
+		| Tables_in_test |
+		+----------------+
+		| user           |
+		+----------------+
+		1 row in set (0.00 sec)
+
+| 
+| 
+| 
+
+レコード(データ)の追加
+=======================
+1.次のコマンドでレコードを追加していきましょう。
+
+	.. code-block:: shell
+		
+		#"inert"コマンドで追加していきます。
+		#渡辺さんを追加
+		insert into user(username,dibision,age)
+		values('watanabe','infra','30');
+		
+		#森田さんを追加
+		insert into user(username,dibision,age)
+		values('morita','infra','23');
+		
+		#川島さんを追加
+		insert into user(username,dibision,age)
+		values('kawashima','kikaku-unyo','29');
+		
+		#照屋さんを追加
+		insert into user(username,dibision,age)
+		values('teruya','kikaku-unyo','26');
+
+	
+		#追加レコード内容を確認
+		select *from user;
+	| 
+
+2.レコード内容にミスがあった場合は次の様にして修正しましょう。
+
+	.. code-block:: shell
+		
+		#updateコマンドで内容を更新
+		update user set username = watanabe where id = 1;
+
+		#変更内容を確認
+		select *from user;
+		
+	| 
+
+
+
+

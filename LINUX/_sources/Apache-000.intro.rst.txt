@@ -1,0 +1,76 @@
+================
+サマリApacheとは
+================
+
+
+
+
+
+====================
+ハンズオン
+====================
+
+
+Apacheのインストール
+=====================
+1.Apacheをインストールする。
+
+	.. code-block:: shell	
+	
+		#Apacheをインストール
+		yum install httpd
+		
+		#インストールされていることを確認
+		yum list installed | grep httpd
+		
+	| 
+
+
+2.Apache起動してみる
+========================
+1.Apacheのサービスを起動する。
+	
+	.. code-block:: shell
+		
+		#Apacheのサービス状態を確認
+		systemctl status httpd 
+
+		● httpd.service - The Apache HTTP Server
+   		   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+ 		   Active: inactive (dead) #Apacheは停止しています。
+     		     Docs: man:httpd(8)
+		           man:apachectl(8)
+		   
+		#Apacheのサービスを起動
+		systemctl start httpd
+		
+		#Apacheのサービス状態を確認
+		● httpd.service - The Apache HTTP Server
+		   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+		   Active: active (running) since 水 2017-10-18 13:07:47 UTC; 22s ago
+		     Docs: man:httpd(8)
+		           man:apachectl(8)
+		 Main PID: 1242 (httpd)
+		   Status: "Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec"
+		   CGroup: /system.slice/httpd.service
+		           ├─1242 /usr/sbin/httpd -DFOREGROUND
+		           ├─1243 /usr/sbin/httpd -DFOREGROUND
+		           ├─1244 /usr/sbin/httpd -DFOREGROUND
+		           ├─1245 /usr/sbin/httpd -DFOREGROUND
+		           ├─1246 /usr/sbin/httpd -DFOREGROUND
+		           └─1247 /usr/sbin/httpd -DFOREGROUND
+		
+		10月 18 13:07:47 testserver systemd[1]: Starting The Apache HTTP Server...
+		10月 18 13:07:47 testserver httpd[1242]: AH00558: httpd: Could not reliably...e
+		10月 18 13:07:47 testserver systemd[1]: Started The Apache HTTP Server.
+		Hint: Some lines were ellipsized, use -l to show in full.
+		
+
+
+
+
+| 
+	
+	
+
+

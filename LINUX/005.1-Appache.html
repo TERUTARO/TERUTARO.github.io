@@ -1,0 +1,444 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Apacheの設定 &#8212; LINUX 1.0.0 ドキュメント</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="ハンズオン" href="006-MySQL.html" />
+    <link rel="prev" title="ホスト名の変更" href="001-hostname.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="006-MySQL.html" title="ハンズオン"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="001-hostname.html" title="ホスト名の変更"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">LINUX 1.0.0 ドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Apacheの設定</a><ul>
+<li><a class="reference internal" href="#httpd">httpd</a></li>
+<li><a class="reference internal" href="#etc-httpd">/etc/httpd</a></li>
+<li><a class="reference internal" href="#etc-httpd-conf-httpd-conf">/etc/httpd/conf/httpd.conf</a></li>
+<li><a class="reference internal" href="#documentroot">DocumentRootディレクティブ</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id1">ハンズオン</a><ul>
+<li><a class="reference internal" href="#id2">Apache起動してみる</a></li>
+<li><a class="reference internal" href="#id3">Apacheの自動起動設定</a></li>
+<li><a class="reference internal" href="#apachefqdn">ApacheにFQDNを紐付ける。</a></li>
+<li><a class="reference internal" href="#dns">登録したDNSの内容を確認する。</a></li>
+<li><a class="reference internal" href="#id4">インデックスファイルを配置してみよう</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="001-hostname.html"
+                        title="前の章へ">ホスト名の変更</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="006-MySQL.html"
+                        title="次の章へ">ハンズオン</a></p>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/005.1-Appache.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="apache">
+<h1>Apacheの設定<a class="headerlink" href="#apache" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">この章が終わるころには、http接続ができているかもしれません。</p>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="httpd">
+<h2>httpd<a class="headerlink" href="#httpd" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Apacheのサービス名です。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="etc-httpd">
+<h2>/etc/httpd<a class="headerlink" href="#etc-httpd" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Apacheのルートディレクトリです。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="etc-httpd-conf-httpd-conf">
+<h2>/etc/httpd/conf/httpd.conf<a class="headerlink" href="#etc-httpd-conf-httpd-conf" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Apacheの核となる設定ファイルです。Apacheは設定ファイルはディレクティブと呼ばれる命令文を記載することで細かな設定を反映させることが可能です。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="documentroot">
+<h2>DocumentRootディレクティブ<a class="headerlink" href="#documentroot" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Apacheが提供するコンテンツが配置されるディレクトリを指定することが可能です。
+デフォルトでは以下に示すように「/var/www/html」ディレクトリに設定されています。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1"># DocumentRoot: The directory out of which you will serve your</span>
+<span class="c1"># documents. By default, all requests are taken from this directory, but</span>
+<span class="c1"># symbolic links and aliases may be used to point to other locations.</span>
+<span class="c1">#</span>
+DocumentRoot <span class="s2">&quot;/var/www/html&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h1>ハンズオン<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>1.何はともあれスーパーユーザーに昇格します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#rootに昇格</span>
+sudo su
+</pre></div>
+</div>
+</div></blockquote>
+<p>1.Apacheをインストールします。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#Apacheをインストール</span>
+yum install httpd
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>2.インストールされているかどうかを確認しましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#Apacheがインストールされているかどうかを確認</span>
+yum list installed <span class="p">|</span> grep httpd
+
+<span class="c1">#こんな感じに出力されれればインストールできてます。</span>
+httpd.x86_64                             <span class="m">2</span>.2.34-1.15.amzn1            @amzn-main
+httpd-tools.x86_64                       <span class="m">2</span>.2.34-1.15.amzn1            @amzn-main
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>3.Apacheのバージョンを確認してみましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#Apacheのバージョンを確認</span>
+httpd -v
+
+<span class="c1">#バージョンは2.4.6のようですね。</span>
+Server version: Apache/2.4.6 <span class="o">(</span>Red Hat Enterprise Linux<span class="o">)</span>
+Server built:   Sep <span class="m">25</span> <span class="m">2017</span> <span class="m">09</span>:13:41
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="id2">
+<h2>Apache起動してみる<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>1.Apacheのサービスを起動してみましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#Apacheのサービス状態を確認</span>
+systemctl status httpd
+
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded <span class="o">(</span>/usr/lib/systemd/system/httpd.service<span class="p">;</span> disabled<span class="p">;</span> vendor preset: disabled<span class="o">)</span>
+   Active: inactive <span class="o">(</span>dead<span class="o">)</span>
+     Docs: man:httpd<span class="o">(</span><span class="m">8</span><span class="o">)</span>
+           man:apachectl<span class="o">(</span><span class="m">8</span><span class="o">)</span>
+
+<span class="c1">#Apacheのサービスを起動</span>
+systemctl start httpd
+
+<span class="c1">#Apacheのサービス状態を確認</span>
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded <span class="o">(</span>/usr/lib/systemd/system/httpd.service<span class="p">;</span> disabled<span class="p">;</span> vendor preset: disabled<span class="o">)</span>
+   Active: active <span class="o">(</span>running<span class="o">)</span> since 水 <span class="m">2017</span>-10-18 <span class="m">13</span>:07:47 UTC<span class="p">;</span> 22s ago
+     Docs: man:httpd<span class="o">(</span><span class="m">8</span><span class="o">)</span>
+           man:apachectl<span class="o">(</span><span class="m">8</span><span class="o">)</span>
+ Main PID: <span class="m">1242</span> <span class="o">(</span>httpd<span class="o">)</span>
+   Status: <span class="s2">&quot;Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec&quot;</span>
+   CGroup: /system.slice/httpd.service
+           ├─1242 /usr/sbin/httpd -DFOREGROUND
+           ├─1243 /usr/sbin/httpd -DFOREGROUND
+           ├─1244 /usr/sbin/httpd -DFOREGROUND
+           ├─1245 /usr/sbin/httpd -DFOREGROUND
+           ├─1246 /usr/sbin/httpd -DFOREGROUND
+           └─1247 /usr/sbin/httpd -DFOREGROUND
+
+<span class="m">10</span>月 <span class="m">18</span> <span class="m">13</span>:07:47 testserver systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: Starting The Apache HTTP Server...
+<span class="m">10</span>月 <span class="m">18</span> <span class="m">13</span>:07:47 testserver httpd<span class="o">[</span><span class="m">1242</span><span class="o">]</span>: AH00558: httpd: Could not reliably...e
+<span class="m">10</span>月 <span class="m">18</span> <span class="m">13</span>:07:47 testserver systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: Started The Apache HTTP Server.
+Hint: Some lines were ellipsized, use -l to show in full.
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>Apacheの自動起動設定<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>1.Red Hat 7系からはsystemctlコマンドを使用してを自動起動に設定します。6系までは機能していたchkconfigコマンは現在使用することはできません。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#httpdの自動起動設定を確認</span>
+systemctl is-enabled httpd
+
+disabled <span class="c1">#自動起動設定：OFF</span>
+
+<span class="c1">#httpdの自動起動を設定</span>
+systemctl enabled httpd
+
+Created symlink from /etc/systemd/system/multi-user.target.wants/httpd.service to /usr/lib/systemd/system/httpd.service.
+
+<span class="c1">#httpdの自動起動設定を確認</span>
+systemctl is-enabled httpd
+
+enabled <span class="c1">#自動起動設定：ON</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p>ちなみにですが、chkconfigコマンドを使用してみようとすると次のような出力がありました。</p>
+<p>[<a class="reference external" href="mailto:root&#37;&#52;&#48;testserver">root<span>&#64;</span>testserver</a> ec2-user]# chkconfig –list httpd</p>
+<dl class="docutils">
+<dt>注記: この出力に含まれるのは SysV サービスのみです。ネイティブな</dt>
+<dd><dl class="first last docutils">
+<dt>systemd サービスは含まれません。SysV の設定データはネイティブな</dt>
+<dd><blockquote class="first">
+<div>systemd 設定で上書きされる場合があります。</div></blockquote>
+<p class="last">systemd サービスを一覧表示する場合は 『systemctl list-unit-files』 を使用します。
+特定のターゲットで有効になっているサービスを確認する場合は</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>『systemctl list-dependencies [target]』を使用します。</p>
+<p class="last">サービス httpd に関する情報の読み込み中にエラーが発生しました: そのようなファイルやディレクトリはありません</p>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="apachefqdn">
+<h2>ApacheにFQDNを紐付ける。<a class="headerlink" href="#apachefqdn" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>1./etc/httpd/conf/ディレクトリに移動します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#指定ディレクトリへ移動</span>
+<span class="nb">cd</span> /etc/httpd/conf/
+
+<span class="c1">#カレントディレクトリを確認</span>
+<span class="nb">pwd</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>2./etc/httpd/conf/httpd.confファイルの中身をみてみましょう。長いのでviewコマンドで見てみましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#ファイル内容を確認</span>
+view httpd.conf
+
+<span class="c1">#viコマンドと同様に「:q!」で終了できます。</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>3.バックアップを取得します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#保存先ディレクトリを作成</span>
+mkdir reg-ConfigBackup
+
+<span class="c1">#保存先ディレクトリへバックアップを作成</span>
+cp -a httpd.conf ./reg-ConfigBackup/htppd.conf_yyyymmdd
+
+<span class="c1">#保存先ディレクトリにバックアップがとれていることを確認</span>
+ls -lh ./reg-ConfigBackup
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>4.ファイルを編集します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#Apachの設定ファイルを確認してみましょう。</span>
+vi httpd.conf
+
+<span class="c1">#ファイルが開けましたらコマンドモード上で「/ServerName」と入力し、「Enter」キーを押下してください。</span>
+
+<span class="c1">#以下の記述に飛べばおk。とばなかったら「N」キーをいくつか押下してみましょう。</span>
+<span class="c1">##ServerName www.example.com:80</span>
+
+<span class="c1">#「a」キーを押下し、インサートモードへ移行後、「www.example.com」の部分を「XXXX.teruya.okinawa」に変更してください。「xxxx」はなんでもおk</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>5.サービスを再起動します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#Apacheのサービスを再起動</span>
+systemctl restart httpd
+
+<span class="c1">#Apacheのサービスを状態を確認</span>
+<span class="c1">#起動していること</span>
+systemctl status httpd
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="dns">
+<h2>登録したDNSの内容を確認する。<a class="headerlink" href="#dns" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>1.ムームードメインとAWS route53で登録します。</p>
+<p>2.反映までしばらく待ちます。</p>
+<p>3.名前解決できるかを確認します</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span>nslookup ドメイン名
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>4.ブラウザを起動し、設定したurlで接続できるかを確認する。</p>
+<blockquote>
+<div><img alt="_images/005.1-Appache-001.png" src="_images/005.1-Appache-001.png" />
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>インデックスファイルを配置してみよう<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>インデックスファイルを配置すると挙動がどのように変化するかを確認してみましょう。</p>
+<p>1.インデックスファイルを作成しましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#touchコマンドでインデックスファイルを作成しましょう。</span>
+vi index.html
+
+<span class="c1">#ファイルが作成しているかどうかを確認しましょう。</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="006-MySQL.html" title="ハンズオン"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="001-hostname.html" title="ホスト名の変更"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">LINUX 1.0.0 ドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, TERUYA.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3 で生成しました。
+    </div>
+  </body>
+</html>

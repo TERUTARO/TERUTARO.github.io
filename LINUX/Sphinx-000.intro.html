@@ -1,0 +1,176 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Sphinxとは &#8212; LINUX 1.0.0 ドキュメント</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="prev" title="ハンズオン" href="006-MySQL.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="006-MySQL.html" title="ハンズオン"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">LINUX 1.0.0 ドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Sphinxとは</a><ul>
+<li><a class="reference internal" href="#id1">概要</a></li>
+<li><a class="reference internal" href="#id4">何ができるか</a></li>
+<li><a class="reference internal" href="#id5">このハンズオンのゴール</a></li>
+<li><a class="reference internal" href="#id6">ハンズオンのセクション</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="006-MySQL.html"
+                        title="前の章へ">ハンズオン</a></p>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Sphinx-000.intro.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sphinx">
+<h1>Sphinxとは<a class="headerlink" href="#sphinx" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id1">
+<h2>概要<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Sphinxとは？</p>
+<p><a href="#id2"><span class="problematic" id="id3">|</span></a>Sphinxは知的で美しいドキュメントを簡単に作れるようにするツールです。Georg Brandlによって開発され、BSDライセンスのもとで公開されています。</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p>引用Sphinx</p>
+<p class="last"><a class="reference external" href="http://www.sphinx-doc.org/ja/stable/">http://www.sphinx-doc.org/ja/stable/</a></p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id4">
+<h2>何ができるか<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>出力形式: HTML (WIndowsのHTMLヘルプを含む)、LaTeX(印刷可能なPDFバージョン)、ePub、Texinfo、man、プレーンテキスト</p>
+<p>多岐にわたる相互参照: 意味のマークアップと、関数、クラス、引用、用語解説、似たような情報に対する自動リンク</p>
+<p>階層構造: 簡単にドキュメントツリーを定義でき、兄弟、親、子供のドキュメントに対して、リンクを貼れる</p>
+<p>自動インデックス作成: 全体インデックスと、言語特有のモジュールインデックス
+ソースコードの対応: Pygmentsを使った自動ハイライト</p>
+<p>拡張: コードスニペットを使った自動テスト, Pythonモジュールのdocstringのインクルード(APIドキュメント作成), 他にもあります</p>
+<p>寄贈された拡張: 50以上の拡張が ユーザによって寄贈され。 sphinx-contribリポジトリ内にあり、ほとんどの拡張はPyPIよりインストール可能</p>
+</div>
+<div class="section" id="id5">
+<h2>このハンズオンのゴール<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Sphinxサーバを構築し、同一ホストにApacheを立ち上げ、作成ドキュメントをWeb公開する。</p>
+</div>
+<div class="section" id="id6">
+<h2>ハンズオンのセクション<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>当ハンズオンのセクションは以下のようになっている。</p>
+<ol class="arabic simple">
+<li>AWS EC2インスタンスの立ち上げ</li>
+<li>EC2インスタンスの初期設定</li>
+<li>Sphinxの導入・設定</li>
+<li>Apacheの導入・設定</li>
+<li>DNSサーバへのドメイン登録</li>
+</ol>
+<ol class="arabic simple" start="5">
+<li>Sphinxドキュメントの作成・公開</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">時間の都合上今回は上記セクション中、1.、2.、5.について筆者にて登録を行う。</p>
+</div>
+<p>　|</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">doc:</th><td class="field-body">『Sphinx-001.SetupSphinx.rst』</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="006-MySQL.html" title="ハンズオン"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">LINUX 1.0.0 ドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, TERUYA.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3 で生成しました。
+    </div>
+  </body>
+</html>

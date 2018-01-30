@@ -1,0 +1,638 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>2.Sphinxの導入・設定 &#8212; Sphinx 1.1 documentation</title>
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Apacheの基本設定" href="Sphinx-003.Apache.html" />
+    <link rel="prev" title="1.AWS EC2インスタンスの作成" href="Sphinx-001.AWS-EC2.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">Sphinx 1.1 documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="Sphinx-001.AWS-EC2.html" title="1.AWS EC2インスタンスの作成"
+             accesskey="P">previous</a> |
+          <a href="Sphinx-003.Apache.html" title="Apacheの基本設定"
+             accesskey="N">next</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sphinx">
+<h1>2.Sphinxの導入・設定<a class="headerlink" href="#sphinx" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>2.1.サマリ　〜用語編〜<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="python">
+<h3>2.1.1.Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h3>
+<p>プログラミング言語のひとつ。そのコードは可読性が高く、学習コストが低い。現在最もホットな言語といっても過言ではありません。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="pip">
+<h3>2.1.2.pip<a class="headerlink" href="#pip" title="Permalink to this headline">¶</a></h3>
+<p>Pythonで書かれたパッケージソフトウェアをインストール・管理するためのパッケージ管理システムのこと。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>2.1.3.カレントディレクトリ<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>プロセスが現在関連付けられている（現在の位置である）ディレクトリのことです。
+つまり、自分がいまいるディレクトリのことです。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>2.1.4.スーパーユーザー<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>特権ユーザーとも呼称されます。
+特定の環境でどのような操作であっても制限なく実行できるユーザーです。
+つまり「なんでもできるマン」です。</p>
+<p>Windows、Linuxではそれぞれ以下のような特権ユーザーが構築時にデフォルトでいます。</p>
+<p>Windows…Administrator
+Linux…root</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>2.2.サマリ　〜コマンド編〜<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">準備中　(^ω^)</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id5">
+<h2>2.3.ハンズオン<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h3>2.3.1.スーパーユーザー になる。<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>1.何はともあれスーパーユーザーに昇格します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">##################</span>
+<span class="c1">#rootに昇格</span>
+<span class="c1">##################</span>
+sudo su
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id7">
+<h3>2.3.1.PIPのインストール<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>1.Pythonのバージョンを確認します。</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">###################################</span>
+<span class="c1">#[version]オプションでバージョンを確認</span>
+<span class="c1">###################################</span>
+python --version
+
+<span class="c1">########################################</span>
+<span class="c1">#バージョンは2.7.5であることが確認できます。</span>
+<span class="c1">########################################</span>
+Python <span class="m">2</span>.7.5
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>2.PIPをインストールします。</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">########################</span>
+<span class="c1">#curlコマンドでpipを取得。</span>
+<span class="c1">########################</span>
+curl -O https://bootstrap.pypa.io/get-pip.py
+
+<span class="c1">########################</span>
+<span class="c1">#コマンド実行結果</span>
+<span class="c1">########################</span>
+<span class="o">[</span>root@Mai-Test ec2-user<span class="o">]</span><span class="c1"># curl -O https://bootstrap.pypa.io/                    get-pip.py</span>
+% Total % Received % Xferd  Average Speed Time Time Time Current
+
+Dload  Upload   Total   Spent    Left  Speed
+<span class="m">100</span> 1558k <span class="m">100</span> 1558k <span class="m">0</span> <span class="m">0</span> 3401k <span class="m">0</span> --:--:-- --:--:-- --:--:-- 3409k
+
+<span class="c1">######################################</span>
+<span class="c1">#easy_install pipでインストールできるらしい。</span>
+<span class="c1">#Python得意な人教えてください。</span>
+<span class="c1">######################################</span>
+<span class="o">[</span>root@Mai-Test pip<span class="o">]</span><span class="c1"># easy_install pip</span>
+Searching <span class="k">for</span> pip
+Best match: pip <span class="m">9</span>.0.1
+Adding pip <span class="m">9</span>.0.1 to easy-install.pth file
+Installing pip script to /usr/bin
+Installing pip3.5 script to /usr/bin
+Installing pip3 script to /usr/bin
+
+Using /root/.local/lib/python2.7/site-packages
+Processing dependencies <span class="k">for</span> pip
+F
+
+<span class="c1">#####################################</span>
+<span class="c1">#バージョンを確認する。</span>
+<span class="c1">#####################################</span>
+<span class="o">[</span>root@Mai-Test pip<span class="o">]</span><span class="c1"># pip -V</span>
+
+pip <span class="m">9</span>.0.1 from /root/.local/lib/python2.7/site-packages <span class="o">(</span>python <span class="m">2</span>.7<span class="o">)</span>
+
+<span class="p">|</span>
+<span class="p">|</span>
+<span class="p">|</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>3.Pythonをインストール</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span>      <span class="c1">##################################</span>
+      <span class="c1">#pipコマンドでsohinxをインストール！</span>
+      <span class="c1">##################################</span>
+      pip install Sphinx
+
+      <span class="c1">##################################</span>
+      <span class="c1">#実行結果</span>
+      <span class="c1">##################################</span>
+      Collecting Sphinx
+        Downloading Sphinx-1.6.5-py2.py3-none-any.whl <span class="o">(</span><span class="m">1</span>.9MB<span class="o">)</span>
+          <span class="m">100</span>% <span class="p">|</span>████████████████████████████████<span class="p">|</span> <span class="m">1</span>.9MB 352kB/s
+      Collecting alabaster&lt;<span class="m">0</span>.8,&gt;<span class="o">=</span><span class="m">0</span>.7 <span class="o">(</span>from Sphinx<span class="o">)</span>
+        Downloading alabaster-0.7.10-py2.py3-none-any.whl
+              Requirement already satisfied: Jinja2&gt;<span class="o">=</span><span class="m">2</span>.3 in /usr/lib/python2.7/site-packages <span class="o">(</span>from Sphinx<span class="o">)</span>
+      Collecting snowballstemmer&gt;<span class="o">=</span><span class="m">1</span>.1 <span class="o">(</span>from Sphinx<span class="o">)</span>
+        Downloading snowballstemmer-1.2.1-py2.py3-none-any.whl <span class="o">(</span>64kB<span class="o">)</span>
+          <span class="m">100</span>% <span class="p">|</span>████████████████████████████████<span class="p">|</span> 71kB <span class="m">4</span>.8MB/s
+      Collecting babel!<span class="o">=</span><span class="m">2</span>.0,&gt;<span class="o">=</span><span class="m">1</span>.3 <span class="o">(</span>from Sphinx<span class="o">)</span>
+        Downloading Babel-2.5.1-py2.py3-none-any.whl <span class="o">(</span><span class="m">6</span>.8MB<span class="o">)</span>
+      <span class="m">100</span>% <span class="p">|</span>████████████████████████████████<span class="p">|</span> <span class="m">6</span>.8MB 100kB/s
+      Collecting imagesize <span class="o">(</span>from Sphinx<span class="o">)</span>
+        Downloading imagesize-0.7.1-py2.py3-none-any.whl
+        Requirement already satisfied: setuptools in /usr/lib/python2.7/site-packages <span class="o">(</span>from Sphinx<span class="o">)</span>
+      Collecting Pygments&gt;<span class="o">=</span><span class="m">2</span>.0 <span class="o">(</span>from Sphinx<span class="o">)</span>
+        Downloading Pygments-2.2.0-py2.py3-none-any.whl <span class="o">(</span>841kB<span class="o">)</span>
+      <span class="m">100</span>% <span class="p">|</span>████████████████████████████████<span class="p">|</span> 849kB 867kB/s
+      Collecting typing<span class="p">;</span> python_version &lt; <span class="s2">&quot;3.5&quot;</span> <span class="o">(</span>from Sphinx<span class="o">)</span>
+        Downloading typing-3.6.2-py2-none-any.whl
+      Collecting docutils&gt;<span class="o">=</span><span class="m">0</span>.11 <span class="o">(</span>from Sphinx<span class="o">)</span>
+        Downloading docutils-0.14-py2-none-any.whl <span class="o">(</span>543kB<span class="o">)</span>
+      <span class="m">100</span>% <span class="p">|</span>████████████████████████████████<span class="p">|</span> 552kB <span class="m">1</span>.4MB/s
+          Requirement already satisfied: requests&gt;<span class="o">=</span><span class="m">2</span>.0.0 in /usr/lib/python2.7/site-packages <span class="o">(</span>from Sphinx<span class="o">)</span>
+              Requirement already satisfied: six&gt;<span class="o">=</span><span class="m">1</span>.5 in /usr/lib/python2.7/site-packages <span class="o">(</span>from Sphinx<span class="o">)</span>
+      Collecting sphinxcontrib-websupport <span class="o">(</span>from Sphinx<span class="o">)</span>
+      Downloading sphinxcontrib_websupport-1.0.1-py2.py3-none-any.whl
+      Requirement already satisfied: markupsafe in /usr/lib64/python2.7/site-packages <span class="o">(</span>from Jinja2&gt;<span class="o">=</span><span class="m">2</span>.3-&gt;Sphinx<span class="o">)</span>
+      Collecting pytz&gt;<span class="o">=</span>0a <span class="o">(</span>from babel!<span class="o">=</span><span class="m">2</span>.0,&gt;<span class="o">=</span><span class="m">1</span>.3-&gt;Sphinx<span class="o">)</span>
+        Downloading pytz-2017.3-py2.py3-none-any.whl <span class="o">(</span>511kB<span class="o">)</span>
+<span class="m">100</span>% <span class="p">|</span>████████████████████████████████<span class="p">|</span> 512kB <span class="m">1</span>.5MB/s
+      Installing collected packages: alabaster, snowballstemmer, pytz, babel, imagesize, Pygments, typing, docutils, sphinxcontrib-websupport, Sphinx
+      Found existing installation: Babel <span class="m">0</span>.9.6
+      Uninstalling Babel-0.9.6:
+      Successfully uninstalled Babel-0.9.6
+      Successfully installed Pygments-2.2.0 Sphinx-1.6.5 alabaster-0.7                .10 babel-2.5.1 docutils-0.14 imagesize-0.7.1 pytz-2017.3
+      snowballstemmer-1.2.1 sphinxcontrib-websupport-1.0.1
+      typing-3.6.2
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>4.ドキュメント管理用ディレクトリを作成する。</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">####################################</span>
+<span class="c1">#mkdirコマンドでディレクトリを作成します。</span>
+<span class="c1">#/opt2/docとかで管理しましょう！</span>
+<span class="c1">####################################</span>
+<span class="o">[</span>root@Mai-Test ec2-user<span class="o">]</span><span class="c1"># mkdir /opt2</span>
+<span class="o">[</span>root@Mai-Test ec2-user<span class="o">]</span><span class="c1">#</span>
+
+<span class="c1">####################################</span>
+<span class="c1">#lsコマンドで確認</span>
+<span class="c1">####################################</span>
+<span class="o">[</span>root@Mai-Test ec2-user<span class="o">]</span><span class="c1"># ls -lh /</span>
+合計 16K
+lrwxrwxrwx.   <span class="m">1</span> root root    <span class="m">7</span>  <span class="m">7</span>月 <span class="m">11</span> <span class="m">15</span>:57 bin -&gt; usr/bin
+dr-xr-xr-x.   <span class="m">5</span> root root <span class="m">4</span>.0K  <span class="m">7</span>月 <span class="m">11</span> <span class="m">16</span>:07 boot
+-x.   <span class="m">2</span> root root    <span class="m">6</span>  <span class="m">3</span>月 <span class="m">10</span>  <span class="m">2016</span> opt
+
+///略///
+
+drwxr-xr-x.   <span class="m">2</span> root root    <span class="m">6</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">14</span>:29 opt2
+dr-xr-xr-x. <span class="m">107</span> root root    <span class="m">0</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">10</span>:53 proc
+
+///略///
+
+<span class="c1">####################################</span>
+<span class="c1">#opt2の中にdocディレクトリを作成</span>
+<span class="c1">####################################</span>
+<span class="o">[</span>root@Mai-Test ec2-user<span class="o">]</span><span class="c1"># mkdir /opt2/doc</span>
+<span class="o">[</span>root@Mai-Test ec2-user<span class="o">]</span><span class="c1">#</span>
+
+<span class="c1">####################################</span>
+<span class="c1">#lsコマンドで確認</span>
+<span class="c1">####################################</span>
+<span class="o">[</span>root@Mai-Test ec2-user<span class="o">]</span><span class="c1"># ls -lh /opt2/</span>
+合計 <span class="m">0</span>
+drwxr-xr-x. <span class="m">2</span> root root <span class="m">6</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">14</span>:33 doc <span class="c1">#できてますね。</span>
+<span class="o">[</span>root@Mai-Test ec2-user<span class="o">]</span><span class="c1">#</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>5./opt2/docへ移動</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">###############################</span>
+<span class="c1">#カレントディレクトリを/opt2/docへ</span>
+<span class="c1">###############################</span>
+<span class="o">[</span>root@Mai-Test ec2-user<span class="o">]</span><span class="c1"># cd /opt2/doc</span>
+<span class="o">[</span>root@Mai-Test doc<span class="o">]</span><span class="c1">#</span>
+
+<span class="c1">###############################</span>
+<span class="c1">#pwdコマンドで確認！</span>
+<span class="c1">###############################</span>
+<span class="o">[</span>root@Mai-Test doc<span class="o">]</span><span class="c1"># pwd</span>
+/opt2/doc
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>6.Sphinx-quickstart！いよいよSphinx使います。</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span>##############################
+#PATHは通っているはず...!
+##############################
+[root@Mai-Test doc]# sphinx-quickstart
+Welcome to the Sphinx 1.6.5 quickstart utility.
+
+Please enter values for the following settings (just press Enter to
+accept a default value, if one is given in brackets).
+
+######################################
+#ドキュメントのルートパスを指定します。
+#デフォルト（カレントディレクトリ）で大丈夫！
+######################################
+Enter the root path for documentation.
+&gt; Root path for the documentation [.]:
+
+######################################
+#あとはEnterを連打する。
+#連打していると以下の項目から進まなくなります。
+#プロジェクト名を入力してください！（任意）
+######################################
+The project name will occur in several places in the built documentation.
+&gt; Project name: Sphinx
+&gt; Author name(s): Sphinx
+
+######################################
+#プロジェクトのバージョンを設定しましょう。
+#適当で大丈夫です！
+######################################
+
+Sphinx has the notion of a &quot;version&quot; and a &quot;release&quot; for the
+software. Each version can have multiple releases. For example, for
+Python the version is something like 2.5 or 3.0, while the release is
+something like 2.5.1 or 3.0a1.  If you don&#39;t need this dual structure,
+just set both to the same value.
+&gt; Project version []: 1
+&gt; Project release [1]: 1.1
+
+######################################
+#プロジェクトの使用言語を指定しましょう。
+#とりあえずjp（Japan）でしょうか。
+######################################
+For a list of supported codes, see
+http://sphinx-doc.org/config.html#confval-language.
+&gt; Project language [en]:jp
+
+
+######################################
+#あとはEnterを連打しましょう。
+#するとどうでしょう。
+######################################
+
+Finished: An initial directory structure has been created.
+
+You should now populate your master file ./index.rst and create other documentation
+source files. Use the Makefile to build the docs, like so:
+make builder
+where &quot;builder&quot; is one of the supported builders, e.g. html, latex or linkcheck.
+
+[root@Mai-Test doc]#
+
+##############################################
+#Finishedしてました！
+#これでプロジェクトスタートへの第一歩を踏み出しました！
+##############################################
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>7.カレントディレクトリに何ができているのか…</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">##########################################</span>
+<span class="c1">#lsコマンドで確認しましょう！</span>
+<span class="c1">##########################################</span>
+<span class="o">[</span>root@Mai-Test doc<span class="o">]</span><span class="c1"># ls -lh</span>
+合計 20K
+
+rrw-r--rw-r--r--. <span class="m">1</span> root root  <span class="m">603</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">15</span>:06 Makefile
+drwxr-xr-x. <span class="m">2</span> root root    <span class="m">6</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">15</span>:06 _build
+drwxr-xr-x. <span class="m">2</span> root root    <span class="m">6</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">15</span>:06 _static
+drwxr-xr-x. <span class="m">2</span> root root    <span class="m">6</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">15</span>:06 _templates
+rrw-r--rw-r--r--. <span class="m">1</span> root root <span class="m">5</span>.0K <span class="m">12</span>月  <span class="m">5</span> <span class="m">15</span>:06 conf.py
+rrrw-r--rw-r--rw-r--r--. <span class="m">1</span> root root  <span class="m">434</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">15</span>:06 index.rst
+rrrw-r--rw-r--rw-r--r--. <span class="m">1</span> root root  <span class="m">810</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">15</span>:06 make.bat
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>8.ドキュメントを作成してみましょう。</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">###################################</span>
+<span class="c1">#viコマンドでファイルを作成！</span>
+<span class="c1">#このとき拡張子を.rstにしてください！</span>
+<span class="c1">###################################</span>
+<span class="o">[</span>root@Mai-Test doc<span class="o">]</span><span class="c1"># vi doc01.rst</span>
+
+
+<span class="c1">########################################</span>
+<span class="c1">#viエディタが起動したら、「a」キーを押下します！</span>
+<span class="c1">#すると、インサートモードへ移行しやす。</span>
+<span class="c1">#以下を入力しましょう。</span>
+<span class="c1">########################################</span>
+<span class="o">=============================</span>
+こんにちは
+<span class="o">=============================</span>
+今日からSphinxを始めます。
+
+
+<span class="c1">########################################</span>
+<span class="c1">#「esc」キーを押下し、</span>
+<span class="c1">#「:wq!」入力後、「Enter」キーを押下します。</span>
+<span class="c1">#</span>
+<span class="c1">#これで編集完了！</span>
+<span class="c1">#catコマンドで見てみましょう！</span>
+<span class="c1">########################################</span>
+
+<span class="o">[</span>root@Mai-Test doc<span class="o">]</span><span class="c1"># cat doc01.rst</span>
+<span class="o">=============================</span>
+こんにちは
+<span class="o">=============================</span>
+今日からSphinxを始めます。
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>9.index.rstの編集</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span>####################################
+#viコマンドでファイルを編集します。
+####################################
+[root@Mai-Test doc]# vi index.rst
+
+
+########################################
+#viエディタが起動したら、「a」キーを押下します！
+#すると、インサートモードへ移行しやす。
+#「toctree::」の下にさっき作成したファイル名を
+#入力してやりましょう。
+#
+#この時、1行空白行を入れるのがポイント！
+#
+########################################
+.. Sphinx documentation master file, created by
+ sphinx-quickstart on Tue Dec  5 15:06:12 2017.
+You can adapt this file completely to your liking, but it should at least
+contain the root `toctree` directive.
+
+Welcome to Sphinx&#39;s documentation!
+==================================
+
+.. toctree::
+:maxdepth: 2
+:caption: Contents:
+        　＃空白行を入れてください！
+doc01 #ここを追加しました！
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
+########################################
+#「esc」キーを押下し、
+#「:wq!」入力後、「Enter」キーを押下します。
+#
+#これで編集完了！
+#catコマンドで見てみましょう！
+########################################
+[root@Mai-Test doc]# cat index.rst
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>10.HTMLを生成してみましょう！</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">#############################</span>
+<span class="c1">#make htmlコマンドでHTML生成！</span>
+<span class="c1">#############################</span>
+root@Mai-Test doc<span class="o">]</span><span class="c1"># make html</span>
+
+<span class="c1">#############################</span>
+<span class="c1">#実行結果！</span>
+<span class="c1">#特にエラーが出なければOKです！</span>
+<span class="c1">#############################</span>
+Running Sphinx v1.6.5
+loading translations <span class="o">[</span>jp<span class="o">]</span>... not available <span class="k">for</span> built-in messages
+/usr/lib/python2.7/site-packages/sphinx/util/requests.py:72: UserWarning: Some links may <span class="k">return</span> broken results due to being unable to check the Server Name Indication <span class="o">(</span>SNI<span class="o">)</span> in the returned SSL cert against the hostname in the url requested. Recommended to install requests-2.4.1+.
+  <span class="s1">&#39;Some links may return broken results due to being unable to &#39;</span>
+loading pickled environment... <span class="k">done</span>
+building <span class="o">[</span>mo<span class="o">]</span>: targets <span class="k">for</span> <span class="m">0</span> po files that are out of date
+building <span class="o">[</span>html<span class="o">]</span>: targets <span class="k">for</span> <span class="m">1</span> <span class="nb">source</span> files that are out of date
+updating environment: <span class="m">0</span> added, <span class="m">1</span> changed, <span class="m">0</span> removed
+reading sources... <span class="o">[</span><span class="m">100</span>%<span class="o">]</span> index
+looking <span class="k">for</span> now-outdated files... none found
+pickling environment... <span class="k">done</span>
+checking consistency... <span class="k">done</span>
+preparing documents... <span class="k">done</span>
+writing output... <span class="o">[</span><span class="m">100</span>%<span class="o">]</span> index
+generating indices... genindex
+writing additional pages... search
+copying static files... <span class="k">done</span>
+copying extra files... <span class="k">done</span>
+dumping search index in English <span class="o">(</span>code: en<span class="o">)</span> ... <span class="k">done</span>
+dumping object inventory... <span class="k">done</span>
+build succeeded.
+
+Build finished. The HTML pages are in _build/html.
+<span class="o">[</span>root@Mai-Test doc<span class="o">]</span><span class="c1">#</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>11.HTMLファイルが生成されたかどうかを確認しましょう！</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">######################################################################</span>
+<span class="c1">#今回ですと/opt2/doc/_build/html/配下にHTMLファイルが生成されているはずです。</span>
+<span class="c1">#lsコマンドで確認してみましょう。</span>
+<span class="c1">######################################################################</span>
+<span class="o">[</span>root@Mai-Test doc<span class="o">]</span><span class="c1"># ls -ls  _build/html/</span>
+合計 <span class="m">28</span>
+<span class="m">0</span> drwxr-xr-x. <span class="m">2</span> root root   <span class="m">48</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">15</span>:14 _sources
+<span class="m">4</span> drwxr-xr-x. <span class="m">2</span> root root <span class="m">4096</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">15</span>:14 _static
+<span class="m">4</span> -rw-r--r--. <span class="m">1</span> root root <span class="m">2796</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">15</span>:14 doc01.html
+<span class="m">4</span> -rw-r--r--. <span class="m">1</span> root root <span class="m">2571</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">15</span>:32 genindex.html
+<span class="m">4</span> -rw-r--r--. <span class="m">1</span> root root <span class="m">3734</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">15</span>:32 index.html　＃こいつ
+<span class="m">4</span> -rw-r--r--. <span class="m">1</span> root root  <span class="m">270</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">15</span>:32 objects.inv
+<span class="m">4</span> -rw-r--r--. <span class="m">1</span> root root <span class="m">3077</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">15</span>:32 search.html
+<span class="m">4</span> -rw-r--r--. <span class="m">1</span> root root  <span class="m">451</span> <span class="m">12</span>月  <span class="m">5</span> <span class="m">15</span>:32 searchindex.js
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Sphinx-000.intro.html">Sphinxとは</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Sphinx-000.intro.html#id1">概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Sphinx-000.intro.html#id12">何ができるか</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Sphinx-000.intro.html#id13">このハンズオンのゴール</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Sphinx-000.intro.html#id14">この章の最後に</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Sphinx-001.AWS-EC2.html">1.AWS EC2インスタンスの作成</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2.Sphinxの導入・設定</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2.1.サマリ　〜用語編〜</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">2.2.サマリ　〜コマンド編〜</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">2.3.ハンズオン</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Sphinx-003.Apache.html">Apacheの基本設定</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+          </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="Sphinx-001.AWS-EC2.html" title="1.AWS EC2インスタンスの作成"
+              >previous</a> |
+            <a href="Sphinx-003.Apache.html" title="Apacheの基本設定"
+              >next</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/Sphinx-002.Sphinx.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Sphinx.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

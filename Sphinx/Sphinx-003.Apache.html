@@ -1,0 +1,449 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Apacheの基本設定 &#8212; Sphinx 1.1 documentation</title>
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="2.Sphinxの導入・設定" href="Sphinx-002.Sphinx.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">Sphinx 1.1 documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="Sphinx-002.Sphinx.html" title="2.Sphinxの導入・設定"
+             accesskey="P">previous</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="apache">
+<h1>Apacheの基本設定<a class="headerlink" href="#apache" title="Permalink to this headline">¶</a></h1>
+<p>この章では、ApacheでWebページを公開する最低限の設定内容を記載します。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="id1">
+<h2>サマリ 〜用語編〜<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>この章で頻出するキーワードを事前に勉強しておきましょう。</p>
+<div class="section" id="httpd">
+<h3>httpd<a class="headerlink" href="#httpd" title="Permalink to this headline">¶</a></h3>
+<p>Apacheのサービス名です。また、Apacheはyumにおいてもhttpdというパッケージ名で登録されいるため、yum installed Apacheなどではインストールできませんのでご注意を。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="etc-httpd">
+<h3>/etc/httpd<a class="headerlink" href="#etc-httpd" title="Permalink to this headline">¶</a></h3>
+<p>Apacheのルートディレクトリです。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="etc-httpd-conf-httpd-conf">
+<h3>/etc/httpd/conf/httpd.conf<a class="headerlink" href="#etc-httpd-conf-httpd-conf" title="Permalink to this headline">¶</a></h3>
+<p>Apacheの核となる設定ファイルです。Apacheは設定ファイルをディレクティブと呼ばれる命令文を記載することで細かな設定を反映させることが可能です。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="documentroot">
+<h3>DocumentRootディレクティブ<a class="headerlink" href="#documentroot" title="Permalink to this headline">¶</a></h3>
+<p>Apacheが提供するコンテンツが配置されるディレクトリを指定することが可能です。
+デフォルトでは以下に示すように「/var/www/html」ディレクトリに設定されています。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1"># DocumentRoot: The directory out of which you will serve your</span>
+<span class="c1"># documents. By default, all requests are taken from this directory, but</span>
+<span class="c1"># symbolic links and aliases may be used to point to other locations.</span>
+<span class="c1">#</span>
+DocumentRoot <span class="s2">&quot;/var/www/html&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>サマリ 〜コマンド編〜<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">ただいま整備中（^ω^）</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id3">
+<h2>ハンズオン<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>それでは早速ハンズオン！</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="id4">
+<h3>スーパーユーザーになろう<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>1.何はともあれスーパーユーザーに昇格します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#rootに昇格</span>
+sudo su
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id5">
+<h3>Apacheのインストール<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>1.Apacheをインストールします。上述のサマリでも述べましたが、パッケージ名はApacheなどではなくhttpdなのでご注意を。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#Apacheをインストール</span>
+yum install httpd
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>2.インストールされているかどうかを確認しましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#Apacheがインストールされているかどうかを確認</span>
+yum list installed <span class="p">|</span> grep httpd
+
+<span class="c1">#こんな感じに出力されれればインストールできてます。</span>
+httpd.x86_64                             <span class="m">2</span>.2.34-1.15.amzn1            @amzn-main
+httpd-tools.x86_64                       <span class="m">2</span>.2.34-1.15.amzn1            @amzn-main
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>3.Apacheのバージョンを確認してみましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#Apacheのバージョンを確認</span>
+httpd -v
+
+<span class="c1">#バージョンは2.4.6のようですね。</span>
+Server version: Apache/2.4.6 <span class="o">(</span>Red Hat Enterprise Linux<span class="o">)</span>
+Server built:   Sep <span class="m">25</span> <span class="m">2017</span> <span class="m">09</span>:13:41
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>Apache起動してみる<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>1.Apacheのサービスを起動してみましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#Apacheのサービス状態を確認</span>
+systemctl status httpd
+
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded <span class="o">(</span>/usr/lib/systemd/system/httpd.service<span class="p">;</span> disabled<span class="p">;</span> vendor preset: disabled<span class="o">)</span>
+   Active: inactive <span class="o">(</span>dead<span class="o">)</span>
+     Docs: man:httpd<span class="o">(</span><span class="m">8</span><span class="o">)</span>
+           man:apachectl<span class="o">(</span><span class="m">8</span><span class="o">)</span>
+
+<span class="c1">#Apacheのサービスを起動</span>
+systemctl start httpd
+
+<span class="c1">#Apacheのサービス状態を確認</span>
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded <span class="o">(</span>/usr/lib/systemd/system/httpd.service<span class="p">;</span> disabled<span class="p">;</span> vendor preset: disabled<span class="o">)</span>
+   Active: active <span class="o">(</span>running<span class="o">)</span> since 水 <span class="m">2017</span>-10-18 <span class="m">13</span>:07:47 UTC<span class="p">;</span> 22s ago
+     Docs: man:httpd<span class="o">(</span><span class="m">8</span><span class="o">)</span>
+           man:apachectl<span class="o">(</span><span class="m">8</span><span class="o">)</span>
+ Main PID: <span class="m">1242</span> <span class="o">(</span>httpd<span class="o">)</span>
+   Status: <span class="s2">&quot;Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec&quot;</span>
+   CGroup: /system.slice/httpd.service
+           ├─1242 /usr/sbin/httpd -DFOREGROUND
+           ├─1243 /usr/sbin/httpd -DFOREGROUND
+           ├─1244 /usr/sbin/httpd -DFOREGROUND
+           ├─1245 /usr/sbin/httpd -DFOREGROUND
+           ├─1246 /usr/sbin/httpd -DFOREGROUND
+           └─1247 /usr/sbin/httpd -DFOREGROUND
+
+<span class="m">10</span>月 <span class="m">18</span> <span class="m">13</span>:07:47 testserver systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: Starting The Apache HTTP Server...
+<span class="m">10</span>月 <span class="m">18</span> <span class="m">13</span>:07:47 testserver httpd<span class="o">[</span><span class="m">1242</span><span class="o">]</span>: AH00558: httpd: Could not reliably...e
+<span class="m">10</span>月 <span class="m">18</span> <span class="m">13</span>:07:47 testserver systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: Started The Apache HTTP Server.
+Hint: Some lines were ellipsized, use -l to show in full.
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>Apacheの自動起動設定<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>1.Red Hat 7系からはsystemctlコマンドを使用してを自動起動に設定します。6系までは機能していたchkconfigコマンは現在使用することはできません。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#httpdの自動起動設定を確認</span>
+systemctl is-enabled httpd
+
+disabled <span class="c1">#自動起動設定：OFF</span>
+
+<span class="c1">#httpdの自動起動を設定</span>
+systemctl enabled httpd
+
+Created symlink from /etc/systemd/system/multi-user.target.wants/httpd.service to /usr/lib/systemd/system/httpd.service.
+
+<span class="c1">#httpdの自動起動設定を確認</span>
+systemctl is-enabled httpd
+
+enabled <span class="c1">#自動起動設定：ON</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>ちなみにですが、chkconfigコマンドを使用してみようとすると次のような出力がありました。</p>
+<p>[<a class="reference external" href="mailto:root&#37;&#52;&#48;testserver">root<span>&#64;</span>testserver</a> ec2-user]# chkconfig –list httpd</p>
+<dl class="docutils">
+<dt>注記: この出力に含まれるのは SysV サービスのみです。ネイティブな</dt>
+<dd><dl class="first last docutils">
+<dt>systemd サービスは含まれません。SysV の設定データはネイティブな</dt>
+<dd><blockquote class="first">
+<div>systemd 設定で上書きされる場合があります。</div></blockquote>
+<p class="last">systemd サービスを一覧表示する場合は ‘systemctl list-unit-files’ を使用します。
+特定のターゲットで有効になっているサービスを確認する場合は</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>‘systemctl list-dependencies [target]’を使用します。</p>
+<p class="last">サービス httpd に関する情報の読み込み中にエラーが発生しました: そのようなファイルやディレクトリはありません</p>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="apachefqdn">
+<h3>ApacheにFQDNを紐付ける<a class="headerlink" href="#apachefqdn" title="Permalink to this headline">¶</a></h3>
+<p>1./etc/httpd/conf/ディレクトリに移動します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#指定ディレクトリへ移動</span>
+<span class="nb">cd</span> /etc/httpd/conf/
+
+<span class="c1">#カレントディレクトリを確認</span>
+<span class="nb">pwd</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>2./etc/httpd/conf/httpd.confファイルの中身をみてみましょう。長いのでviewコマンドで見てみましょう。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">###################</span>
+<span class="c1">#ファイル内容を確認</span>
+<span class="c1">###################</span>
+view httpd.conf
+
+<span class="c1">#############################################</span>
+<span class="c1">#viコマンドと同様に「:q!」で終了できます。</span>
+<span class="c1">#############################################</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>3.バックアップを取得します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#############################</span>
+<span class="c1">#保存先ディレクトリを作成</span>
+<span class="c1">############################</span>
+mkdir reg-ConfigBackup
+
+<span class="c1">#######################################################</span>
+<span class="c1">#保存先ディレクトリへバックアップを作成</span>
+<span class="c1">#######################################################</span>
+cp -a httpd.conf ./reg-ConfigBackup/htppd.conf_yyyymmdd
+
+<span class="c1">#######################################################</span>
+<span class="c1">#保存先ディレクトリにバックアップがとれていることを確認</span>
+<span class="c1">#######################################################</span>
+ls -lh ./reg-ConfigBackup
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>4.ファイルを編集します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">##########################################</span>
+<span class="c1">#Apachの設定ファイルを確認してみましょう。</span>
+<span class="c1">##########################################</span>
+vi httpd.conf
+
+<span class="c1">#######################################################</span>
+<span class="c1">#ファイルが開けましたらコマンドモード上で「/ServerName</span>
+<span class="c1">#と入力し、「Enter」キーを押下してください。</span>
+<span class="c1">#以下の記述に飛べばおk。</span>
+<span class="c1">#とばなかったら「N」キーをいくつか押下してみましょう。</span>
+<span class="c1">#######################################################</span>
+
+<span class="c1">##ServerName www.example.com:80</span>
+
+<span class="c1">#######################################################</span>
+<span class="c1">#「a」キーを押下し、インサートモードへ移行後、</span>
+<span class="c1">#「www.example.com」の部分を</span>
+<span class="c1">#「XXXX.teruya.okinawa」に変更しててください。</span>
+<span class="c1">######################################################</span>
+
+
+
+<span class="c1">######################################################</span>
+<span class="c1">#変更が完了いたしましたら、「esc」キーを押下します。</span>
+<span class="c1">#「Document」と入力し、「Enter」キーを押下してください。</span>
+<span class="c1">#以下の記述に飛べばOK」</span>
+<span class="c1">#とばなかったら「N」キーをいくつか押下してみましょう。</span>
+<span class="c1">######################################################</span>
+
+DocumentRoot <span class="s2">&quot;/var/www/html&quot;</span>
+
+<span class="c1">#####################################################</span>
+<span class="c1">#「a」キーを押下し、インサートモードへ移行後、</span>
+<span class="c1">#/var/www/htmlの部分を</span>
+<span class="c1">#/opt2/doc/_build/html/に書き換えてください。</span>
+<span class="c1">####################################################</span>
+
+DocumentRoot <span class="s2">&quot;/opt2/doc/_build/html/</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>5.サービスを再起動します。</p>
+<blockquote>
+<div><div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1">#Apacheのサービスを再起動</span>
+systemctl restart httpd
+
+<span class="c1">#Apacheのサービスを状態を確認</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Sphinx-000.intro.html">Sphinxとは</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Sphinx-001.AWS-EC2.html">1.AWS EC2インスタンスの作成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Sphinx-002.Sphinx.html">2.Sphinxの導入・設定</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Apacheの基本設定</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">サマリ 〜用語編〜</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">サマリ 〜コマンド編〜</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">ハンズオン</a></li>
+</ul>
+</li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+          </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="Sphinx-002.Sphinx.html" title="2.Sphinxの導入・設定"
+              >previous</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/Sphinx-003.Apache.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Sphinx.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

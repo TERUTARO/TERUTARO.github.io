@@ -1,0 +1,381 @@
+SSH接続する。
+====================
+
+| 
+
+2.1.サマリ　〜用語編〜
+=======================
+
+2.1.1.公開鍵暗号方式
+-----------------------
+
+| 
+
+2.1.2./etc/sshd
+-------------------
+sshのルートディレクトリ。ここにssh関連の設定ファイルが配置されています。
+以下当該ディレクトリのlsコマンドの結果です。
+
+	.. code-block:: bash 
+
+		[sphinx@sphinx-prac ssh]$ ls -lh 
+		合計 604K
+		-rw-r--r--. 1 root root     569K  5月 22  2017 moduli
+		-rw-r--r--. 1 root root     2.3K  5月 22  2017 ssh_config
+		-rw-r-----. 1 root ssh_keys  227 12月 16 08:23 ssh_host_ecdsa_key
+		-rw-r--r--. 1 root root      162 12月 16 08:23 ssh_host_ecdsa_key.pub
+		-rw-r-----. 1 root ssh_keys  387 12月 16 08:23 ssh_host_ed25519_key
+		-rw-r--r--. 1 root root       82 12月 16 08:23 ssh_host_ed25519_key.pub
+		-rw-r-----. 1 root ssh_keys 1.7K 12月 16 08:23 ssh_host_rsa_key
+		-rw-r--r--. 1 root root      382 12月 16 08:23 ssh_host_rsa_key.pub
+		-rw-------. 1 root root     3.9K  1月  1 12:44 sshd_config
+| 
+
+2.1.3.ssh.config
+-------------------
+sshのルートディレクトリに配置されているファイルの一つ。
+SSHクライアントのデフォルトの設定が記述されています。
+
+| 
+
+2.1.4.sshd.config
+-------------------
+sshのルートディレクトリに配置されているファイルの一つ。
+SSHデーモン（sshd）の設定が記述されています。
+
+| 
+
+2.1.5./var/log/secure
+----------------------
+sshdのログファイルです。
+SSHでのリモート接続関連の履歴が当該ファイルに記録されます。
+
+| 
+| 
+| 
+
+
+2.2.サマリ　〜コマンド編〜
+=============================
+このハンズオンで頻繁に使用するコマンドのサマリについて下記に一覧化します。
+
+| 
+
+2.2.1.cdコマンド
+-------------------
+
+| 
+
+2.2.2.pwdコマンド
+-------------------
+
+| 
+
+2.2.3.catコマンド
+--------------------
+
+| 
+
+2.2.4.cpコマンド
+------------------
+
+|
+
+2.2.5.grepコマンド
+--------------------
+
+| 
+
+2.2.6.「|（パイプ）」
+----------------------
+
+| 
+| 
+| 
+
+3.公開鍵認証によるSSH接続
+============================
+AWSのEC2インスタンスはデフォルトの初期設定では公開鍵認証によるSSHが設定されています。さっそく接続してみましょう。
+
+| 
+
+(1).以下のファイル（公開鍵）をダウンロードし、保存してください。	
+		
+	:download:`このファイルをダウンロード <./download/testpubkey.pem>`
+
+(2).OSごとに以下の要領で対象のインスタンスへ接続してください。
+	
+| 
+ 
+Windowsの場合（teraterm）
+--------------------------
+(a).teratermを起動します。以下の情報を入力後、「OK」ボタンをクリックしてください。
+	
+	+ ホスト：XXX.compute.amazonaws.com
+	+ サービス：ssh
+	
+(b).「SSH認証」画面が表示れます。以下の情報を入力後、「OK」ボタンをクリックしてください。
+「セキュリティ警告」が表示される場合は「続行」をクリックしてください。
+		
+	+ ユーザー名：testuser
+	+ RSA/DSA....鍵を使う：チェックを入れ、DLした秘密鍵を指定。
+
+| 
+
+MACの場合（terminal）
+------------------------
+(a).
+
+(b).
+
+(c).
+
+| 
+| 
+| 
+
+4.パスワード認証によるSSH接続
+===============================
+
+4.1.スーパーユーザーになる。
+-------------------------------
+(1).何はともあれスーパーユーザーになる。
+
+	.. code-block:: bash
+		
+		#rootに昇格
+		sudo su
+| 
+
+
+4.2.sshd.configからパスワード認証を設定しよう！
+-------------------------------------------------
+(1)./etc/sshディレクトリへ移動します。
+
+	.. code-blck:: bash
+		
+		#cdコマンドで指定ディレクトリへ移動
+		[root@ip-172-31-27-221 ec2-user]# cd /etc/ssh 
+		[root@ip-172-31-27-221 ssh]# 
+
+		#カレントディレクトリを確認
+		[root@ip-172-31-27-221 ssh]# pwd
+		/etc/ssh
+
+		#カレントディレクトリの中身を見てみましょう。
+		[root@ip-172-31-27-221 ssh]# ls -lh 
+		合計 604K
+		-rw-r--r--. 1 root root     569K  9月 13 09:35 moduli
+		-rw-r--r--. 1 root root     2.3K  9月 13 09:35 ssh_config
+		-rw-r-----. 1 root ssh_keys  227  1月  9 11:36 ssh_host_ecdsa_key
+		-rw-r--r--. 1 root root      162  1月  9 11:36 ssh_host_ecdsa_key.pub
+		-rw-r-----. 1 root ssh_keys  387  1月  9 11:36 ssh_host_ed25519_key
+		-rw-r--r--. 1 root root       82  1月  9 11:36 ssh_host_ed25519_key.pub
+		-rw-r-----. 1 root ssh_keys 1.7K  1月  9 11:36 ssh_host_rsa_key
+		-rw-r--r--. 1 root root      382  1月  9 11:36 ssh_host_rsa_key.pub
+		-rw-------. 1 root root     3.9K  1月  9 11:36 sshd_config
+
+| 
+
+(2).バックアップを取得します。
+	
+	.. code-block:: bash 
+
+		#バックアップ用のフォルダを作成しましょう。
+		[root@ip-172-31-27-221 ssh]# mkdir ConfigBackup
+		[root@ip-172-31-27-221 ssh]# 
+
+		#lsコマンドで確認しましょう。
+		[root@ip-172-31-27-221 ssh]# ls -lh 
+		合計 604K
+		drwxr-xr-x. 2 root root        6  1月  9 12:32 ConfigBackup
+		-rw-r--r--. 1 root root     569K  9月 13 09:35 moduli
+		-rw-r--r--. 1 root root     2.3K  9月 13 09:35 ssh_config
+		-rw-r-----. 1 root ssh_keys  227  1月  9 11:36 ssh_host_ecdsa_key
+		-rw-r--r--. 1 root root      162  1月  9 11:36 ssh_host_ecdsa_key.pub
+		-rw-r-----. 1 root ssh_keys  387  1月  9 11:36 ssh_host_ed25519_key
+		-rw-r--r--. 1 root root       82  1月  9 11:36 ssh_host_ed25519_key.pub
+		-rw-r-----. 1 root ssh_keys 1.7K  1月  9 11:36 ssh_host_rsa_key
+		-rw-r--r--. 1 root root      382  1月  9 11:36 ssh_host_rsa_key.pub
+		-rw-------. 1 root root     3.9K  1月  9 11:36 sshd_config
+
+		#cpコマンドでバックアップを取得しましょう。
+		[root@ip-172-31-27-221 ssh]# cp -a sshd_config ./ConfigBackup/sshd_config_20180109-01
+
+		#lsコマンドで確認
+		[root@ip-172-31-27-221 ssh]# ls -lh ./ConfigBackup/
+		合計 4.0K
+		-rw-------. 1 root root 3.9K  1月  9 11:36 sshd_config_20180109-01
+		[root@ip-172-31-27-221 ssh]# 
+
+| 
+
+
+(3).ファイルを編集します。
+	
+	.. code-block:: bash
+
+		#viコマンドで編集しよう
+		[root@ip-172-31-27-221 ssh]# vi sshd_config 
+
+		###############################################
+		#ファイルが開けましたらコマンドモード上で「/Password」
+		#と入力し、「Enter」キーを押下してください。
+		#以下の記述に飛べばおk。
+		#とばなかったら「N」キーをいくつか押下してみましょう。
+		###############################################
+		PasswordAuthentication no
+
+
+		###############################################
+		#「a」キーを押下し、インサートモードへ移行後、
+		#「no」の部分を「yes」に変更しましょう。
+		#完了しましたら「esc」キーを押下し、再びコマンドモードへ移行しましょう。
+		###############################################
+
+
+		###############################################
+		#コマンドモード上で「/Pubkey」
+		#と入力し、「Enter」キーを押下してください。
+		#以下の記述に飛べばおk
+		###############################################
+
+		#PubkeyAuthentication yes
+
+
+		###############################################
+		#さあここで「yyp」と入力してみやしょう。
+		#増えましたか。
+		###############################################
+
+		#PubkeyAuthentication yes
+		#PubkeyAuthentication yes <-こいつが増えた
+
+
+		###############################################
+		#そうしたら「a」キーを押下し、インサートモードへ移行後、
+		#増やした記述の先頭「#」をとってあげましょう。
+		###############################################
+
+		#PubkeyAuthentication yes
+		PubkeyAuthentication yes
+
+
+		###############################################
+		#「esc」キーを押下し、ふたたびコマンドモードへ移行します。
+		#さらに「Shif」キーと「g」キーを同時に押下してください。
+		#最下部へ飛びます。
+		#「a」キーを押下し、インサートモードへ移行後、最下部の段落に
+		#以下の記述を記載してください。
+		###############################################
+
+		RSAAuthentication no
+
+
+		###############################################
+		#できましたか？これで編集完了です。
+		#「esc」キーを押下し、コマンドモードへ移行後、
+		#「:wq!」->「Enter」と順い押下していってください。
+		###############################################
+
+| 
+
+
+(4).ファイルを編集後に、取得していたバックアップファイルと比較してみましょう。
+		
+		.. csv-table:: bash 
+
+			#diffコマンドでファイル比較
+			#下記のような感じで出力されます。目的の設定項目以外が設定
+			#されていないかを確認しましょう。
+			[root@ip-172-31-27-221 ssh]# diff sshd_config ./ConfigBackup/sshd_config_20180109-01 
+			43,44d42
+			< 
+			< #PubkeyAuthentication yes
+			46d43
+			< PubkeyAuthentication yes
+			68c65
+			< PasswordAuthentication yes
+			
+			> PasswordAuthentication no
+			142,146c139
+			< #	ForceCommand cvs server
+			< 
+			< RSAAuthentication no
+			< 
+			< 
+			
+			> #	ForceCommand cvs server
+			\ ファイル末尾に改行がありません
+
+| 
+
+上記で設定したファイルの設定項目は以下の通りです。
+
+	.. note:: 
+
+		PasswordAuthentication
+		->パスワード認証について設定する。
+
+		PubkeyAuthentication
+		->公開鍵認証について設定する。
+
+		RSAAuthentication
+		->RSA鍵認証方式について設定する。
+
+| 
+
+(5).sshデーモンを再起動します。
+設定ファイルを再度読み込ませるためにsshd（サービス）を再起動します。
+サービスを再起動するとまずはじめにconfigファイルを再読み込みします。
+
+サービスを再起動しないと以前（編集前）の設定値を読み込んだままなので
+設定が反映されないんですね。
+
+	.. code-block:: bash 
+		
+		#RHEL7からserviceコマンドが使用できないことに注意！
+		#systemctlコマンドでサービスを再起動しましょう。
+		[root@relay-server ec2-user]# systemctl restart sshd
+
+
+		#サービスが起動したか確認してみましょう。
+		[root@relay-server ec2-user]# systemctl status sshd
+		● sshd.service - OpenSSH server daemon
+		Loaded: loaded (/usr/lib/systemd/system/sshd.service; enabled; vendor preset: enabled)
+		Active: active (running) since 水 2018-01-10 13:48:31 UTC; 13s ago
+		Docs: man:sshd(8)
+		man:sshd_config(5)
+		Main PID: 1005 (sshd)
+		CGroup: /system.slice/sshd.service
+           └─1005 /usr/sbin/sshd -D
+	| 
+
+(6).別ウィンドウでSSH接続してみよう。
+新たにterminalソフトのウィンドウを開き、サーバーに接続してみましょう。
+
+
+
+
+
+
+
+
+
+| 
+| 
+| 
+
+5.SSHの接続履歴を見てみよう。
+===============================
+(1)./var/log/secureを見てみましょう。
+
+
+
+
+
+
+
+
+
+

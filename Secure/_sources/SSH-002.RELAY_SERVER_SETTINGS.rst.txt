@@ -1,0 +1,350 @@
+==============================
+SSH多段接続の構成を考える。
+==============================
+
+2.1.構成の概要
+==========================
+今回は以下のようなSSH多段接続の構成を考慮します。
+
+relayserver
+---------------
++ 認証方式　：　公開鍵認証方式
++ SSHポート番号　：　2022
++ firewalld　：　2022有効、22廃止
+
+| 
+
+testserver
+----------------
++ 認証方式　：　パスワード認証
++ SSHポート番号　：　22
++ hosts.allow　：　relayserverのみ許可
+
+|
+
+では早速構築！
+		
+| 
+| 
+| 
+
+2.2.中継用サーバの設定
+==========================
+中継用サーバは、後段のサーバ群への接続を前段で一挙に引き受けます。
+その際に、セキュリティ向上のためにSSH接続のポート番号を変更しましょう。 
+
+ハニーポットなどで試行してみるとわかりますが、ウェルノウンポートを使用しないだけで
+不正接続数は激減します。
+
+	.. note::
+		
+		ハニーポットとは
+		サーバなどを意図的にノーガードにして悪意ある者の攻撃を分析する手法です。
+
+
+
+2.2.0.中継用サーバへの接続
+-----------------------------
+(1).中継用サーバへ接続します。
+
+
+
+
+2.2.1.iptablesの設定①
+-------------------------
+(1).何はともあれスーパーユーザーになる。
+
+	.. code-block:: bash
+		
+		#rootに昇格
+		sudo su
+
+| 
+
+2.2.2.sshポート番号の設定
+---------------------------------
+(1)./etc/sshディレクトリへ移動します。
+
+	.. code-block:: bash
+		
+		#cdコマンドで指定ディレクトリへ移動
+		[root@ip-172-31-27-221 ec2-user]# cd /etc/ssh 
+		[root@ip-172-31-27-221 ssh]# 
+
+		#カレントディレクトリを確認
+		[root@ip-172-31-27-221 ssh]# pwd
+		/etc/ssh
+
+		#カレントディレクトリの中身を見てみましょう。
+		[root@ip-172-31-27-221 ssh]# ls -lh 
+		合計 604K
+		-rw-r--r--. 1 root root     569K  9月 13 09:35 moduli
+		-rw-r--r--. 1 root root     2.3K  9月 13 09:35 ssh_config
+		-rw-r-----. 1 root ssh_keys  227  1月  9 11:36 ssh_host_ecdsa_key
+		-rw-r--r--. 1 root root      162  1月  9 11:36 ssh_host_ecdsa_key.pub
+		-rw-r-----. 1 root ssh_keys  387  1月  9 11:36 ssh_host_ed25519_key
+		-rw-r--r--. 1 root root       82  1月  9 11:36 ssh_host_ed25519_key.pub
+		-rw-r-----. 1 root ssh_keys 1.7K  1月  9 11:36 ssh_host_rsa_key
+		-rw-r--r--. 1 root root      382  1月  9 11:36 ssh_host_rsa_key.pub
+		-rw-------. 1 root root     3.9K  1月  9 11:36 sshd_config
+| 
+
+(2).バックアップを取得します。
+	
+	.. code-block:: bash 
+		
+		#cpコマンドでバックアップを取得しましょう。
+		[root@ip-172-31-27-221 ssh]# cp -a sshd_config ./ConfigBackup/sshd_config_20180109-01
+
+		#lsコマンドで確認
+		[root@ip-172-31-27-221 ssh]# ls -lh ./ConfigBackup/
+		合計 4.0K
+		-rw-------. 1 root root 3.9K  1月  9 11:36 sshd_config_20180109-01
+		[root@ip-172-31-27-221 ssh]# 
+
+| 
+
+3).ファイルを編集します。
+	
+	.. code-block:: bash
+
+		#viコマンドで編集しよう
+		[root@ip-172-31-27-221 ssh]# vi sshd_config 
+
+		###############################################
+		#ファイルが開けましたらコマンドモード上で「/Port」
+		#と入力し、「Enter」キーを押下してください。
+		#以下の記述に飛べばおk。
+		#とばなかったら「N」キーをいくつか押下してみましょう。
+		###############################################
+		
+		#Port 22
+
+
+		###############################################
+		#「a」キーを押下し、インサートモードへ移行後、
+		#以下の用に編集しましょう。
+		#完了しましたら「esc」キーを押下し、再びコマンドモードへ移行しましょう。
+		###############################################
+		
+		#変更前
+		#Port 22
+		
+		#変更後
+		Port 2022
+
+
+		###############################################
+		#できましたか？これで編集完了です。
+		#「esc」キーを押下し、コマンドモードへ移行後、
+		#「:wq!」->「Enter」と順い押下していってください。
+		###############################################
+
+| 
+
+(4).sshdの待ち受けポートで2022番を許可しましょう。
+
+	.. code-block:: bash 
+		
+		#selinuxの設定でポート番号を許可します。
+		semanage port -a -t ssh_port_t -p tcp 2222
+		
+		#selinuxの設定を確認しましょう。
+		semanage port -l| grep ssh
+| 
+
+(5).sshデーモンを再起動します。 設定ファイルを再度読み込ませるためにsshd（サービス）を再起動します。 サービスを再起動するとまずはじめにconfigファイルを再読み込みします。
+
+サービスを再起動しないと以前（編集前）の設定値を読み込んだままなので 設定が反映されないんですね。
+
+	.. code-block:: bash 
+		
+     		#RHEL7からserviceコマンドが使用できないことに注意！
+    		#systemctlコマンドでサービスを再起動しましょう。
+     		[root@relay-server ec2-user]# systemctl restart sshd
+		
+		
+     		#サービスが起動したか確認してみましょう。
+     		[root@relay-server ec2-user]# systemctl status sshd
+     		● sshd.service - OpenSSH server daemon
+     		Loaded: loaded (/usr/lib/systemd/system/sshd.service; enabled; vendor preset: enabled)
+     		Active: active (running) since 水 2018-01-10 13:48:31 UTC; 13s ago
+     		Docs: man:sshd(8)
+     		man:sshd_config(5)
+    		Main PID: 1005 (sshd)
+     		CGroup: /system.slice/sshd.service
+		└─1005 /usr/sbin/sshd -D
+|
+|
+|
+
+
+2.2.3.接続の確認
+---------------------------------
+(1).設定したポート番号で中継用サーバに接続できるか確認してみましょう。
+
+	.. code-block:: bash 
+		
+		ssh -l testuser -p 2022 ホスト名
+
+| 
+| 
+| 
+
+	
+2.2.4.iptablesの設定②
+------------------------------
+(1).firewalldの設定から既存のssh設定を削除
+
+	.. code-block:: bash
+		
+		#firewall-cmdコマンドで削除！
+		firewall-cmd --permanent --remove-service=ssh
+		
+	|
+
+
+2.2.5.単体テスト
+-------------------------------
+(1).通常のsshポート（22番ポート）で接続できないことを確認
+
+	.. code-block:: bash 
+
+		ssh -l testuser -p 22 ホスト名
+
+
+		
+
+
+(2).変更後のsshポート（2022番ポート）で接続できることを確認
+
+	.. code-block:: bash 
+
+		ssh -l testuser -p 2022 ホスト名
+
+
+
+
+
+| 
+| 
+| 
+		
+3.1.testserverの設定
+==========================
+接続先のサーバでは、意図的に接続元IPアドレスを絞り、中継用サーバからのみ接続できるような設定とします。
+
+| 
+
+3.1.0.testserverへ接続
+----------------------------------
+(1).testserverへ接続します。
+
+
+
+3.1.1.hosts.allowファイルの変更
+----------------------------------
+(1).何はともあれスーパーユーザーになる。
+
+	.. code-block:: bash
+		
+		#rootに昇格
+		sudo su
+
+| 
+
+(2)./etcディレクトリへ移動します。
+
+	.. code-blck:: bash
+		
+		#cdコマンドで指定ディレクトリへ移動
+		[root@ip-172-31-27-221 ec2-user]# cd /etc
+		[root@ip-172-31-27-221 etc]# 
+
+		#カレントディレクトリを確認
+		[root@relay-server etc]# pwd
+		/etc
+
+		#hosts.*ファイルがあるか見てみましょう。
+		[root@relay-server etc]# ls -lh | grep hosts*
+		hosts.allow:# hosts.allow       This file contains access rules which are used to
+		hosts.allow:#           See 'man 5 hosts_options' and 'man 5 hosts_access'
+		hosts.deny:# hosts.deny This file contains access rules which are used to
+		hosts.deny:#            /etc/hosts.allow with a 'deny' option instead.
+		hosts.deny:#            See 'man 5 hosts_options' and 'man 5 hosts_access'
+		[root@relay-server etc]#
+
+| 
+
+(2).バックアップを取得します。
+	
+	.. code-block:: bash 
+
+		#バックアップ用のフォルダがあるか確認しましょう。
+		[root@relay-server etc]# ls -lh | grep ConfigBackup
+		drwxr-xr-x.  2 root root     50 Jan 10 11:05 ConfigBackup
+
+		#cpコマンドでバックアップを取得しましょう。
+		cp -a hosts.allow ./ConfigBackup/hosts.allow_20180111-01
+		
+		#lsコマンドで確認
+		[root@relay-server etc]# ls -lh ./ConfigBackup/
+
+| 
+
+
+(3).hosts.allowファイルを編集します。
+
+
+	.. code-block:: bash 
+		
+		###############################################
+		#ファイルが開けましたら「Shift」+「g」キーを押下してください。
+		#末尾にカーソルが飛びます。
+		#「a」キーを押下し、インサートモードへ移行後、下記を追記してください。
+		###############################################
+
+		sshd : ホスト名を記載
+		
+		
+		###############################################
+		#できましたか？これで編集完了です。
+		#「esc」キーを押下し、コマンドモードへ移行後、
+		#「:wq!」->「Enter」と順い押下していってください。
+		###############################################
+
+
+3.1.2.単体テスト
+----------------------------------
+中継用サーバ以外から接続できないことを確認しましょう。
+ 
+
+(1).端末から接続確認
+
+	.. code-block:: bash 
+	
+		ssh 
+
+|
+|
+|
+
+
+4.1.結合テスト
+-----------------------------------
+中継用サーバへ接続後、
+
+
+(1).中継用サーバへ接続後、下記で接続確認
+	
+	.. code-block:: bash 
+		
+		ssh -l testuser ホスト名
+|
+
+
+
+
+
+
+

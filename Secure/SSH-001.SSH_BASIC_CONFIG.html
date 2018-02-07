@@ -1,0 +1,558 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="jp">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SSH接続する。 &#8212; Secure 1.1 documentation</title>
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="SSH多段接続の構成を考える。" href="SSH-002.RELAY_SERVER_SETTINGS.html" />
+    <link rel="prev" title="SSHとは" href="SSH-000.INTRO.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">Secure 1.1 documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="SSH-000.INTRO.html" title="SSHとは"
+             accesskey="P">previous</a> |
+          <a href="SSH-002.RELAY_SERVER_SETTINGS.html" title="SSH多段接続の構成を考える。"
+             accesskey="N">next</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ssh">
+<h1>SSH接続する。<a class="headerlink" href="#ssh" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h1>2.1.サマリ　〜用語編〜<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>2.1.1.公開鍵暗号方式<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="etc-sshd">
+<h2>2.1.2./etc/sshd<a class="headerlink" href="#etc-sshd" title="Permalink to this headline">¶</a></h2>
+<p>sshのルートディレクトリ。ここにssh関連の設定ファイルが配置されています。
+以下当該ディレクトリのlsコマンドの結果です。</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">[</span>sphinx@sphinx-prac ssh<span class="o">]</span>$ ls -lh
+合計 604K
+-rw-r--r--. <span class="m">1</span> root root     569K  <span class="m">5</span>月 <span class="m">22</span>  <span class="m">2017</span> moduli
+-rw-r--r--. <span class="m">1</span> root root     <span class="m">2</span>.3K  <span class="m">5</span>月 <span class="m">22</span>  <span class="m">2017</span> ssh_config
+-rw-r-----. <span class="m">1</span> root ssh_keys  <span class="m">227</span> <span class="m">12</span>月 <span class="m">16</span> <span class="m">08</span>:23 ssh_host_ecdsa_key
+-rw-r--r--. <span class="m">1</span> root root      <span class="m">162</span> <span class="m">12</span>月 <span class="m">16</span> <span class="m">08</span>:23 ssh_host_ecdsa_key.pub
+-rw-r-----. <span class="m">1</span> root ssh_keys  <span class="m">387</span> <span class="m">12</span>月 <span class="m">16</span> <span class="m">08</span>:23 ssh_host_ed25519_key
+-rw-r--r--. <span class="m">1</span> root root       <span class="m">82</span> <span class="m">12</span>月 <span class="m">16</span> <span class="m">08</span>:23 ssh_host_ed25519_key.pub
+-rw-r-----. <span class="m">1</span> root ssh_keys <span class="m">1</span>.7K <span class="m">12</span>月 <span class="m">16</span> <span class="m">08</span>:23 ssh_host_rsa_key
+-rw-r--r--. <span class="m">1</span> root root      <span class="m">382</span> <span class="m">12</span>月 <span class="m">16</span> <span class="m">08</span>:23 ssh_host_rsa_key.pub
+-rw-------. <span class="m">1</span> root root     <span class="m">3</span>.9K  <span class="m">1</span>月  <span class="m">1</span> <span class="m">12</span>:44 sshd_config
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="ssh-config">
+<h2>2.1.3.ssh.config<a class="headerlink" href="#ssh-config" title="Permalink to this headline">¶</a></h2>
+<p>sshのルートディレクトリに配置されているファイルの一つ。
+SSHクライアントのデフォルトの設定が記述されています。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="sshd-config">
+<h2>2.1.4.sshd.config<a class="headerlink" href="#sshd-config" title="Permalink to this headline">¶</a></h2>
+<p>sshのルートディレクトリに配置されているファイルの一つ。
+SSHデーモン（sshd）の設定が記述されています。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="var-log-secure">
+<h2>2.1.5./var/log/secure<a class="headerlink" href="#var-log-secure" title="Permalink to this headline">¶</a></h2>
+<p>sshdのログファイルです。
+SSHでのリモート接続関連の履歴が当該ファイルに記録されます。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h1>2.2.サマリ　〜コマンド編〜<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
+<p>このハンズオンで頻繁に使用するコマンドのサマリについて下記に一覧化します。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="cd">
+<h2>2.2.1.cdコマンド<a class="headerlink" href="#cd" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="pwd">
+<h2>2.2.2.pwdコマンド<a class="headerlink" href="#pwd" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="cat">
+<h2>2.2.3.catコマンド<a class="headerlink" href="#cat" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="cp">
+<h2>2.2.4.cpコマンド<a class="headerlink" href="#cp" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="grep">
+<h2>2.2.5.grepコマンド<a class="headerlink" href="#grep" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>2.2.6.「<a href="#id4"><span class="problematic" id="id5">|</span></a>（パイプ）」<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h1>3.公開鍵認証によるSSH接続<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h1>
+<p>AWSのEC2インスタンスはデフォルトの初期設定では公開鍵認証によるSSHが設定されています。さっそく接続してみましょう。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>(1).以下のファイル（公開鍵）をダウンロードし、保存してください。</p>
+<blockquote>
+<div><a class="reference download internal" href="_downloads/testpubkey.pem" download=""><code class="xref download docutils literal"><span class="pre">このファイルをダウンロード</span></code></a></div></blockquote>
+<p>(2).OSごとに以下の要領で対象のインスタンスへ接続してください。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="windows-teraterm">
+<h2>Windowsの場合（teraterm）<a class="headerlink" href="#windows-teraterm" title="Permalink to this headline">¶</a></h2>
+<p>(a).teratermを起動します。以下の情報を入力後、「OK」ボタンをクリックしてください。</p>
+<blockquote>
+<div><ul class="simple">
+<li>ホスト：XXX.compute.amazonaws.com</li>
+<li>サービス：ssh</li>
+</ul>
+</div></blockquote>
+<p>(b).「SSH認証」画面が表示れます。以下の情報を入力後、「OK」ボタンをクリックしてください。
+「セキュリティ警告」が表示される場合は「続行」をクリックしてください。</p>
+<blockquote>
+<div><ul class="simple">
+<li>ユーザー名：testuser</li>
+<li>RSA/DSA....鍵を使う：チェックを入れ、DLした秘密鍵を指定。</li>
+</ul>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="mac-terminal">
+<h2>MACの場合（terminal）<a class="headerlink" href="#mac-terminal" title="Permalink to this headline">¶</a></h2>
+<p>(a).</p>
+<p>(b).</p>
+<p>(c).</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h1>4.パスワード認証によるSSH接続<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id9">
+<h2>4.1.スーパーユーザーになる。<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<p>(1).何はともあれスーパーユーザーになる。</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">#rootに昇格</span>
+sudo su
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>4.2.sshd.configからパスワード認証を設定しよう！<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<p>(1)./etc/sshディレクトリへ移動します。</p>
+<blockquote>
+<div></div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>(2).バックアップを取得します。</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">#バックアップ用のフォルダを作成しましょう。</span>
+<span class="o">[</span>root@ip-172-31-27-221 ssh<span class="o">]</span><span class="c1"># mkdir ConfigBackup</span>
+<span class="o">[</span>root@ip-172-31-27-221 ssh<span class="o">]</span><span class="c1">#</span>
+
+<span class="c1">#lsコマンドで確認しましょう。</span>
+<span class="o">[</span>root@ip-172-31-27-221 ssh<span class="o">]</span><span class="c1"># ls -lh</span>
+合計 604K
+drwxr-xr-x. <span class="m">2</span> root root        <span class="m">6</span>  <span class="m">1</span>月  <span class="m">9</span> <span class="m">12</span>:32 ConfigBackup
+-rw-r--r--. <span class="m">1</span> root root     569K  <span class="m">9</span>月 <span class="m">13</span> <span class="m">09</span>:35 moduli
+-rw-r--r--. <span class="m">1</span> root root     <span class="m">2</span>.3K  <span class="m">9</span>月 <span class="m">13</span> <span class="m">09</span>:35 ssh_config
+-rw-r-----. <span class="m">1</span> root ssh_keys  <span class="m">227</span>  <span class="m">1</span>月  <span class="m">9</span> <span class="m">11</span>:36 ssh_host_ecdsa_key
+-rw-r--r--. <span class="m">1</span> root root      <span class="m">162</span>  <span class="m">1</span>月  <span class="m">9</span> <span class="m">11</span>:36 ssh_host_ecdsa_key.pub
+-rw-r-----. <span class="m">1</span> root ssh_keys  <span class="m">387</span>  <span class="m">1</span>月  <span class="m">9</span> <span class="m">11</span>:36 ssh_host_ed25519_key
+-rw-r--r--. <span class="m">1</span> root root       <span class="m">82</span>  <span class="m">1</span>月  <span class="m">9</span> <span class="m">11</span>:36 ssh_host_ed25519_key.pub
+-rw-r-----. <span class="m">1</span> root ssh_keys <span class="m">1</span>.7K  <span class="m">1</span>月  <span class="m">9</span> <span class="m">11</span>:36 ssh_host_rsa_key
+-rw-r--r--. <span class="m">1</span> root root      <span class="m">382</span>  <span class="m">1</span>月  <span class="m">9</span> <span class="m">11</span>:36 ssh_host_rsa_key.pub
+-rw-------. <span class="m">1</span> root root     <span class="m">3</span>.9K  <span class="m">1</span>月  <span class="m">9</span> <span class="m">11</span>:36 sshd_config
+
+<span class="c1">#cpコマンドでバックアップを取得しましょう。</span>
+<span class="o">[</span>root@ip-172-31-27-221 ssh<span class="o">]</span><span class="c1"># cp -a sshd_config ./ConfigBackup/sshd_config_20180109-01</span>
+
+<span class="c1">#lsコマンドで確認</span>
+<span class="o">[</span>root@ip-172-31-27-221 ssh<span class="o">]</span><span class="c1"># ls -lh ./ConfigBackup/</span>
+合計 <span class="m">4</span>.0K
+-rw-------. <span class="m">1</span> root root <span class="m">3</span>.9K  <span class="m">1</span>月  <span class="m">9</span> <span class="m">11</span>:36 sshd_config_20180109-01
+<span class="o">[</span>root@ip-172-31-27-221 ssh<span class="o">]</span><span class="c1">#</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>(3).ファイルを編集します。</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">#viコマンドで編集しよう</span>
+<span class="o">[</span>root@ip-172-31-27-221 ssh<span class="o">]</span><span class="c1"># vi sshd_config</span>
+
+<span class="c1">###############################################</span>
+<span class="c1">#ファイルが開けましたらコマンドモード上で「/Password」</span>
+<span class="c1">#と入力し、「Enter」キーを押下してください。</span>
+<span class="c1">#以下の記述に飛べばおk。</span>
+<span class="c1">#とばなかったら「N」キーをいくつか押下してみましょう。</span>
+<span class="c1">###############################################</span>
+PasswordAuthentication no
+
+
+<span class="c1">###############################################</span>
+<span class="c1">#「a」キーを押下し、インサートモードへ移行後、</span>
+<span class="c1">#「no」の部分を「yes」に変更しましょう。</span>
+<span class="c1">#完了しましたら「esc」キーを押下し、再びコマンドモードへ移行しましょう。</span>
+<span class="c1">###############################################</span>
+
+
+<span class="c1">###############################################</span>
+<span class="c1">#コマンドモード上で「/Pubkey」</span>
+<span class="c1">#と入力し、「Enter」キーを押下してください。</span>
+<span class="c1">#以下の記述に飛べばおk</span>
+<span class="c1">###############################################</span>
+
+<span class="c1">#PubkeyAuthentication yes</span>
+
+
+<span class="c1">###############################################</span>
+<span class="c1">#さあここで「yyp」と入力してみやしょう。</span>
+<span class="c1">#増えましたか。</span>
+<span class="c1">###############################################</span>
+
+<span class="c1">#PubkeyAuthentication yes</span>
+<span class="c1">#PubkeyAuthentication yes &lt;-こいつが増えた</span>
+
+
+<span class="c1">###############################################</span>
+<span class="c1">#そうしたら「a」キーを押下し、インサートモードへ移行後、</span>
+<span class="c1">#増やした記述の先頭「#」をとってあげましょう。</span>
+<span class="c1">###############################################</span>
+
+<span class="c1">#PubkeyAuthentication yes</span>
+PubkeyAuthentication yes
+
+
+<span class="c1">###############################################</span>
+<span class="c1">#「esc」キーを押下し、ふたたびコマンドモードへ移行します。</span>
+<span class="c1">#さらに「Shif」キーと「g」キーを同時に押下してください。</span>
+<span class="c1">#最下部へ飛びます。</span>
+<span class="c1">#「a」キーを押下し、インサートモードへ移行後、最下部の段落に</span>
+<span class="c1">#以下の記述を記載してください。</span>
+<span class="c1">###############################################</span>
+
+RSAAuthentication no
+
+
+<span class="c1">###############################################</span>
+<span class="c1">#できましたか？これで編集完了です。</span>
+<span class="c1">#「esc」キーを押下し、コマンドモードへ移行後、</span>
+<span class="c1">#「:wq!」-&gt;「Enter」と順い押下していってください。</span>
+<span class="c1">###############################################</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>(4).ファイルを編集後に、取得していたバックアップファイルと比較してみましょう。</p>
+<blockquote>
+<div><table border="1" class="docutils" id="id12">
+<caption><span class="caption-text">bash</span><a class="headerlink" href="#id12" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>#diffコマンドでファイル比較</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>#下記のような感じで出力されます。目的の設定項目以外が設定</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>#されていないかを確認しましょう。</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>[<a class="reference external" href="mailto:root&#37;&#52;&#48;ip-172-31-27-221">root<span>&#64;</span>ip-172-31-27-221</a> ssh]# diff sshd_config ./ConfigBackup/sshd_config_20180109-01</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>43</td>
+<td>44d42</td>
+</tr>
+<tr class="row-even"><td>&lt;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>&lt; #PubkeyAuthentication yes</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>46d43</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>&lt; PubkeyAuthentication yes</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>68c65</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>&lt; PasswordAuthentication yes</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>&gt; PasswordAuthentication no</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>142</td>
+<td>146c139</td>
+</tr>
+<tr class="row-odd"><td>&lt; #     ForceCommand cvs server</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>&lt;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>&lt; RSAAuthentication no</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>&lt;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>&lt;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>&gt; #     ForceCommand cvs server</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>ファイル末尾に改行がありません</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>上記で設定したファイルの設定項目は以下の通りです。</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>PasswordAuthentication
+-&gt;パスワード認証について設定する。</p>
+<p>PubkeyAuthentication
+-&gt;公開鍵認証について設定する。</p>
+<p class="last">RSAAuthentication
+-&gt;RSA鍵認証方式について設定する。</p>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>(5).sshデーモンを再起動します。
+設定ファイルを再度読み込ませるためにsshd（サービス）を再起動します。
+サービスを再起動するとまずはじめにconfigファイルを再読み込みします。</p>
+<p>サービスを再起動しないと以前（編集前）の設定値を読み込んだままなので
+設定が反映されないんですね。</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span>     <span class="c1">#RHEL7からserviceコマンドが使用できないことに注意！</span>
+     <span class="c1">#systemctlコマンドでサービスを再起動しましょう。</span>
+     <span class="o">[</span>root@relay-server ec2-user<span class="o">]</span><span class="c1"># systemctl restart sshd</span>
+
+
+     <span class="c1">#サービスが起動したか確認してみましょう。</span>
+     <span class="o">[</span>root@relay-server ec2-user<span class="o">]</span><span class="c1"># systemctl status sshd</span>
+     ● sshd.service - OpenSSH server daemon
+     Loaded: loaded <span class="o">(</span>/usr/lib/systemd/system/sshd.service<span class="p">;</span> enabled<span class="p">;</span> vendor preset: enabled<span class="o">)</span>
+     Active: active <span class="o">(</span>running<span class="o">)</span> since 水 <span class="m">2018</span>-01-10 <span class="m">13</span>:48:31 UTC<span class="p">;</span> 13s ago
+     Docs: man:sshd<span class="o">(</span><span class="m">8</span><span class="o">)</span>
+     man:sshd_config<span class="o">(</span><span class="m">5</span><span class="o">)</span>
+     Main PID: <span class="m">1005</span> <span class="o">(</span>sshd<span class="o">)</span>
+     CGroup: /system.slice/sshd.service
+└─1005 /usr/sbin/sshd -D
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+<p>(6).別ウィンドウでSSH接続してみよう。
+新たにterminalソフトのウィンドウを開き、サーバーに接続してみましょう。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h1>5.SSHの接続履歴を見てみよう。<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h1>
+<p>(1)./var/log/secureを見てみましょう。</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="SSH-000.INTRO.html">SSHとは</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SSH接続する。</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id1">2.1.サマリ　〜用語編〜</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.1.1.公開鍵暗号方式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#etc-sshd">2.1.2./etc/sshd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ssh-config">2.1.3.ssh.config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sshd-config">2.1.4.sshd.config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#var-log-secure">2.1.5./var/log/secure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#id3">2.2.サマリ　〜コマンド編〜</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cd">2.2.1.cdコマンド</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pwd">2.2.2.pwdコマンド</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cat">2.2.3.catコマンド</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cp">2.2.4.cpコマンド</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grep">2.2.5.grepコマンド</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">2.2.6.「|（パイプ）」</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#id7">3.公開鍵認証によるSSH接続</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#windows-teraterm">Windowsの場合（teraterm）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mac-terminal">MACの場合（terminal）</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#id8">4.パスワード認証によるSSH接続</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id9">4.1.スーパーユーザーになる。</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">4.2.sshd.configからパスワード認証を設定しよう！</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#id11">5.SSHの接続履歴を見てみよう。</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SSH-002.RELAY_SERVER_SETTINGS.html">SSH多段接続の構成を考える。</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+          </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="SSH-000.INTRO.html" title="SSHとは"
+              >previous</a> |
+            <a href="SSH-002.RELAY_SERVER_SETTINGS.html" title="SSH多段接続の構成を考える。"
+              >next</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/SSH-001.SSH_BASIC_CONFIG.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Secure.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

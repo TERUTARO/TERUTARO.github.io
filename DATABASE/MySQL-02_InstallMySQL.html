@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+<h1 id="mysqlをインストールしよう">MySQLをインストールしよう！</h1>
+<h2 id="mysqlのインストール">MySQLのインストール</h2>
+<h3 id="mysqlの利用できるパッケージの種類">MySQLの利用できるパッケージの種類</h3>
+<p>ここで、MySQLのパッケージについて紹介しましょう。</p>
+<p>MySQLには、以下の4タイプがあります。</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">No</th>
+<th align="center">種類</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">MySQL Standard Edition</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">MySQL Enterprise Edition</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">MySQL Cluster Carrier Grade Edition</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">MySQL Community Server</td>
+</tr>
+</tbody>
+</table>
+<p>名前でだいたい検討がつきますが、No.1～3の方は、有償であり、サポートおよび様々なツールが付随します。 No.4は無償ダウンロードが可能ですので、今回は、そちらを利用します。</p>
+<p>ちなみに以下のページがMySQL Editionに関する詳細ページとなります。</p>
+<p>https://www.mysql.com/jp/products/</p>
+<h3 id="パッケージ内容の確認">パッケージ内容の確認</h3>
+<p>パッケージの内容を覗いてみましょう。 以下のコマンドを実行してみてください。</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code> yum info mysql-community-server</code></pre>
+<p>結果がえられましたか？ 「バージョン」項目が8系のままだとさっきのリポジトリの有効／無効がうまくいってないかもしれませんね。</p>
+<h3 id="mysqlインストール">MySQLインストール</h3>
+<p>では、無償版をインストールしてみましょう！ 以下のコマンドを実行して、MySQLを実行してみましょう。</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>yum -y install mysql-community-server</code></pre>
+<p>完了したかな？ 完了したら、コマンドを打って、バージョン情報を確認してみましょう。</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>mysql —version</code></pre>
+<p>以下のように出力されればOKです！</p>
+<p><em>[実行結果]</em></p>
+<pre class="shell-session"><code>mysqld  Ver 5.7.22 for Linux on x86_64 (MySQL Community Server (GPL))</code></pre>
+<p>5.7系がちゃんとインストールできていれば、今回インストールしたいバージョンのMySQLがちゃんとインストールできたことになります。</p>
+<h3 id="mysqlの自動起動設定">MySQLの自動起動設定</h3>
+<p>サーバをシャットダウンした際に、サービス（MySQL）が自動的に</p>
+<p>実行されるととても楽ですよね！ ということでサービスの自動起動をONにしましょう。</p>
+<p>chkconfig mysql on ※chkconfig の「on」オプションでは、ランレベルとしては全て有効状態です。</p>
+<p>「ランレベル」がわからない人はググってみよう。</p>
+
+
+</body>

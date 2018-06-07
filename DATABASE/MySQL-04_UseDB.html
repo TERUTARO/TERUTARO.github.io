@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+<h1 id="mysql">MySQL</h1>
+<h1 id="mysqlへの接続">MySQLへの接続</h1>
+<p>それではMySQLへ接続しましょう。</p>
+<h2 id="謎のデフォルトパスワード">謎のデフォルトパスワード</h2>
+<p>MySQLインストール時に特権ユーザーのパスワードがランダムで生成されます。 そのパスワードはログに記載されています。</p>
+<p>実際に見てみよう！ 以下のコマンドを実行してみてください！</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>cat /var/log/mysqld.log | grep pass</code></pre>
+<p><em>[実行結果]</em></p>
+<pre class="shell-session"><code>[root@relay-server ec2-user]# cat /var/log/mysqld.log | grep pass
+2018-05-23T16:09:05.032611Z 1 [Note] A temporary password is generated for root@localhost: eR/qaG&amp;_,4(D
+
+2018-05-23T16:09:16.786969Z 2 [Note] Access denied for user &#39;root&#39;@&#39;localhost&#39; (using password: NO)
+
+2018-05-23T16:09:29.951956Z 3 [Note] Access denied for user &#39;root&#39;@&#39;localhost&#39; (using password: YES)</code></pre>
+<p>見つけることができましたか？ 上記の例でいえば「eR/qaG&amp;_,4(D」が特権ユーザーのパスワードですね。</p>
+<p>こちらをメモっておいてください！</p>
+<h2 id="初期のセキュリティ設定">初期のセキュリティ設定</h2>
+<p>以下のコマンドを利用することによって一括で最低限のセキュリティ設定が可能です。</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>mysql_secure_installation</code></pre>
+<p>このコマンドで設定できる項目は以下になります！</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">No</th>
+<th align="center">設定できる項目</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">root ユーザーのパスワードの変更</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">VALIDATE PASSWORD プラグインのインストール</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">ポリシーに沿った root ユーザーパスワードの設定 (VALIDATE PASSWORD プラグインをインストールした場合)</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">anonymous ユーザーの削除</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">リモートホストから root ユーザーでログインするのを禁止する</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="center">testデータベースの削除 (存在する場合)</td>
+</tr>
+</tbody>
+</table>
+<p>では早速実行してみましょう。</p>
+<p>すると最初に現在のパスワードを問われます。</p>
+<pre class="shell-session"><code>Securing the MySQL server deployment.
+
+Enter password for user root:</code></pre>
+<p>先ほどメモった特権ユーザーのパスワードを入力しましょう。 すると、新しいパスワードを問われます。</p>
+<p>今回は一律「P@$$w0rd」で再設定しましょう。</p>
+<pre class="shell-session"><code>The existing password for the user account root has expired. Please set a new password.
+
+New password: </code></pre>
+<p>問題なければ次々行こう</p>
+<pre class="shell-session"><code>[root@relay-server ec2-user]# mysql_secure_installation
+
+Securing the MySQL server deployment.
+
+Enter password for user root: 
+
+The existing password for the user account root has expired. Please set a new password.
+
+New password: 
+
+Re-enter new password: 
+The &#39;validate_password&#39; plugin is installed on the server.
+The subsequent steps will run with the existing configuration
+of the plugin.
+Using existing password for root.
+
+Estimated strength of the password: 100 
+Change the password for root ? ((Press y|Y for Yes, any other key for No) : y
+
+New password: 
+
+Re-enter new password: 
+
+Estimated strength of the password: 100 
+Do you wish to continue with the password provided?(Press y|Y for Yes, any other key for No) : y
+By default, a MySQL installation has an anonymous user,
+allowing anyone to log into MySQL without having to have
+a user account created for them. This is intended only for
+testing, and to make the installation go a bit smoother.
+You should remove them before moving into a production
+environment.
+
+Remove anonymous users? (Press y|Y for Yes, any other key for No) : y
+Success.
+
+
+Normally, root should only be allowed to connect from
+&#39;localhost&#39;. This ensures that someone cannot guess at
+the root password from the network.
+
+Disallow root login remotely? (Press y|Y for Yes, any other key for No) : y
+Success.
+
+By default, MySQL comes with a database named &#39;test&#39; that
+anyone can access. This is also intended only for testing,
+and should be removed before moving into a production
+environment.
+
+
+Remove test database and access to it? (Press y|Y for Yes, any other key for No) : y
+ - Dropping test database...
+Success.
+
+ - Removing privileges on test database...
+Success.
+
+Reloading the privilege tables will ensure that all changes
+made so far will take effect immediately.
+
+Reload privilege tables now? (Press y|Y for Yes, any other key for No) : y
+Success.
+
+All done! 
+[root@relay-server ec2-user]
+</code></pre>
+<p>OKじゃないだろうか！</p>
+<h2 id="mysqlへの接続-1">MySQLへの接続</h2>
+<p>と、いうことで接続しましょう。以下のコマンドを実行しましょう。</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>mysql -u root -p</code></pre>
+<p><em>[実行結果]</em></p>
+<pre class="shell-session"><code>[root@relay-server ec2-user]# mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 7
+Server version: 5.7.22 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement.
+
+mysql&gt; 
+</code></pre>
+<p>でけましたか？ できた場合は次のステップに進みましょう。</p>
+<h2 id="データベースの作成">データベースの作成</h2>
+<p>ログインまでできたところで、データベースを作成してみましょう。 以下のようなデータベースを作成したいと思います。</p>
+<p>データベースの構成</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">項目</th>
+<th align="center">値</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">データベース名</td>
+<td align="center">Organization</td>
+</tr>
+<tr class="even">
+<td align="center">テーブル名</td>
+<td align="center">user</td>
+</tr>
+</tbody>
+</table>
+<p>テーブル内容</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">id</th>
+<th align="center">name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">0001</td>
+<td align="center">user01</td>
+</tr>
+<tr class="even">
+<td align="center">0002</td>
+<td align="center">user02</td>
+</tr>
+</tbody>
+</table>
+<p>ではまずは「がわ」となる、データベースを作成しましょう。</p>
+<p>以下のコマンドを実行してみてください。</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>create database Organization;</code></pre>
+<p>「Query OK,」と出力されればOKです。</p>
+<p>実際に作成されたのか確認しましょう。 「show」コマンドでデータベースを確認しましょう。</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>show databases;</code></pre>
+<p>見れましたか？ では次のステップに進みましょう！</p>
+<h2 id="テーブルの作成">テーブルの作成</h2>
+<p>次にテーブルを作成しましょう。 「表」のことをテーブルというんでしたね！</p>
+<p>「use」コマンドを使ってデータベースに接続できます！ 実際にやってみよう！</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>use Organization;</code></pre>
+<p>エラーなく接続できたかな？ ではテーブルを作成してみよう！</p>
+<p>以下のコマンドを実行してください。</p>
+<pre class="shell-session"><code>create table user;</code></pre>
+<p>「Query OK,」と出力されればOKです。 ここまでで、データを入れるテーブル（表）、テーブルを入れるデータベースが作成できました！</p>
+<h2 id="データをインサートする">データをインサートする</h2>
+<p>器の準備ができたらデータを入れましょう。</p>
+<p>以下のコマンドを実行してください。</p>
+<pre class="shell-session"><code>insert into user(id,name) values(0001,user01);</code></pre>
+<h2 id="データをセレクトする">データをセレクトする</h2>
+<p>データを入れてみたら、次はデータを取り出してみましょう！ 以下のコマンドを実行してみてください。</p>
+<pre class="shell-session"><code>select * from user;</code></pre>
+<p>データが表示されたら成功です！</p>
+<p>お疲れ様でした！</p>
+
+
+</body>

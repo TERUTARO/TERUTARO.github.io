@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+<h1 id="mysqlをインストールしよう">MySQLをインストールしよう！</h1>
+<h2 id="事前準備">事前準備</h2>
+<h3 id="mariadbの削除">mariaDBの削除</h3>
+<p>Red Hatは7系から標準搭載のDBはMariaDBとなっています。</p>
+<p>MySQLを利用するにはまず競合するMariaDBを削除してやりましょう。</p>
+<p>MariaDBはデフォルトでyumのリポジトリに登録されています。</p>
+<p>ので、yumから消せます。 まずは以下のコマンドで登録情報を見てみましょう。</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>yum list installed | grep maria</code></pre>
+<p><em>[実行結果]</em></p>
+<pre class="shell-session"><code>[root@relay-server ec2-user]# yum list installed  | grep maria
+
+mariadb-libs.x86_64                   1:5.5.56-2.el7
+@anaconda/7.4
+</code></pre>
+<p>ふむ。確かにいますね。 ではremoveしましょう。</p>
+<p>以下のコマンドを実行</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>yum removes mariadb-libs.x86_64</code></pre>
+<p><em>[実行結果]</em></p>
+<pre class="shell-session"><code>[root@relay-server ec2-user]# yum removes mariadb-libs.x86_64
+
+読み込んだプラグイン:amazon-id, rhui-lb, search-disabled-repos
+
+コマンド「removes」が見つかりません。「/bin/yum --help」を実行してください。
+
+[root@relay-server ec2-user]# yum remove mariadb-libs.x86_64
+
+読み込んだプラグイン:amazon-id, rhui-lb, search-disabled-repos
+
+依存性の解決をしています
+
+--&gt; トランザクションの確認を実行しています。
+
+---&gt; パッケージ mariadb-libs.x86_64 1:5.5.56-2.el7 を 削除
+
+--&gt; 依存性の処理をしています: libmysqlclient.so.18()(64bit) のパッケージ:
+2:postfix-2.10.1-6.el7.x86_64
+
+--&gt; 依存性の処理をしています: libmysqlclient.so.18(libmysqlclient_18)(64bit) のパッケージ:
+2:postfix-2.10.1-6.el7.x86_64
+
+--&gt; トランザクションの確認を実行しています。
+
+---&gt; パッケージ postfix.x86_64 2:2.10.1-6.el7 を 削除
+
+--&gt; 依存性解決を終了しました。
+
+
+依存性を解決しました
+
+
+================================================================================
+
+ Package            アーキテクチャー
+
+                                 バージョン           リポジトリー         容量
+
+================================================================================
+
+削除中:
+
+ mariadb-libs       x86_64       1:5.5.56-2.el7       @anaconda/7.4
+4.4 M
+
+依存性関連での削除をします:
+
+ postfix            x86_64       2:2.10.1-6.el7       @anaconda/7.4
+12 M
+
+
+トランザクションの要約
+
+================================================================================
+
+削除  1 パッケージ (+1 個の依存関係のパッケージ)
+
+
+インストール容量: 17 M
+
+上記の処理を行います。よろしいでしょうか？ [y/N</code></pre>
+<p>ここまでできたかな？ ここで処理実行内容を確認しましょう。</p>
+<p>「y」キーを押下します。</p>
+<pre><code>上記の処理を行います。よろしいでしょうか？ [y/N]y
+
+Downloading packages:
+
+Running transaction check
+
+Running transaction test
+
+Transaction test succeeded
+
+Running transaction
+
+  削除中                  : 2:postfix-2.10.1-6.el7.x86_64
+1/2
+
+  削除中                  : 1:mariadb-libs-5.5.56-2.el7.x86_64
+2/2
+
+  検証中                  : 1:mariadb-libs-5.5.56-2.el7.x86_64
+1/2
+
+  検証中                  : 2:postfix-2.10.1-6.el7.x86_64
+2/2
+
+
+削除しました:
+
+  mariadb-libs.x86_64 1:5.5.56-2.el7
+
+
+
+依存性の削除をしました:
+
+  postfix.x86_64 2:2.10.1-6.el7
+
+
+
+完了しました!
+</code></pre>
+<p>処理できたようですね。</p>
+<p>あと、お掃除という意味合いでMariaDBのディレクトリも削除しておきましょう。</p>
+<p>不要ディレクトリがあると、後続の参入メンバーが混乱する場合があります。</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>rm -rf /var/lib/mysql/</code></pre>
+<p>これでmariaDBを削除できました！</p>
+<h3 id="yumリポジトリの追加">yumリポジトリの追加</h3>
+<p>次に、yumのリポジトリを追加します。 まずは以下のコマンドを実行し、yumに登録されているMySQLのリポジトリのリストを見てみましょう！</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>yum repolist all | grep mysql</code></pre>
+<p><em>[実行結果]</em></p>
+<pre class="shell-session"><code>[root@relay-server ec2-user]# yum repolist all | grep mysql
+
+mysql-cluster-7.5-community/x86_64                          MySQL C 無効
+
+mysql-cluster-7.5-community-source                          MySQL C 無効
+
+mysql-cluster-7.6-community/x86_64                          MySQL C 無効
+
+mysql-cluster-7.6-community-source                          MySQL C 無効
+
+!mysql-connectors-community/x86_64                          MySQL C 有効:
+51
+
+mysql-connectors-community-source                           MySQL C 無効
+
+!mysql-tools-community/x86_64                               MySQL T 有効:
+63
+
+mysql-tools-community-source                                MySQL T 無効
+
+mysql-tools-preview/x86_64                                  MySQL T 無効
+
+mysql-tools-preview-source                                  MySQL T 無効
+
+mysql55-community/x86_64                                    MySQL 5 無効
+
+mysql55-community-source                                    MySQL 5 無効
+
+mysql56-community/x86_64                                    MySQL 5 無効
+
+mysql56-community-source                                    MySQL 5 無効
+
+mysql57-community/x86_64                                    MySQL 5 無効
+
+mysql57-community-source                                    MySQL 5 無効
+
+!mysql80-community/x86_64                                   MySQL 8 有効:
+17
+
+mysql80-community-source                                    MySQL 8 無効
+</code></pre>
+<p>ここで、無効／有効と表記のある列があります。これはリポジトリが有効か、無効かを示します。 yumのリポジトリがわからない人はググって調べてみよう！</p>
+<p>上記コマンドの実行結果を見ると、 今回利用したい、MySQL5.7のリポジトリが無効になっている。↓</p>
+<pre class="shell-session"><code>mysql57-community/x86_64                                    MySQL 5 無効 こいつら
+
+mysql57-community-source                                    MySQL 5 無効 こいつ</code></pre>
+<p>これを有効にする必要がある。</p>
+<p>その前に、「yumdownloader」を利用したいので「yum-utils」をインストールします。 以下のコマンドを実行</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>yum -y install yum-utils
+</code></pre>
+<p>できましたか？</p>
+<p>では、準備が整ったのでリポジトリを有効にします。 以下のコマンドを事項しよう！</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>yum-config-manager —enable mysql57-community</code></pre>
+<p>有効になったかを確認します。 「yum-repolist」コマンドで確認してみよう。</p>
+<pre class="shell-session"><code>[root@relay-server ec2-user]# yum repolist all | grep mysql
+
+mysql-cluster-7.5-community/x86_64                          MySQL C 無効
+
+mysql-cluster-7.5-community-source                          MySQL C 無効
+
+mysql-cluster-7.6-community/x86_64                          MySQL C 無効
+
+mysql-cluster-7.6-community-source                          MySQL C 無効
+
+mysql-connectors-community/x86_64                           MySQL C 有効:
+51
+
+mysql-connectors-community-source                           MySQL C 無効
+
+mysql-tools-community/x86_64                                MySQL T 有効:
+63
+
+mysql-tools-community-source                                MySQL T 無効
+
+mysql-tools-preview/x86_64                                  MySQL T 無効
+
+mysql-tools-preview-source                                  MySQL T 無効
+
+mysql55-community/x86_64                                    MySQL 5 無効
+
+mysql55-community-source                                    MySQL 5 無効
+
+mysql56-community/x86_64                                    MySQL 5 無効
+
+mysql56-community-source                                    MySQL 5 無効
+
+mysql57-community/x86_64                                    MySQL 5 有効:
+267
+
+mysql57-community-source                                    MySQL 5 無効
+
+mysql80-community/x86_64                                    MySQL 8 有効:
+17
+
+mysql80-community-source                                    MySQL 8 無効
+
+[root@relay-server ec2-user]#
+</code></pre>
+<p>どうでしょうか。有効になってましたか？</p>
+<p>次は8系を利用しないので、以下のコマンドを実行しましょう！</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>yum-config-manager —disable mysql80-community</code></pre>
+<p>これで8系は無効になったはずです。</p>
+<p>もう一度「yum-repolist」コマンドで確認してみよう。</p>
+<pre class="shell-session"><code>
+[root@relay-server ec2-user]# yum repolist all | grep mysql
+
+mysql-cluster-7.5-community/x86_64                          MySQL C 無効
+
+mysql-cluster-7.5-community-source                          MySQL C 無効
+
+mysql-cluster-7.6-community/x86_64                          MySQL C 無効
+
+mysql-cluster-7.6-community-source                          MySQL C 無効
+
+mysql-connectors-community/x86_64                           MySQL C 有効:
+51
+
+mysql-connectors-community-source                           MySQL C 無効
+
+mysql-tools-community/x86_64                                MySQL T 有効:
+63
+
+mysql-tools-community-source                                MySQL T 無効
+
+mysql-tools-preview/x86_64                                  MySQL T 無効
+
+mysql-tools-preview-source                                  MySQL T 無効
+
+mysql55-community/x86_64                                    MySQL 5 無効
+
+mysql55-community-source                                    MySQL 5 無効
+
+mysql56-community/x86_64                                    MySQL 5 無効
+
+mysql56-community-source                                    MySQL 5 無効
+
+mysql57-community/x86_64                                    MySQL 5 有効:
+267
+
+mysql57-community-source                                    MySQL 5 無効
+
+mysql80-community/x86_64                                    MySQL 8 無効
+
+mysql80-community-source                                    MySQL 8 無効
+
+[root@relay-server ec2-user]#
+
+</code></pre>
+<p>これで準備完了です！</p>
+</body>

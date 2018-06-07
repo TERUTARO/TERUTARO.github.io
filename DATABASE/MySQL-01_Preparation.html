@@ -197,7 +197,11 @@ mysql57-community-source                                    MySQL 5 無効 こ�
 </code></pre>
 <p>できましたか？</p>
 <p>では、準備が整ったのでリポジトリを有効にします。 以下のコマンドを事項しよう！</p>
-<p><em>[コマンド]</em></p>
+ <p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>yum-config-manager —disable mysql80-community</code></pre>
+<p>これで8系は無効になったはずです。</p>
+ <p>次に以下のコマンドを入力してください！</p>
+ <p><em>[コマンド]</em></p>
 <pre class="shell-session"><code>yum-config-manager —enable mysql57-community</code></pre>
 <p>有効になったかを確認します。 「yum-repolist」コマンドで確認してみよう。</p>
 <pre class="shell-session"><code>[root@relay-server ec2-user]# yum repolist all | grep mysql
@@ -245,56 +249,6 @@ mysql80-community-source                                    MySQL 8 無効
 [root@relay-server ec2-user]#
 </code></pre>
 <p>どうでしょうか。有効になってましたか？</p>
-<p>次は8系を利用しないので、以下のコマンドを実行しましょう！</p>
-<p><em>[コマンド]</em></p>
-<pre class="shell-session"><code>yum-config-manager —disable mysql80-community</code></pre>
-<p>これで8系は無効になったはずです。</p>
-<p>もう一度「yum-repolist」コマンドで確認してみよう。</p>
-<pre class="shell-session"><code>
-[root@relay-server ec2-user]# yum repolist all | grep mysql
-
-mysql-cluster-7.5-community/x86_64                          MySQL C 無効
-
-mysql-cluster-7.5-community-source                          MySQL C 無効
-
-mysql-cluster-7.6-community/x86_64                          MySQL C 無効
-
-mysql-cluster-7.6-community-source                          MySQL C 無効
-
-mysql-connectors-community/x86_64                           MySQL C 有効:
-51
-
-mysql-connectors-community-source                           MySQL C 無効
-
-mysql-tools-community/x86_64                                MySQL T 有効:
-63
-
-mysql-tools-community-source                                MySQL T 無効
-
-mysql-tools-preview/x86_64                                  MySQL T 無効
-
-mysql-tools-preview-source                                  MySQL T 無効
-
-mysql55-community/x86_64                                    MySQL 5 無効
-
-mysql55-community-source                                    MySQL 5 無効
-
-mysql56-community/x86_64                                    MySQL 5 無効
-
-mysql56-community-source                                    MySQL 5 無効
-
-mysql57-community/x86_64                                    MySQL 5 有効:
-267
-
-mysql57-community-source                                    MySQL 5 無効
-
-mysql80-community/x86_64                                    MySQL 8 無効
-
-mysql80-community-source                                    MySQL 8 無効
-
-[root@relay-server ec2-user]#
-
-</code></pre>
 <p>これで準備完了です！</p>
 
  

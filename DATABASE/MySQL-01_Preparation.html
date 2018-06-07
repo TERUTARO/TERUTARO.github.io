@@ -200,10 +200,12 @@ mysql57-community-source                                    MySQL 5 無効 こ�
  <p><em>[コマンド]</em></p>
 <pre class="shell-session"><code>yum-config-manager —disable mysql80-community</code></pre>
 <p>これで8系は無効になったはずです。</p>
- <p>次に以下のコマンドを入力してください！</p>
- <p><em>[コマンド]</em></p>
+<p>次に以下のコマンドを入力してください！</p>
+
+<p><em>[コマンド]</em></p>
 <pre class="shell-session"><code>yum-config-manager —enable mysql57-community</code></pre>
-<p>有効になったかを確認します。 「yum-repolist」コマンドで確認してみよう。</p>
+
+ <p>有効になったかを確認します。 「yum-repolist」コマンドで確認してみよう。</p>
 <pre class="shell-session"><code>[root@relay-server ec2-user]# yum repolist all | grep mysql
 
 mysql-cluster-7.5-community/x86_64                          MySQL C 無効

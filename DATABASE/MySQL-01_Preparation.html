@@ -135,7 +135,12 @@ Running transaction
 <pre class="shell-session"><code>rm -rf /var/lib/mysql/</code></pre>
 <p>これでmariaDBを削除できました！</p>
 <h3 id="yumリポジトリの追加">yumリポジトリの追加</h3>
-<p>次に、yumのリポジトリを追加します。 まずは以下のコマンドを実行し、yumに登録されているMySQLのリポジトリのリストを見てみましょう！</p>
+<p>次に、yumのリポジトリを追加します。 まずは以下のコマンドを実行しましょう!</p>
+<p><em>[コマンド]</em></p>
+<pre class="shell-session"><code>yum localinstall http://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm</code></pre> 
+
+ <p>次に、リポジトリのリストを見てみましょう！</p>
+ 
 <p><em>[コマンド]</em></p>
 <pre class="shell-session"><code>yum repolist all | grep mysql</code></pre>
 <p><em>[実行結果]</em></p>

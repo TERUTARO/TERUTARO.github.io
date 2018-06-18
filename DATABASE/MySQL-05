@@ -12,7 +12,7 @@
 <h1 id="正規化">正規化</h1>
 <h2 id="各種キー">各種キー</h2>
 <p>リレーショナルデータベースには、その種類を問わず、「主キー」、「外部キー」を持ちます。 また、テーブル同士の関係性をリンクさせる「外部」キーなどのキーが存在しやす。 以下に、それぞれのキーの説明を記載します。</p>
-<pre><code>主キー：あるレコードを一意に識別することができるキーテーブルにおいて必ず一つ存在しなければならずかつ一つしか存在しない一部であってもNULLを含んではならない。</code></pre>
+<pre><code>主キー：あるレコードを一意に識別することができるキーテーブルにおいて必ず一つ存在しなければならず、かつ一つしか存在しない一部であってもNULLを含んではならない。</code></pre>
 <pre><code>候補キー：主キーの候補となるキーのことで、表の中の1つのレコードを特定できる性質を持つ属性、または属性の組合せのこと。 </code></pre>
 <pre><code>外部キー：外部キー(FK)は、2つのテーブルのデータ間にリンクを確立および設定するために使用される単一の列または複数の列の組み合わせのこと。</code></pre>
 <h2 id="関数従属">関数従属</h2>
@@ -85,7 +85,7 @@ http://www.atmarkit.co.jp/ait/articles/1703/01/news181.html</code></pre>
 <p>属性が繰り返し出ている箇所を別の表に分解する。 今回の例では、該当箇所がないため、この手順は割愛します。</p>
 <h3 id="他カラムから導出可能な箇所の削除">他カラムから導出可能な箇所の削除</h3>
 <p>ここで、「在庫数」に着目します。 「在庫数」は毎日の「生産数」の合計と毎日の「出荷数」の合計の差から導出することができます。 他カラムの値から導出できる数値であるため、「在庫数」については削除します。</p>
-<p>[表1-2 第1正規化前]</p>
+<p>[表1-2 第1正規化後]</p>
 <table>
 <thead>
 <tr class="header">
@@ -169,6 +169,7 @@ http://www.atmarkit.co.jp/ait/articles/1703/01/news181.html</code></pre>
 <th align="center">商品名</th>
 <th align="center">単価</th>
 <th align="center">生産日</th>
+<th align="center">生産数</th>
 </tr>
 </thead>
 <tbody>
@@ -176,11 +177,13 @@ http://www.atmarkit.co.jp/ait/articles/1703/01/news181.html</code></pre>
 <td align="center">ボルト</td>
 <td align="center">100</td>
 <td align="center">20180618</td>
+<td align="center">500</td>
 </tr>
 <tr class="even">
 <td align="center">ナット</td>
 <td align="center">50</td>
 <td align="center">20180618</td>
+<td align="center">100</td>
 </tr>
 </tbody>
 </table>

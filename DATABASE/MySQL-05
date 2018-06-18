@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+<h1 id="正規化">正規化</h1>
+<h2 id="各種キー">各種キー</h2>
+<p>リレーショナルデータベースには、その種類を問わず、「主キー」、「外部キー」を持ちます。 また、テーブル同士の関係性をリンクさせる「外部」キーなどのキーが存在しやす。 以下に、それぞれのキーの説明を記載します。</p>
+<pre><code>主キー：あるレコードを一意に識別することができるキーテーブルにおいて必ず一つ存在しなければならずかつ一つしか存在しない一部であってもNULLを含んではならない。</code></pre>
+<pre><code>候補キー：主キーの候補となるキーのことで、表の中の1つのレコードを特定できる性質を持つ属性、または属性の組合せのこと。 </code></pre>
+<pre><code>外部キー：外部キー(FK)は、2つのテーブルのデータ間にリンクを確立および設定するために使用される単一の列または複数の列の組み合わせのこと。</code></pre>
+<h2 id="関数従属">関数従属</h2>
+<p>次に、関数従属という重要な概念について説明する。</p>
+<h2 id="関数従属性">関数従属性</h2>
+<p>functional dependency：通称FDと呼称される。 関係データベースにおいて、表の2つの属性（カラム）の集合間で一方の属性の集合間で、 一方の属性集合の値が決まれば、もう一方の属性の集合の値が決定する性質。</p>
+<h2 id="練習問題">練習問題</h2>
+<p>問題 関係R(A，B，C，D，E，F)において，次の関数従属が成立するとき，候補キーとなるのはどれか。</p>
+<p><a href="#関数従属">関数従属</a> A→B，A→F，B→C，C→D，{B，C}→E，{C，F}→A</p>
+<p>ア：B イ：｛B、C｝ ウ：｛B、F｝ エ：｛B、D、E｝</p>
+<pre><code>応用情報技術者 平成27年秋期 午前
+http://www.atmarkit.co.jp/ait/articles/1703/01/news181.html</code></pre>
+<h1 id="正規化-1">正規化</h1>
+<p>データの重複をなくし、整合的にデータを取り扱えるようにデータベースを設計することを「正規化」と呼びます。 データベースに対し、正規化を施しておくことで、データの追加・更新・削除の際にデータの損失、不整合が生じることを防ぐことが可能です。 正規化には第1～第5正規化がありますが、一般的に用いられる段階は第3正規化までです。</p>
+<p>また、正規化していないデータベースのことを「非正規形」と呼びます。</p>
+<p>以降に、第1正規化～第3正規化の実施手順を記載します。</p>
+<h2 id="第1正規化">第1正規化</h2>
+<p>第1正規化では以下の操作を行います。</p>
+<pre><code>繰り返し項目の削除
+</code></pre>
+<p>個人的なポイントは、他のカラムから導出できる値についてもこの時点で弾いておくことだと思います。</p>
+<p>例を見てみましょう。 表1のようなデータベースを想定します。</p>
+<p>[表1-1 第1正規化前]</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">出荷先</th>
+<th align="center">出荷先住所</th>
+<th align="center">出荷先代表者名</th>
+<th align="center">連絡先</th>
+<th align="center">商品名</th>
+<th align="center">単価</th>
+<th align="center">在庫数</th>
+<th align="center">生産日</th>
+<th align="center">生産数</th>
+<th align="center">出荷日</th>
+<th align="center">出荷数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">照屋鉄工所</td>
+<td align="center">沖縄県石垣市</td>
+<td align="center">照屋朝太郎</td>
+<td align="center">0980-XX-XXXX</td>
+<td align="center">ボルト</td>
+<td align="center">100</td>
+<td align="center">5000</td>
+<td align="center">20180618</td>
+<td align="center">1000</td>
+<td align="center">20180620</td>
+<td align="center">500</td>
+</tr>
+<tr class="even">
+<td align="center">照屋鉄工所</td>
+<td align="center">沖縄県石垣市</td>
+<td align="center">照屋朝太郎</td>
+<td align="center">0980-XX-XXXX</td>
+<td align="center">ナット</td>
+<td align="center">50</td>
+<td align="center">20000</td>
+<td align="center">20180618</td>
+<td align="center">200</td>
+<td align="center">20180730</td>
+<td align="center">100</td>
+</tr>
+</tbody>
+</table>
+<h3 id="繰り返し項目の削除">繰り返し項目の削除</h3>
+<p>属性が繰り返し出ている箇所を別の表に分解する。 今回の例では、該当箇所がないため、この手順は割愛します。</p>
+<h3 id="他カラムから導出可能な箇所の削除">他カラムから導出可能な箇所の削除</h3>
+<p>ここで、「在庫数」に着目します。 「在庫数」は毎日の「生産数」の合計と毎日の「出荷数」の合計の差から導出することができます。 他カラムの値から導出できる数値であるため、「在庫数」については削除します。</p>
+<p>[表1-2 第1正規化前]</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">出荷先</th>
+<th align="center">出荷先住所</th>
+<th align="center">出荷先代表者名</th>
+<th align="center">連絡先</th>
+<th align="center">商品名</th>
+<th align="center">単価</th>
+<th align="center">生産日</th>
+<th align="center">生産数</th>
+<th align="center">出荷日</th>
+<th align="center">出荷数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">照屋鉄工所</td>
+<td align="center">沖縄県石垣市</td>
+<td align="center">照屋朝太郎</td>
+<td align="center">0980-XX-XXXX</td>
+<td align="center">ボルト</td>
+<td align="center">100</td>
+<td align="center">20180618</td>
+<td align="center">1000</td>
+<td align="center">20180620</td>
+<td align="center">500</td>
+</tr>
+<tr class="even">
+<td align="center">照屋鉄工所</td>
+<td align="center">沖縄県石垣市</td>
+<td align="center">照屋朝太郎</td>
+<td align="center">0980-XX-XXXX</td>
+<td align="center">ナット</td>
+<td align="center">50</td>
+<td align="center">20180618</td>
+<td align="center">200</td>
+<td align="center">20180730</td>
+<td align="center">100</td>
+</tr>
+</tbody>
+</table>
+<h2 id="第2正規化">第2正規化</h2>
+<p>第2正規系では先ほど述べた「関数従属性」に焦点を当てます。</p>
+<p>ここでデータベースの保守性を高めます。 「表1-2」では以下の問題点を包含しています。</p>
+<pre><code>1.「仕入れ先」が増えた場合に商品の取引ができるようになるまでデータの入力ができない。
+2.「住所」「代表者名」などが変更されると複数レコードを更新する必要がある。</code></pre>
+<h3 id="主キーの決定">主キーの決定</h3>
+<p>表1-2を見てみると、レコードを定める要素は「出荷先」、「商品名」、「出荷数」であることがわかります。 これは、上述した関数従属性に該当し、関数従属性を持つ属性を主キーと呼びます。</p>
+<h3 id="従属関係の別テーブル化">従属関係の別テーブル化</h3>
+<p>主キーに対し、関数従属関係にあたるカラムを別テーブルに分離します。</p>
+<p>[表2-1 出荷先テーブル]</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">出荷先</th>
+<th align="center">出荷先住所</th>
+<th align="center">出荷先代表者名</th>
+<th align="center">連絡先</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">照屋鉄工所</td>
+<td align="center">沖縄県石垣市</td>
+<td align="center">照屋朝太郎</td>
+<td align="center">0980-XX-XXXX</td>
+</tr>
+<tr class="even">
+<td align="center">照屋鉄工所</td>
+<td align="center">沖縄県石垣市</td>
+<td align="center">照屋朝太郎</td>
+<td align="center">0980-XX-XXXX</td>
+</tr>
+</tbody>
+</table>
+<p>[表2-2 商品テーブル]</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">商品名</th>
+<th align="center">単価</th>
+<th align="center">生産日</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">ボルト</td>
+<td align="center">100</td>
+<td align="center">20180618</td>
+</tr>
+<tr class="even">
+<td align="center">ナット</td>
+<td align="center">50</td>
+<td align="center">20180618</td>
+</tr>
+</tbody>
+</table>
+<p>[表2-3 出荷テーブル]</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">商品名</th>
+<th align="center">出荷先</th>
+<th align="center">出荷日</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">ボルト</td>
+<td align="center">照屋鉄工所</td>
+<td align="center">20180620</td>
+</tr>
+<tr class="even">
+<td align="center">ナット</td>
+<td align="center">照屋鉄工所</td>
+<td align="center">20180730</td>
+</tr>
+</tbody>
+</table>
+<h2 id="第3正規化">第3正規化</h2>
+<p>第2正規形から主キー以外の属性が相互に依存関係をもたないようにする作業が第3正規化です。 つまり、非キー項目どうしの関数従属関係がある場合は、それを取り除きます。</p>
+<h1 id="推移的関数従属の排除">推移的関数従属の排除</h1>
+<p>ここでは主キー以外の項目について、項目同士で依存関係のあるものを取り除きます。 具体的にどのようなものでしょうか。</p>
+<p>上記表2-1の照屋さんが別の事業所も管理したとしましょう。 そうすると照屋さんの連絡先が変更された場合、必然的に複数レコードを操作しなければなりません。 従って、以下のようにテーブルを分解することができます。</p>
+<p>[表3-1 出荷先テーブル]</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">出荷先</th>
+<th align="center">出荷先住所</th>
+<th align="center">出荷先代表者名</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">照屋鉄工所</td>
+<td align="center">沖縄県石垣市</td>
+<td align="center">照屋朝太郎</td>
+</tr>
+<tr class="even">
+<td align="center">照屋鉄工所</td>
+<td align="center">沖縄県石垣市</td>
+<td align="center">照屋朝太郎</td>
+</tr>
+</tbody>
+</table>
+<p>[表3-2 代表者テーブル]</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">出荷先代表者</th>
+<th align="center">連絡先</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">照屋朝太郎</td>
+<td align="center">0980-XX-XXXX</td>
+</tr>
+<tr class="even">
+<td align="center">照屋朝太郎</td>
+<td align="center">0980-XX-XXXX</td>
+</tr>
+</tbody>
+</table>
+<p>[表3-3 商品テーブル]</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">商品名</th>
+<th align="center">単価</th>
+<th align="center">生産日</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">ボルト</td>
+<td align="center">100</td>
+<td align="center">20180618</td>
+</tr>
+<tr class="even">
+<td align="center">ナット</td>
+<td align="center">50</td>
+<td align="center">20180618</td>
+</tr>
+</tbody>
+</table>
+<p>[表3-4 出荷テーブル]</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">商品名</th>
+<th align="center">出荷先</th>
+<th align="center">出荷日</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">ボルト</td>
+<td align="center">照屋鉄工所</td>
+<td align="center">20180620</td>
+</tr>
+<tr class="even">
+<td align="center">ナット</td>
+<td align="center">照屋鉄工所</td>
+<td align="center">20180730</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

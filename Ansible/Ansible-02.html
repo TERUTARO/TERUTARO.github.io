@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="./style.css" type="text/css" />
+</head>
+<body>
+<h1 id="ansibleのお作法">Ansibleのお作法</h1>
+<h2 id="要素">要素</h2>
+<p>以下の要素がある。</p>
+<h2 id="要素-1"><em><a href="#要素">要素</a></em></h2>
+<table>
+<thead>
+<tr class="header">
+<th align="center">要素</th>
+<th align="center">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">モジュール</td>
+<td align="center">サーバーの設定／構築等の処理を定義したリソース</td>
+</tr>
+<tr class="even">
+<td align="center">インベントリファイル</td>
+<td align="center">ホスト情報のリスト</td>
+</tr>
+<tr class="odd">
+<td align="center">プレイブック</td>
+<td align="center">モジュールを複数記載した構築時の実行順序</td>
+</tr>
+</tbody>
+</table>
+<h2 id="よく出る用語"><em>[よく出る用語]</em></h2>
+<table>
+<thead>
+<tr class="header">
+<th align="center">用語</th>
+<th align="center">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Roles</td>
+<td align="center">特定のvars_fileやtasks、handlersをあらかじめ決められたファイル構造で置くと、自動的にロードされる仕組み</td>
+</tr>
+<tr class="even">
+<td align="center">task</td>
+<td align="center">Ansible実行の最小単位　task &lt; Role &lt;　Playbook的なイメージ</td>
+</tr>
+</tbody>
+</table>
+<h2 id="実行コマンド">実行コマンド</h2>
+<p>だいたい以下のコマンドで実行したりする。</p>
+<pre><code>ansible-playbook -i [インベントリファイルのパス] [実行したいPlaybook名]</code></pre>
+<h2 id="playbook">PlayBook</h2>
+<p>PlayBookはおおよそ以下の項目で利用する。</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">項目</th>
+<th align="center">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">name</td>
+<td align="center">コメント。playbookの概要を簡潔に書いておくとよい。　</td>
+</tr>
+<tr class="even">
+<td align="center">hosts</td>
+<td align="center">対象ホスト。インベントリファイルに記載した名前を定義する。</td>
+</tr>
+<tr class="odd">
+<td align="center">user</td>
+<td align="center">playbook内のタスクを実行するユーザー。</td>
+</tr>
+<tr class="even">
+<td align="center">sudo</td>
+<td align="center">sudoが必要か否か指定する。</td>
+</tr>
+<tr class="odd">
+<td align="center">vars</td>
+<td align="center">変数。実際の変数はネストして定義していく。</td>
+</tr>
+<tr class="even">
+<td align="center">tasks</td>
+<td align="center">タスクのモジュールを列挙。</td>
+</tr>
+<tr class="odd">
+<td align="center">handlers</td>
+<td align="center">タスク実行の後続で呼び出す処理を列挙</td>
+</tr>
+</tbody>
+</table>
+<p>また、PlayBookの記述はYAML形式で記載する。</p>
+<p>Ansible YAML syntax</p>
+<pre><code>- hosts: targets
+  user: root
+  tasks:
+    - name: output message.
+      debug: msg=&quot;{{ message }}&quot;
+
+    - name: output fruits
+      debug: msg=&quot;We want {{ item.value.amount }} {{ item.key }} !&quot;
+      with_dict: &quot;{{ fruits }}&quot;
+</code></pre>
+</body>
+</html>

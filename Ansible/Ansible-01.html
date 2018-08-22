@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="./style.css" type="text/css" />
+</head>
+<body>
+<h1 id="infrastructure-as-code">Infrastructure as Code</h1>
+<h2 id="背景">背景</h2>
+<p>AnsibleやChefが波及している背景には以下の要素が絡んでいる。</p>
+<p>・　構成管理の普及 ・　DevOpsへの意識改革 ・　Infrastructure as Codeの波及</p>
+<p>以下にそれぞれれの要素について補足する。</p>
+<h3 id="構成管理">構成管理</h3>
+<p>構成管理はシステム構成の最新状況 (現状) を正確に把握するという、運用上、最も基礎的な管理である。 システムを構成するすべての要素が管理対象となるため、この情報の確かさが、安定的なシステム運用の要となる。</p>
+<p>昨今の例ではGitなどもこの構成管理に該当する。</p>
+<h3 id="devops">DevOps</h3>
+<p>開発 (Development) と運用 (Operations) を組み合わせた語であり、開発担当者と運用担当者が連携して協力する（さらに両担当者の境目もあいまいにする）開発手法をさす。</p>
+<p>2015年ごろからプッシュされるようになった印象がある。</p>
+<h3 id="infrastructure-as-code-1">Infrastructure as code</h3>
+<p>設計手順やパラメータを再利用性の高いなんらかのコードにしよう！という思想。 同時に構成管理も兼ねることが多い。</p>
+<p>メリットとしては以下が挙げられる。 ・　ヒューマンエラーの削減 ・　工数削減</p>
+<p>デメリットとしては以下が挙げられる。 ・　プロビジョニングツールに対する学習コストがかかる。</p>
+<p>代表的なプロビジョニングツールにChef、Ansible、Puppet、Terraform、Vagrant等がある。</p>
+<h2 id="ansibleの特徴">Ansibleの特徴</h2>
+<h3 id="エージェントレス">エージェントレス</h3>
+<p>　</p>
+</body>
+</html>

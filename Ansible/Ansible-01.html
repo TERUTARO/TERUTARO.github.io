@@ -12,21 +12,61 @@
 <h1 id="infrastructure-as-code">Infrastructure as Code</h1>
 <h2 id="背景">背景</h2>
 <p>AnsibleやChefが波及している背景には以下の要素が絡んでいる。</p>
-<p>・　構成管理の普及 ・　DevOpsへの意識改革 ・　Infrastructure as Codeの波及</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">要素</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">構成管理の普及</td>
+</tr>
+<tr class="even">
+<td align="center">DevOpsへの意識改革</td>
+</tr>
+<tr class="odd">
+<td align="center">Infrastructure as Codeの波及</td>
+</tr>
+</tbody>
+</table>
 <p>以下にそれぞれれの要素について補足する。</p>
 <h3 id="構成管理">構成管理</h3>
+<hr />
 <p>構成管理はシステム構成の最新状況 (現状) を正確に把握するという、運用上、最も基礎的な管理である。 システムを構成するすべての要素が管理対象となるため、この情報の確かさが、安定的なシステム運用の要となる。</p>
 <p>昨今の例ではGitなどもこの構成管理に該当する。</p>
 <h3 id="devops">DevOps</h3>
+<hr />
 <p>開発 (Development) と運用 (Operations) を組み合わせた語であり、開発担当者と運用担当者が連携して協力する（さらに両担当者の境目もあいまいにする）開発手法をさす。</p>
 <p>2015年ごろからプッシュされるようになった印象がある。</p>
 <h3 id="infrastructure-as-code-1">Infrastructure as code</h3>
+<hr />
 <p>設計手順やパラメータを再利用性の高いなんらかのコードにしよう！という思想。 同時に構成管理も兼ねることが多い。</p>
 <p>メリットとしては以下が挙げられる。 ・　ヒューマンエラーの削減 ・　工数削減</p>
 <p>デメリットとしては以下が挙げられる。 ・　プロビジョニングツールに対する学習コストがかかる。</p>
 <p>代表的なプロビジョニングツールにChef、Ansible、Puppet、Terraform、Vagrant等がある。</p>
 <h2 id="ansibleの特徴">Ansibleの特徴</h2>
 <h3 id="エージェントレス">エージェントレス</h3>
+<blockquote>
+<p>エージェントレスモデルでは、Ansibleがインストールされた中央マシンが各操作対象にログインして直接操作を実行する「プッシュ型」のアーキテクチャを採用しています。そのため、Ansible からネットワーク経由でマシンに繋がるかぎり、何の事前準備もなくAnsibleから対象マシンを操作できるのです。</p>
+</blockquote>
+<h3 id="冪等性">冪等性</h3>
+<blockquote>
+<p>冪等性とは「ある操作を何度実行しても常に結果が同じになる」性質のことです。Ansible においては、各モジュールの内部で、何を実行するかを「手続き的」に扱うのではなく、最終的なあるべき姿を「宣言的」に取り扱うことによって冪等性が担保されるようになっています。</p>
+</blockquote>
+<h3 id="再利用性">再利用性</h3>
+<blockquote>
+<p>Ansibleを長く使い続けるにあたって、気になるのが再利用性の高さです。「再利用性が高い」つまり汎用性を高く保てるのであれば、Ansibleを使い続けるにつれ実装などにかかる手間は減っていくはずです。何度も似た内容を実装しなければならないのは辛いものがあります。</p>
+</blockquote>
+<blockquote>
+<p>典型的な操作を実装しているモジュールのほかに、Playbookの側にも再利用のための仕組みが備わっていますので紹介しましょう。</p>
+</blockquote>
+<blockquote>
+<p>まずひとつ目は、すでにすこし出てきた変数を使った値の抽象化です。操作対象となるマシンごとに個別の値を設定したり、Playbook実行のたびに異なる値を与えたりできますので、値の差し替えが想定される箇所を変数化してしまえば、部分的に異なるPlaybookの亜種が発生するような事態を防げます。</p>
+</blockquote>
+<blockquote>
+<p>もうひとつ、Playbookそれ自体をRoleという単位で部品化して使い回すことも可能です。RoleはPlaybookを各システムで共通して使う単位で切り分けたもので、「MySQLセットアップ」のようにミドルウェアのセットアップ単位にRoleが作られるのが一般的です。RoleはAnsibleであらかじめ決められた単位の部品化であり、ディレクトリ構造などにルールがあり（詳細は第4章で取り扱います）、どこの誰が実装したRoleであってもPlaybookから使うことができます。Ansible GalaxyというRoleの公開／共有のプラットフォームも用意されており、世界中の人が作ったRole資産を活用できるようになっているのです。</p>
+</blockquote>
 <p>　</p>
 </body>
 </html>

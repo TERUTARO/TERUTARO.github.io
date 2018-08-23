@@ -1,3 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+<h1 id="ハンズオン">ハンズオン</h1>
+<h2 id="環境情報">環境情報</h2>
+<p>以下の環境を2人1グループで利用してください。 なお、AnsibleサーバはRedHatですので、SSHで接続、Windowsサーバに関してはRDPで接続をお願いします。</p>
+<p><em>GROUP1</em></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">サーバ種別</th>
+<th align="center">IP</th>
+<th align="center">ユーザ名</th>
+<th align="center">パスワード</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">RedHat</td>
+<td align="center">XXX.XXX.XXX.XXX</td>
+<td align="center">ansible</td>
+<td align="center">Pa$$w0rd</td>
+</tr>
+<tr class="even">
+<td align="center">Windows</td>
+<td align="center">XXX.XXX.XXX.XXX</td>
+<td align="center">Administrator</td>
+<td align="center">eSf(U3N5MJD</td>
+</tr>
+</tbody>
+</table>
+<p><em>GROUP2</em></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">サーバ種別</th>
+<th align="center">IP</th>
+<th align="center">ユーザ名</th>
+<th align="center">パスワード</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">RedHat</td>
+<td align="center">XXX.XXX.XXX.XXX</td>
+<td align="center">ansible</td>
+<td align="center">Pa$$w0rd</td>
+</tr>
+<tr class="even">
+<td align="center">Windows</td>
+<td align="center">XXX.XXX.XXX.XXX</td>
+<td align="center">Administrator</td>
+<td align="center">MGn;6Ynbqah.wb!8=94tGj8s?zfGSbCa</td>
+</tr>
+</tbody>
+</table>
+<p><em>GROUP3</em></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">サーバ種別</th>
+<th align="center">IP</th>
+<th align="center">ユーザ名</th>
+<th align="center">パスワード</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">RedHat</td>
+<td align="center">XXX.XXX.XXX.XXX</td>
+<td align="center">ansible</td>
+<td align="center">Pa$$w0rd</td>
+</tr>
+<tr class="even">
+<td align="center">Windows</td>
+<td align="center">XXX.XXX.XXX.XXX</td>
+<td align="center">Administrator</td>
+<td align="center">j=V(J(Vfkg4RGrc$UD3mTUM%pJS6cwo%</td>
+</tr>
+</tbody>
+</table>
+<p><em>GROUP4</em></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">サーバ種別</th>
+<th align="center">IP</th>
+<th align="center">ユーザ名</th>
+<th align="center">パスワード</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">RedHat</td>
+<td align="center">XXX.XXX.XXX.XXX</td>
+<td align="center">ansible</td>
+<td align="center">Pa$$w0rd</td>
+</tr>
+<tr class="even">
+<td align="center">Windows</td>
+<td align="center">XXX.XXX.XXX.XXX</td>
+<td align="center">Administrator</td>
+<td align="center">%timdn=qGfWlUf5aL*jJ.HwId3kw2g7g</td>
+</tr>
+</tbody>
+</table>
+<p><em>GROUP5</em></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">サーバ種別</th>
+<th align="center">IP</th>
+<th align="center">ユーザ名</th>
+<th align="center">パスワード</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">RedHat</td>
+<td align="center">XXX.XXX.XXX.XXX</td>
+<td align="center">ansible</td>
+<td align="center">Pa$$w0rd</td>
+</tr>
+<tr class="even">
+<td align="center">Windows</td>
+<td align="center">XXX.XXX.XXX.XXX</td>
+<td align="center">Administrator</td>
+<td align="center">m8&amp;n3!dAJ-faNQ;i(X2OK(aCl7O-bgRa</td>
+</tr>
+</tbody>
+</table>
+<h2 id="手順">手順</h2>
+<h2 id="ansibleサーバへの接続"><em>Ansibleサーバへの接続</em></h2>
+<p>1.AnsibleサーバへSSH接続し、ルートユーザに昇格する。</p>
+<p>2.カレントディレクトリを以下に移動</p>
+<pre><code>/pot</code></pre>
+<p>3.以下のコマンドでAnsibleバージョンの確認を実施しましょう。</p>
+<pre><code>ansible --version</code></pre>
+<h2 id="インベントリファイルを作ろう"><em>インベントリファイルを作ろう！</em></h2>
+<p>1.以下のコマンドを実行</p>
+<pre><code>vi hosts
+
+〜以下内容〜
+
+[windows]
+WindowsServerのIP
+
+[windows:vars]
+ansible_ssh_user=Administrator
+ansible_ssh_pass=WindowsServerのパスワード
+ansible_ssh_port=5986
+ansible_connection=winrm
+ansible_winrm_server_cert_validation=ignore
+
+〜ここまで〜
+
+内容追加したら、「wq」して保存！</code></pre>
+<p>2.以下のコマンドを実行！</p>
+<pre><code>ansible windows -i hosts -m win_ping -vvvv</code></pre>
+<h2 id="playbookをつくろう"><em>PlayBookをつくろう！</em></h2>
+<p>1.以下のコマンドを実行</p>
+<pre><code>vi ad_add.yml
+
+〜以下内容〜
+
+- hosts: windows
+  gather_facts: no
+  vars:
+    ad_opts:
+      DomainName: hogehoge.localdomain
+      DomainMode: Win2012R2
+      ForestMode: Win2012R2
+      SafeModeAdministratorPassword: HOGEhoge1
+      DatabasePath: &#39;C:\ADDS\NTDS&#39;
+      LogPath: &#39;C:\ADDS\NTDS&#39;
+      SysvolPath: &#39;C:\ADDS\SYSVOL&#39;
+  tasks:
+    - win_feature:
+        name: AD-Domain-Services
+        include_management_tools: yes
+    - raw: &#39;netsh advfirewall firewall add rule Profile=domain name=&quot;Allow WinRM HTTPS&quot; d=in localport=5986 protocol=TCP action=allow&#39;
+    - local_action: template src=Install-ADDSForest.ps1.j2 dest=./Install-ADDSForest.ps1
+    - script: &#39;Install-ADDSForest.ps1&#39;
+
+〜ここまで〜
+
+内容追加したら、「wq」して保存！</code></pre>
+<p>2.以下のコマンドを実行</p>
+<pre><code>vi Install-ADDSForest.ps1.j2
+
+〜以下内容〜
+
+Install-ADDSForest -Force
+{%- for key, value in ad_opts.iteritems() -%}
+{%- if key == &#39;SafeModeAdministratorPassword&#39; %}
+ -{{ key }} (ConvertTo-SecureString -AsPlainText -Force -String &quot;{{ value }}&quot;)
+{%- else %}
+ -{{ key }} &quot;{{ value }}&quot;
+{%- endif -%}
+{%- endfor -%}
+
+〜ここまで〜
+
+内容追加したら、「wq」して保存！</code></pre>
+<p>3.以下のコマンドを実行！</p>
+<pre><code> ansible-playbook -i hosts ad_add.yml</code></pre>
+<p>4.Windowsサーバに接続してADになってるか確認！おわり！</p>
+</body>
+</html>
 
 <p>#ハンズオン</p>
 <p>##環境情報

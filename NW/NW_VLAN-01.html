@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+<h1 id="vlanポート">VLANポート</h1>
+<h2 id="ポート種別">ポート種別</h2>
+<p><em>アンタグポート</em></p>
+<hr />
+<p>パケットにタグが付加されないポート。 スイッチの物理ポートにVLANをふる（PortVLAN）。 単一VLANしか制御できない。</p>
+<p>ベンダで呼び方が異なる。</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Cisco</th>
+<th align="center">その他製品</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">アクセスポート</td>
+<td align="center">アンタグポート</td>
+</tr>
+</tbody>
+</table>
+<p><em>タグポート</em></p>
+<hr />
+<p>パケットにタグを付加するポート。 複数VLANを制御できる。</p>
+<p>ベンダで呼び方が異なる。</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Cisco</th>
+<th align="center">その他製品</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">トランク</td>
+<td align="center">タグポート</td>
+</tr>
+</tbody>
+</table>
+<h2 id="vlanタグ">VLANタグ</h2>
+<p>イーサネットフレームにVLANタグが追加される場合、以下のような差違が出る。</p>
+<div class="figure">
+<img src="./img/EthernetLAN_VLAN.png" alt="VLANタグなし" />
+<p class="caption">VLANタグなし</p>
+</div>
+<div class="figure">
+<img src="./img/EthernetLAN_NoVLAN.png" alt="VLANタグあり" />
+<p class="caption">VLANタグあり</p>
+</div>
+<div class="figure">
+<img src="./img/VLAN.png" alt="TCI中身" />
+<p class="caption">TCI中身</p>
+</div>
+</body>
+</html>

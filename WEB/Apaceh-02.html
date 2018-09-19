@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="./style.css" type="text/css" />
+</head>
+<body>
+<h1 id="ハンズオン">ハンズオン</h1>
+<h2 id="環境情報">環境情報</h2>
+<h1 id="環境情報-1">環境情報</h1>
+<p>以下の環境を利用してください。 接続対象サーバはRedHatですので、SSHで接続をお願いいたします。</p>
+<p><em>カナエさん</em></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">サーバ種別</th>
+<th align="center">IP</th>
+<th align="center">ユーザ名</th>
+<th align="center">パスワード</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">RedHat</td>
+<td align="center">35.164.185.90</td>
+<td align="center">kanae</td>
+<td align="center">Pa$$w0rd</td>
+</tr>
+</tbody>
+</table>
+<p><em>キドさん</em></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">サーバ種別</th>
+<th align="center">IP</th>
+<th align="center">ユーザ名</th>
+<th align="center">パスワード</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">RedHat</td>
+<td align="center">35.162.238.94　</td>
+<td align="center">kido</td>
+<td align="center">Pa$$w0rd</td>
+</tr>
+</tbody>
+</table>
+<p><em>コニシさん</em></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">サーバ種別</th>
+<th align="center">IP</th>
+<th align="center">ユーザ名</th>
+<th align="center">パスワード</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">RedHat</td>
+<td align="center">34.219.243.25　</td>
+<td align="center">konishi</td>
+<td align="center">Pa$$w0rd</td>
+</tr>
+</tbody>
+</table>
+<p><em>ニチョウギさん</em></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">サーバ種別</th>
+<th align="center">IP</th>
+<th align="center">ユーザ名</th>
+<th align="center">パスワード</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">RedHat</td>
+<td align="center">35.161.201.212</td>
+<td align="center">nityogi</td>
+<td align="center">Pa$$w0rd</td>
+</tr>
+</tbody>
+</table>
+<p><em>シマダさん</em></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">サーバ種別</th>
+<th align="center">IP</th>
+<th align="center">ユーザ名</th>
+<th align="center">パスワード</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">RedHat</td>
+<td align="center">34.215.212.35</td>
+<td align="center">shimada</td>
+<td align="center">Pa$$w0rd</td>
+</tr>
+</tbody>
+</table>
+<p><em>ワタナベさん</em></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">サーバ種別</th>
+<th align="center">IP</th>
+<th align="center">ユーザ名</th>
+<th align="center">パスワード</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">RedHat</td>
+<td align="center">54.213.177.97</td>
+<td align="center">watanabe</td>
+<td align="center">Pa$$w0rd</td>
+</tr>
+</tbody>
+</table>
+<h2 id="手順">手順</h2>
+<h2 id="apacheのインストール"><em>Apacheのインストール</em></h2>
+<p>1.サーバへSSH接続し、以下のコマンドでルートユーザに昇格する。</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">sudo</span> su</code></pre></div>
+<p>2.Apacheをインストールする。</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">yum</span> install httpd</code></pre></div>
+<p>3.インストールされているかどうかを確認する。</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">yum</span> list installed <span class="kw">|</span> <span class="fu">grep</span> httpd
+
+以下のように出力されれればインストールできてます。
+<span class="ex">httpd.x86_64</span>                             2.2.34-1.15.amzn1            @amzn-main
+<span class="ex">httpd-tools.x86_64</span>                       2.2.34-1.15.amzn1            @amzn-main</code></pre></div>
+<h2 id="apacheの起動"><em>Apacheの起動</em></h2>
+<p>1.Apacheのサービスを起動する。</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#Apacheのサービス状態を確認</span>
+<span class="ex">systemctl</span> status httpd
+
+● <span class="ex">httpd.service</span> - The Apache HTTP Server
+   <span class="ex">Loaded</span>: loaded (/usr/lib/systemd/system/httpd.service<span class="kw">;</span> <span class="ex">disabled</span><span class="kw">;</span> <span class="ex">vendor</span> preset: disabled)
+   <span class="ex">Active</span>: inactive (dead)
+     <span class="ex">Docs</span>: man:httpd(8)
+           <span class="ex">man</span>:apachectl(8)
+
+<span class="co">#Apacheのサービスを起動</span>
+<span class="ex">systemctl</span> start httpd
+
+<span class="co">#Apacheのサービス状態を確認</span>
+● <span class="ex">httpd.service</span> - The Apache HTTP Server
+   <span class="ex">Loaded</span>: loaded (/usr/lib/systemd/system/httpd.service<span class="kw">;</span> <span class="ex">disabled</span><span class="kw">;</span> <span class="ex">vendor</span> preset: disabled)
+   <span class="ex">Active</span>: active (running) <span class="ex">since</span> 水 2017-10-18 13:07:47 UTC<span class="kw">;</span> <span class="ex">22s</span> ago
+     <span class="ex">Docs</span>: man:httpd(8)
+           <span class="ex">man</span>:apachectl(8)
+ <span class="ex">Main</span> PID: 1242 (httpd)
+   <span class="ex">Status</span>: <span class="st">&quot;Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec&quot;</span>
+   <span class="ex">CGroup</span>: /system.slice/httpd.service
+           ├─<span class="ex">1242</span> /usr/sbin/httpd -DFOREGROUND
+           ├─<span class="ex">1243</span> /usr/sbin/httpd -DFOREGROUND
+           ├─<span class="ex">1244</span> /usr/sbin/httpd -DFOREGROUND
+           ├─<span class="ex">1245</span> /usr/sbin/httpd -DFOREGROUND
+           ├─<span class="ex">1246</span> /usr/sbin/httpd -DFOREGROUND
+           └─<span class="ex">1247</span> /usr/sbin/httpd -DFOREGROUND
+
+<span class="ex">10</span>月 18 13:07:47 testserver systemd[1]: Starting The Apache HTTP Server...
+<span class="ex">10</span>月 18 13:07:47 testserver httpd[1242]: AH00558: httpd: Could not reliably...e
+<span class="ex">10</span>月 18 13:07:47 testserver systemd[1]: Started The Apache HTTP Server.
+<span class="ex">Hint</span>: Some lines were ellipsized, use -l to show in full.</code></pre></div>
+<h2 id="apacheの自動起動設定"><em>Apacheの自動起動設定</em></h2>
+<p>1.Red Hat 7系からはsystemctlコマンドを使用してを自動起動に設定する。6系までは機能していたchkconfigコマンは7では使用できない。</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#httpdの自動起動設定を確認</span>
+<span class="ex">systemctl</span> is-enabled httpd
+
+<span class="ex">disabled</span> <span class="co">#自動起動設定：OFF</span>
+
+<span class="co">#httpdの自動起動を設定</span>
+<span class="ex">systemctl</span> enabled httpd
+
+<span class="ex">Created</span> symlink from /etc/systemd/system/multi-user.target.wants/httpd.service to /usr/lib/systemd/system/httpd.service.
+
+<span class="co">#httpdの自動起動設定を確認</span>
+<span class="ex">systemctl</span> is-enabled httpd
+
+<span class="ex">enabled</span> <span class="co">#自動起動設定：ON</span></code></pre></div>
+<h2 id="登録したdnsの内容を確認する"><em>登録したDNSの内容を確認する</em></h2>
+<p>1.ムームードメインとAWS route53で取得ドメインを登録する。</p>
+<p>2.反映までしばらく待つ。</p>
+<p>3.名前解決できるかを確認する。</p>
+<h2 id="apacheにfqdnを紐づける"><em>ApacheにFQDNを紐づける</em></h2>
+<p>1./etc/httpd/conf/ディレクトリに移動。</p>
+<pre><code>cd /etc/httpd/conf/
+pwd</code></pre>
+<p>2./etc/httpd/conf/httpd.confファイルの中身をみる。長いのでviewコマンドで見てみる。</p>
+<pre><code>view httpd.conf
+
+#viコマンドと同様に「:q」で終了できます。</code></pre>
+<p>3.バックアップを取得する。</p>
+<pre><code>#保存先ディレクトリを作成
+mkdir reg-ConfigBackup
+
+#保存先ディレクトリへバックアップを作成
+cp -a httpd.conf ./reg-ConfigBackup/htppd.conf_yyyymmdd
+
+#保存先ディレクトリにバックアップがとれていることを確認
+ls -lh ./reg-ConfigBackup</code></pre>
+<p>4.ファイルを編集する。</p>
+<pre><code>#Apachの設定ファイルを確認してみよう
+vi httpd.conf
+
+#ファイルが開けましたらコマンドモード上で「/ServerName」と入力し、「Enter」キーを押下してください。
+
+#以下の記述に飛べばおk。とばなかったら「N」キーをいくつか押下してみましょう。
+##ServerName www.example.com:80
+
+#「a」キーを押下し、インサートモードへ移行後、「www.example.com」の部分を「XXXX.teruya.okinawa」に変更してください。「xxxx」はなんでもおk</code></pre>
+<p>5.サービスを再起動する。</p>
+<pre><code>#Apacheのサービスを再起動
+systemctl restart httpd
+
+#Apacheのサービスを状態を確認
+#起動していること
+systemctl status httpd</code></pre>
+<h2 id="インデックスファイルを配置してみよう"><em>インデックスファイルを配置してみよう</em></h2>
+<p>1.インデックスファイルを作成しましょう。 　　インデックスファイルを配置すると挙動がどのように変化するかを確認してみる。</p>
+<pre><code>#touchコマンドでインデックスファイルを作成しましょう。
+vi index.html
+
+#ファイルが作成しているかどうかを確認しましょう。</code></pre>
+</body>
+</html>

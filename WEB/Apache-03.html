@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href=".\style.css" type="text/css" />
+</head>
+<body>
+<h1 id="ディレクトリトラサーバル攻撃を理解しよう">ディレクトリトラサーバル攻撃を理解しよう！</h1>
+<h2 id="前回の復習">前回の復習</h2>
+<h3 id="前回作ったもの">前回作ったもの</h3>
+<p>前回の講義で作成した（脆弱なWebサーバをつくろう）Webサーバは以下の内容でした。</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">基盤インフラ</th>
+<th align="center">OS</th>
+<th align="center">ミドルウェア</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">AWS EC2</td>
+<td align="center">Red Hat 7系</td>
+<td align="center">Apache</td>
+</tr>
+</tbody>
+</table>
+<p>また、DNSサーバにAレコードを登録し、FQDNを名前解決し、ブラウザからWebサーバへアクセスするところまでを前回実施しました。</p>
+<h3 id="用語の復習">用語の復習</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="center">用語</th>
+<th align="center">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">AWS</td>
+<td align="center">Amazon web Serviceの略称。世界最大級のクラウドサービス</td>
+</tr>
+<tr class="even">
+<td align="center">Red Hat</td>
+<td align="center">Linuxのディストリビューションの一つ。最も有名であり、6系からは多くの企業でも採用されるようになってきた。</td>
+</tr>
+<tr class="odd">
+<td align="center">Apacehe</td>
+<td align="center">Webサービスを提供するミドルウェアの一種。世界で最も利用されている。</td>
+</tr>
+<tr class="even">
+<td align="center">DNSサーバ</td>
+<td align="center">名前解決をするためのサーバ。電話帳のような役割をイメージしていただくとわかりやすい。</td>
+</tr>
+<tr class="odd">
+<td align="center">Aレコード</td>
+<td align="center">IPv4アドレスに紐づけるレコードのこと。v6はAAAAレコード</td>
+</tr>
+<tr class="even">
+<td align="center">FQDN</td>
+<td align="center">※後述</td>
+</tr>
+<tr class="odd">
+<td align="center">名前解決</td>
+<td align="center">※後述</td>
+</tr>
+</tbody>
+</table>
+<h2 id="我々はどのようにwebサーバにアクセスしたのか">我々はどのようにWebサーバにアクセスしたのか？</h2>
+<p>前回我々が作成したWebサーバにはどのような仕組みでWebブラウザからアクセスしたのでしょうか？</p>
+<p>まずはそのWebアクセスのからくりを理解しましょう。</p>
+<h3 id="ipアドレスとfqdn">IPアドレスとFQDN</h3>
+<h4 id="ipアドレス">IPアドレス</h4>
+<p>サーバはIPアドレスという固有の番号を持ちます。 ネットワークに接続されている機器やサーバなどが通信を行う際には IPアドレスを用います。</p>
+<p>みなさんはスマホで相手としゃべるために電話番号を登録しているはずです。 IPアドレスはネットワーク上の電話番号のようなものです。</p>
+<p>IPアドレスには世界中で一意なアドレスであるグローバルIPアドレスと 組織内や家庭内え割り振るためのプライベートIPアドレスがあります。</p>
+<p>それぞれ電話番号の外線・内線のようなものです。 Webサーバで利用するIPアドレスは世界中どこからでもアクセスできるよう、 グローバルIPアドレスを割り振るのが一般的です。</p>
+<div class="figure">
+<img src="./img/Apaceh-img001.png" alt="my caption" />
+<p class="caption">my caption</p>
+</div>
+<h4 id="fqdn">FQDN</h4>
+<p>FQDNとは「Fully Qualified Domain Name」の略です。完全修飾ドメインなどとも言われます。</p>
+<p>JPNICによると</p>
+<blockquote>
+<p>ツリー(木)構造を持つDNS (Domain Name System)の階層構造において、 ある特定のノードに付けられたドメイン名を表記する際、 そのノードからDNSのルートまでのすべてのラベルを並べて書いたものがFQDNです。 具体的な例を挙げると、JPNICのWebサーバのFQDNは「www.nic.ad.jp.」となります。 一番左から、「www (第4レベルドメイン)」.「nic (第3レベルドメイン)」.「ad (第2レベルドメイン)」.「jp (トップレベルドメイン)」.「ルート」と、 順にすべてのラベルを表記しています。 ドメイン名の表記においては、一般的にルートは「.」で表されるため、 狭義の意味でのFQDNを表記する際には、末尾の「.」まで含めて表記することが必要です。 ただし、RFCなどで厳密にFQDNの定義が決まっていないことから、「www.nic.ad.jp」のように、 トップレベルドメインまで表記されていれば、広義のFQDNとして扱われる例も増えてきていますので、 こうした表記が必ずしも誤りというわけではありません。</p>
+</blockquote>
+<p>引用：一般財団法人　日本ネットワークインフォメーションセンター（https://www.nic.ad.jp/ja/basics/terms/fqdn.html）</p>
+<p>IPアドレスは電話番号であるならば、FQDNは電話帳に登録する表記名になります。 IPv4アドレスをFQDNと紐づけたい場合はAレコードを利用します。</p>
+<p><em>Aレコード登録例</em></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">IPアドレス</th>
+<th align="center">FQDN</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">64.233.177.94</td>
+<td align="center">www.google.co.jp</td>
+</tr>
+</tbody>
+</table>
+<p>我々はWebサイトを検索するとき、IPアドレスを直接入力するでしょうか？</p>
+<p>しないですね。</p>
+<p>普段我々は「www.google.co.jp/」の方を入力することが多いでしょう。 FQDNは人間がホスト（コンピュータやネットワーク機器）のネットワーク上の識別番号を識別しやすくする側面ももっているのです。</p>
+<h3 id="名前解決">名前解決</h3>
+<p>DNSサーバというサーバがあります。「用語の復習」でも述べたように、 IPアドレスを電話番号と例えるならば、DNSサーバは電話帳にあたるでしょう。</p>
+<p>以下にDNSサーバへの問い合わせ例を示します。</p>
+<h4 id="fqdnに対するipアドレスをdnsサーバに問いあわせる">1.FQDNに対するIPアドレスをDNSサーバに問いあわせる。</h4>
+<div class="figure">
+<img src="./img/Apaceh-img002.png" alt="my caption" />
+<p class="caption">my caption</p>
+</div>
+<h4 id="dnsサーバがfqdnに対する登録情報を検索する">2.DNSサーバがFQDNに対する登録情報を検索する。</h4>
+<div class="figure">
+<img src="./img/Apaceh-img003.png" alt="my caption" />
+<p class="caption">my caption</p>
+</div>
+<h4 id="dnsサーバが突合したipアドレスを問い合わせ元サーバに通知する">3.DNSサーバが突合したIPアドレスを問い合わせ元サーバに通知する。</h4>
+<div class="figure">
+<img src="./img/Apaceh-img004.png" alt="my caption" />
+<p class="caption">my caption</p>
+</div>
+<p>問い合わせ元のサーバ側から見ると、FQDNを問い合わせて IPアドレスがレスポンスとしてかえってきたことになります。このような一連の流れを「名前解決」と呼びます。</p>
+<p>IPアドレスがわかれば電話番号(IPアドレス)がわかるので本来通信したかった「ww.google.co.jp 」への通信が可能になるのです。</p>
+<div class="figure">
+<img src="./img/Apaceh-img005.png" alt="my caption" />
+<p class="caption">my caption</p>
+</div>
+<h2 id="アドレスバーの記載内容を理解する">アドレスバーの記載内容を理解する。</h2>
+<p>ディレクトリトラサーバル攻撃を行うにあたり、必須の要素がアドレスバーの読み方です。 以下のアドレス例に関して確認してみましょう。</p>
+<div class="figure">
+<img src="./img/Apaceh-img006.png" alt="my caption" />
+<p class="caption">my caption</p>
+</div>
+<h3 id="通信プロトコル">1.通信プロトコル</h3>
+<p>赤枠で囲った箇所は通信プロトコルを示します。</p>
+<div class="figure">
+<img src="./img/Apaceh-img007.png" alt="my caption" />
+<p class="caption">my caption</p>
+</div>
+<h3 id="fqdn-1">2.FQDN</h3>
+<p>赤枠で囲った箇所がFQDNです。 ※FQDNの内容はホスト部、ドメイン部などさらに詳細に要素分解できますが、 そこに関してはまた今度。</p>
+<div class="figure">
+<img src="./img/Apaceh-img008.png" alt="my caption" />
+<p class="caption">my caption</p>
+</div>
+<h3 id="参照ファイルパス">3.参照ファイルパス</h3>
+<p>赤枠で囲った箇所は参照ファイルパスを示します。 このとき、パスの起点となるのはWEBサーバミドルウェアで設定したルートディレクトリになります。</p>
+<div class="figure">
+<img src="./img/Apaceh-img009.png" alt="my caption" />
+<p class="caption">my caption</p>
+</div>
+<p>以上のことを踏まえると、例で示したURLの内容は、 「hogehoge.co.JPに紐づけられるサーバのhuga/test.htmlにhttpsで通信」という内容であることがわかる。</p>
+<h2 id="nullバイト攻撃">NULLバイト攻撃</h2>
+<h3 id="nullとは">NULLとは</h3>
+<blockquote>
+<p>ヌル文字（または「ヌル終端文字」）とは、値0の制御文字である。NULと表記される場合もある[1]。 多くの文字集合にはヌル文字の定義がある。ISO/IEC 646（ASCII)、C0制御コード、C1制御コード、ISO/IEC 10646（Unicode）、EBCDICなどの文字集合は全てヌル文字を含んでいる。一方で、JIS X 0208などの ように、これを収録しない文字集合もある。ASCII、Unicode、EBCDICなどではヌル文字はコードポイント0に当てられている。多くのプログラミング言語ではヌル文字を使用できる[2]。C言語などでは、ヌル文字のコードは0であると定義されている。</p>
+</blockquote>
+<p>引用：Wiki(https://ja.wikipedia.org/wiki/%E3%83%8C%E3%83%AB%E6%96%87%E5%AD%97)</p>
+<h3 id="phpとnull">PHPとNULL</h3>
+<p>nullバイト攻撃は主にPHPで作成されているWebアプリケーションが標的にされる場合が多いです。PHPの型変数であるStringではNullを終端文字として扱うため、文字列の途中にNullが入っていれば、そこを終端として判断してしまう。</p>
+<p>具体的には以下のように攻撃者によって利用される。</p>
+<pre><code>http://hogehoge.co.jp/../../../etc/hosts%00.html</code></pre>
+<p>ここで、htmlファイルへのアクセス判定のみを行っている場合、それを通過し、「%00」によるNULL終端で以下ファイルにたどり着く。</p>
+<pre><code>http://hogehoge.co.jp/../../../etc/hosts</code></pre>
+</body>
+</html>

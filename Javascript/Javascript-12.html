@@ -54,24 +54,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2 id="jqueryとは">jQueryとは</h2>
 <p>Javascriptのライブラリです。</p>
 <h2 id="jqueryの準備">jQueryの準備</h2>
-<p>1.以下のページにアクセス</p>
-<p>http://jquery.com/download/</p>
-<p>2.「Download the compressed, production jQuery 3.3.1」をDL。</p>
-<p>3.DLできなかった場合は「Download the uncompressed, development jQuery 3.3.1」の方をクリック。 表示された内容を全て選択し、コピー。demo.htmlと同一のディレクトリに「jquery-1.11.3.min.js」という名称で保存してください。</p>
-<h2 id="js追記-------">js追記 -- ---</h2>
-<p>1.script部分に以下を追記する。</p>
-<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="at">$</span>(<span class="kw">function</span>() <span class="op">{</span>
-    <span class="kw">var</span> nav <span class="op">=</span> <span class="at">$</span>(<span class="st">&#39;.nav&#39;</span>)<span class="op">;</span>
-    <span class="kw">var</span> navTop <span class="op">=</span> <span class="va">nav</span>.<span class="at">offset</span>().<span class="at">top</span><span class="op">;</span>
-    <span class="at">$</span>(window).<span class="at">scroll</span>(<span class="kw">function</span> () <span class="op">{</span>
-        <span class="kw">var</span> winTop <span class="op">=</span> <span class="at">$</span>(<span class="kw">this</span>).<span class="at">scrollTop</span>()<span class="op">;</span>
-        <span class="cf">if</span> (winTop <span class="op">&gt;=</span> navTop) <span class="op">{</span>
-            <span class="va">nav</span>.<span class="at">addClass</span>(<span class="st">&#39;fixed&#39;</span>)
-        <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> (winTop <span class="op">&lt;=</span> navTop) <span class="op">{</span>
-            <span class="va">nav</span>.<span class="at">removeClass</span>(<span class="st">&#39;fixed&#39;</span>)
-        <span class="op">}</span>
-    <span class="op">}</span>)<span class="op">;</span>
-<span class="op">}</span>)<span class="op">;</span></code></pre></div>
+<p>1.以下を追加してください</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">&lt;</span>script type<span class="op">=</span><span class="st">&quot;text/javascript&quot;</span> src<span class="op">=</span><span class="st">&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js&quot;</span><span class="op">&gt;&lt;</span><span class="ss">/script&gt;</span></code></pre></div>
+<h2 id="js-追記----スクロール量によってcssを変化させる---">js 追記 ---スクロール量によってCSSを変化させる。---</h2>
+<p>ようやくJava Scriptを記載してみます。</p>
+<p>さて今回の実装したい動作は &quot;スクロール量によってCSSを変化させる&quot;です。</p>
 <p>以下のポイントを押さえましょう。</p>
 <ul>
 <li><p>変化をつけるのはnav</p></li>
@@ -136,6 +123,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tr>
 </tbody>
 </table>
+<p>2.編集が完了したら保存してブラウザで表示してみましょう。以下のように表示されていればOKです！</p>
+<p><a href="demo/demo-XX.html">リンクはこちら</a></p>
 <p><a href="Javascript-12.html">NEXT</a> <a href="Javascript-11.html">PREVIOUS</a></p>
 </body>
 </html>

@@ -7,33 +7,16 @@ Javascriptのライブラリです。
 
 ##jQueryの準備
 
-1.以下のページにアクセス
-
-http://jquery.com/download/
-
-2.「Download the compressed, production jQuery 3.3.1」をDL。
-
-3.DLできなかった場合は「Download the uncompressed, development jQuery 3.3.1」の方をクリック。
-表示された内容を全て選択し、コピー。demo.htmlと同一のディレクトリに「jquery-1.11.3.min.js」という名称で保存してください。
-
-
-## js追記 -- ---
-1.script部分に以下を追記する。
-
+1.以下を追加してください
 ```Javascript
-$(function() {
-	var nav = $('.nav');
-	var navTop = nav.offset().top;
-	$(window).scroll(function () {
-		var winTop = $(this).scrollTop();
-		if (winTop >= navTop) {
-			nav.addClass('fixed')
-		} else if (winTop <= navTop) {
-			nav.removeClass('fixed')
-		}
-	});
-});
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+
 ```
+
+##js 追記 ---スクロール量によってCSSを変化させる。---
+ようやくJava Scriptを記載してみます。
+
+さて今回の実装したい動作は "スクロール量によってCSSを変化させる"です。
 
 以下のポイントを押さえましょう。
 
@@ -53,7 +36,6 @@ offset().topはjQueryから呼び出しており、top値を取得してきま�
 ```Javascript
 var navTop = nav.offset().top;
 ```
-
 
 
 <img src="./img/offset.png">
@@ -108,6 +90,12 @@ fixedが適用されると、「Pposition: fixed」が効いてきます。
 | moz | Mozilla  |
 | o | Opera | 
 | ms | IE | 
+
+
+2.編集が完了したら保存してブラウザで表示してみましょう。以下のように表示されていればOKです！
+
+[リンクはこちら](demo/demo-XX.html)
+
 
 
 [NEXT](Javascript-12.html)

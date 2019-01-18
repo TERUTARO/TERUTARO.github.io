@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="style.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="javascriptあんまり使ったことのないやつが送るjavasciript">JavaScriptあんまり使ったことのないやつが送るJavasciript</h1>
+<h1 id="スクロール量に応じた動きを実装する">スクロール量に応じた動きを実装する。</h1>
+<h2 id="jqueryとは">jQueryとは</h2>
+<p>Javascriptのライブラリです。</p>
+<h2 id="jqueryの準備">jQueryの準備</h2>
+<p>1.以下のページにアクセス</p>
+<p>http://jquery.com/download/</p>
+<p>2.「Download the compressed, production jQuery 3.3.1」をDL。</p>
+<p>3.DLできなかった場合は「Download the uncompressed, development jQuery 3.3.1」の方をクリック。 表示された内容を全て選択し、コピー。demo.htmlと同一のディレクトリに「jquery-1.11.3.min.js」という名称で保存してください。</p>
+<h2 id="js追記-------">js追記 -- ---</h2>
+<p>1.script部分に以下を追記する。</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="at">$</span>(<span class="kw">function</span>() <span class="op">{</span>
+    <span class="kw">var</span> nav <span class="op">=</span> <span class="at">$</span>(<span class="st">&#39;.nav&#39;</span>)<span class="op">;</span>
+    <span class="kw">var</span> navTop <span class="op">=</span> <span class="va">nav</span>.<span class="at">offset</span>().<span class="at">top</span><span class="op">;</span>
+    <span class="at">$</span>(window).<span class="at">scroll</span>(<span class="kw">function</span> () <span class="op">{</span>
+        <span class="kw">var</span> winTop <span class="op">=</span> <span class="at">$</span>(<span class="kw">this</span>).<span class="at">scrollTop</span>()<span class="op">;</span>
+        <span class="cf">if</span> (winTop <span class="op">&gt;=</span> navTop) <span class="op">{</span>
+            <span class="va">nav</span>.<span class="at">addClass</span>(<span class="st">&#39;fixed&#39;</span>)
+        <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> (winTop <span class="op">&lt;=</span> navTop) <span class="op">{</span>
+            <span class="va">nav</span>.<span class="at">removeClass</span>(<span class="st">&#39;fixed&#39;</span>)
+        <span class="op">}</span>
+    <span class="op">}</span>)<span class="op">;</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></div>
+<p>以下のポイントを押さえましょう。</p>
+<ul>
+<li><p>変化をつけるのはnav</p></li>
+<li><p>変化する契機をスクロール量でどう表現するか。</p></li>
+</ul>
+<p>上記踏まえ、まず以下でnavを変数定義します。</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> nav <span class="op">=</span> <span class="at">$</span>(<span class="st">&#39;.nav&#39;</span>)<span class="op">;</span></code></pre></div>
+<p>次に以下でnavの縦座標を変数定義してます。 offset().topはjQueryから呼び出しており、top値を取得してきます。すなわちここでページトップの座標が取得されます。</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> navTop <span class="op">=</span> <span class="va">nav</span>.<span class="at">offset</span>().<span class="at">top</span><span class="op">;</span></code></pre></div>
+<p><img src="./img/offset.png"></p>
+<p>次に、この動作の関数部分についてです。</p>
+<blockquote>
+<p>scrollは各要素のscrollイベントに関数をbindします。 scrollイベントは、文書がスクロールした際に呼び出されます。 jQueryのイベントは、コールバック関数の最初の引数でjQuery.Eventオブジェクトを受け取ることができます。このオブジェクトを使って、規定のイベント動作のキャンセルや、バブリングの抑制などを行います。</p>
+</blockquote>
+<p>すなわち、画面をスクロールすることで以下の内容が逐次適用されているわけです。</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">        
+        <span class="kw">var</span> winTop <span class="op">=</span> <span class="at">$</span>(<span class="kw">this</span>).<span class="at">scrollTop</span>()<span class="op">;</span>
+        <span class="cf">if</span> (winTop <span class="op">&gt;=</span> navTop) <span class="op">{</span>
+            <span class="va">nav</span>.<span class="at">addClass</span>(<span class="st">&#39;fixed&#39;</span>)
+        <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> (winTop <span class="op">&lt;=</span> navTop) <span class="op">{</span>
+            <span class="va">nav</span>.<span class="at">removeClass</span>(<span class="st">&#39;fixed&#39;</span>)
+        <span class="op">}</span></code></pre></div>
+<p>上記ではwinTopを定義し、winTopと事前定義したnavTopの差分を比較しています。 そして、(winTop &gt;= navTop)の条件に対して以下をうわがいているわけです。</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">fixed <span class="op">{</span>
+            <span class="dt">position</span><span class="op">:</span> fixed<span class="op">;</span>
+            <span class="dt">top</span><span class="op">:</span> <span class="dv">0</span><span class="op">;</span>
+            <span class="dt">left</span><span class="op">:</span> <span class="dv">0</span><span class="op">;</span>
+            <span class="dt">width</span><span class="op">:</span> <span class="dv">100</span><span class="op">%;</span>
+            border<span class="op">-</span><span class="dt">radius</span><span class="op">:</span> <span class="dv">0</span><span class="op">;</span>
+            <span class="op">-</span>webkit<span class="op">-</span>border<span class="op">-</span><span class="dt">radius</span><span class="op">:</span> <span class="dv">0</span><span class="op">;</span>
+            <span class="op">-</span>moz<span class="op">-</span>border<span class="op">-</span><span class="dt">radius</span><span class="op">:</span> <span class="dv">0</span><span class="op">;</span>
+            <span class="op">-</span>o<span class="op">-</span>border<span class="op">-</span><span class="dt">radius</span><span class="op">:</span> <span class="dv">0</span><span class="op">;</span>
+            <span class="op">-</span>webkit<span class="op">-</span>box<span class="op">-</span><span class="dt">shadow</span><span class="op">:</span> 0px 3px 5px 0px <span class="at">rgba</span>(<span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="fl">0.3</span>)<span class="op">;</span>
+            <span class="op">-</span>moz<span class="op">-</span>box<span class="op">-</span><span class="dt">shadow</span><span class="op">:</span> 0px 3px 5px 0px <span class="at">rgba</span>(<span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="fl">0.3</span>)<span class="op">;</span>
+            box<span class="op">-</span><span class="dt">shadow</span><span class="op">:</span> 0px 3px 5px 0px <span class="at">rgba</span>(<span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="fl">0.3</span>)<span class="op">;</span>
+        <span class="op">}</span></code></pre></div>
+<p>fixedが適用されると、「Pposition: fixed」が効いてきます。 また、top0、left0、width100%にすることにより、画面上部に固定されたnav領域が出現するのです。</p>
+<p>「border-radius」以下に記述されている内容は各ベンダープレフィクスと呼び、 それぞれのブラウザでのCSS解析を補助している。</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">項目</th>
+<th style="text-align: center;">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">webkit</td>
+<td style="text-align: center;">Chrome iso</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">moz</td>
+<td style="text-align: center;">Mozilla</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">o</td>
+<td style="text-align: center;">Opera</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ms</td>
+<td style="text-align: center;">IE</td>
+</tr>
+</tbody>
+</table>
+<p><a href="Javascript-12.html">NEXT</a> <a href="Javascript-11.html">PREVIOUS</a></p>
+</body>
+</html>

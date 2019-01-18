@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Slider</title>
+<style type="text/css">
+  /* スタイルシート */
+  .slider .slide {
+    width: 498px;
+    height: 198px;
+    border: 1px solid #f00;
+    float: left;
+  }
+  .slider .slideSet {
+ 	 position: absolute;
+  }
+  .slider {
+  width: 500px;
+  height: 200px;
+  overflow: hidden;
+  position: relative; 
+  }
+</style>
+<script src="jquery-1.11.3.min.js"></script>
+</head>
+<body>
+
+<!-- HTML -->
+<div class="slider">
+  <div class="slideSet">
+    <div class="slide">slide1</div>
+    <div class="slide">slide2</div>
+    <div class="slide">slide3</div>
+    <div class="slide">slide4</div>
+    <div class="slide">slide5</div>
+  </div>
+</div>
+
+<!-- jQuery -->
+
+<script>
+var slideWidth = $('.slide').outerWidth();	// .slideの幅を取得して代入
+var slideNum = $('.slide').length;	// .slideの数を取得して代入
+var slideSetWidth = slideWidth * slideNum;	// .slideの幅×数で求めた値を代入
+$('.slideSet').css('width', slideSetWidth);	// .slideSetのスタイルシートにwidth: slideSetWidthを指定
+
+// アニメーションの実行
+$('.slideSet').animate({
+	left: -slideWidth
+});
+</script>
+</body>
+</html>

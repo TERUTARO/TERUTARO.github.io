@@ -93,9 +93,9 @@ show databases;
 
 3.以下のコマンドを実行し、データベース／テーブルを作成する。
 ```bash
-create database sample01;
+create database test;
 
-use sample01;
+use test;
 
 CREATE TABLE name (
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -168,7 +168,7 @@ git init
 1.以下のコマンドを実行する。
 
 ```bash
-git remote add origin https://github.com/TERUTARO/terusta.git
+git remote add origin https://github.com/TERUTARO/terusta201903.git
 ```
 ## リモートリポジトリからのPULL
 1.以下のコマンドを実行し、リモートリポジトリをPULLしてくる。
@@ -203,7 +203,30 @@ vi sample.html
 vi dbcon.php
 ```
 
-2.「コーディング箇所」内に以下の内容を追記し、内容を保存して閉じる。
+2.「コーディング箇所 2 」内に以下の内容を追記し、内容を保存して閉じる。
+
+*追記前*
+
+```php
+$db_host = "";
+$db_user = "";
+$db_pass = "";
+$db_name = "";
+```
+
+*追記後*
+```php
+$db_host = "localhost";
+$db_user = "root";
+$db_pass = "";
+$db_name = "test";
+```
+
+3.「コーディング箇所 3」内に以下の内容を追記し、内容を保存して閉じる。
+```PHP
+$stmt = $mysqli->prepare("INSERT INTO name (name) VALUES (?)");
+```
+
 
 
 

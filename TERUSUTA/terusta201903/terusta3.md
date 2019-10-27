@@ -1,3 +1,5 @@
+# ざっくりLAMP環境
+
 # Apache
 ## Apacheのインストール
 1.以下のコマンドを実行し、Apacheをインストールする。
@@ -10,7 +12,7 @@ yum install httpd
 
 ```bash
 yum list installed | grep httpd
-httpd --version 
+httpd -version 
 ```
 
 ## Apacheの起動
@@ -27,7 +29,7 @@ systemctl status httpd
 ## httpd.confの設定／確認
 1.以下のコマンドを実行し、カレントディレクトリを移動し、ディレクトリ配下を確認する。
 ```bash
-cd /var/httpd/conf/
+cd /etc/httpd/conf/
 ls -lha 
 ```
 
@@ -69,7 +71,7 @@ yum install mysql-server
 
 2.以下のコマンドを実行し、導入されたことを確認する。
 ```bash
-yum list installed | grep mysqld
+yum list installed | grep mysql
 mysqld --version
 ```
 
@@ -77,6 +79,11 @@ mysqld --version
 1.以下のコマンドを実行する。
 ```bash
 systemctl start mysqld
+```
+
+2.以下のコマンドを実行し、サービスの起動状態を確認する。
+```
+systemctl status mysqld
 ```
 
 ## MySQLの設定
@@ -104,9 +111,9 @@ name TEXT NOT NULL
 ```
 
 4.以下のコマンドを実行し、登録カラム情報を確認する。
-
-
-
+```
+show columns from name;
+```
 
 
 5.以下のコマンドを実行し、MySQLからexitする。
@@ -160,6 +167,7 @@ git --version
 ```bash
 cd /var/www/html
 pwd
+ls -lha 
 git init
 
 ```
@@ -175,7 +183,7 @@ git remote add origin https://github.com/TERUTARO/terusta201903.git
 
 ```bash
 git pull origin master
-pwd
+ls -lha 
 ```
 以下のコマンドを実行する。
 
@@ -226,6 +234,32 @@ $db_name = "test";
 ```PHP
 $stmt = $mysqli->prepare("INSERT INTO name (name) VALUES (?)");
 ```
+
+# 内容確認
+## Webフロント
+1.ブラウザ上から以下のURLにアクセスする。
+　
+　[URL]
+  <FQDN>/sample.html
+
+2.入力フォームに自分の名前を入力し、登録ボタンをクリックする。
+　画面遷移できていることを確認する。
+
+
+## DB POST
+1.サーバにて以下のコマンドを実行する。
+```bash
+mysql -u root -p
+```
+
+2.以下のコマンドを実行する。ブラウザから入力したデータが格納されていることを確認する。
+```bash
+use test;
+
+select * from name;
+```
+
+
 
 
 

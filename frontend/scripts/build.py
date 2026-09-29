@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Build the five static portfolio pages. Python 3, no dependencies."""
+"""Prepare the existing portfolio markup for the Next.js entry points."""
 from pathlib import Path
 from html import escape
 import json
@@ -9,14 +9,16 @@ import hashlib
 from work_history import render_work_history
 
 ROOT = Path(__file__).resolve().parents[1]
+PUBLIC = ROOT / 'public'
+OUTPUT = ROOT / '.generated'
 PROFILE = json.loads((ROOT / 'content' / 'profile.json').read_text())
 
 def e(value):
     return escape(str(value), quote=True)
 
 def asset_url(path):
-    revision = hashlib.sha256((ROOT / path).read_bytes()).hexdigest()[:12]
-    return f'{path}?v={revision}'
+    revision = hashlib.sha256((PUBLIC / path).read_bytes()).hexdigest()[:12]
+    return f'/{path}?v={revision}'
 
 def arrow(direction='up'):
     path = 'M5 19 19 5M5 5h14v14' if direction == 'up' else 'M4 12h16m-6-6 6 6-6 6'
@@ -62,19 +64,15 @@ def page_head(index, title, ja, desc):
 
 NAV = [('index.html', 'About', 'トップ'), ('works.html', 'Works', '実績'), ('partners.html', 'Partners', '継続のお取引'), ('events.html', 'Events', 'イベント'), ('contact.html', 'Contact', 'お問い合わせ')]
 
-def shell(filename, title, description, body):
+def shell(filename, body):
     nav = ''.join(f'<a href="{url}" {current_attr(filename, url)}><span class="menu-link-en">{name}</span><span class="menu-link-ja">{ja}</span>{arrow("right")}</a>' for url, name, ja in NAV)
     rail = ''.join(f'<a href="{url}" {current_attr(filename, url)}>{ja}</a>' for url, name, ja in NAV)
-    water_assets = f'<link rel="stylesheet" href="{asset_url("assets/water.css")}"><script src="{asset_url("assets/water.js")}" defer></script>' if filename == 'index.html' else ''
-    work_assets = f'<link rel="stylesheet" href="{asset_url("assets/work-history.css")}"><script src="{asset_url("assets/work-history.js")}" defer></script>' if filename == 'works.html' else ''
-    return f'''<!doctype html>
-<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="{e(description)}"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#f4f5f1"><title>{e(title)} — terutaro</title><link rel="icon" href="data:,"><link rel="stylesheet" href="{asset_url("assets/style.css")}"><script src="{asset_url("assets/main.js")}" defer></script>{water_assets}{work_assets}</head>
-<body class="page-{filename.split('.')[0]}"><a class="skip-link" href="#main">本文へスキップ</a>
+    return f'''<a class="skip-link" href="#main">本文へスキップ</a>
 <header class="site-header wrap"><a class="brand" href="index.html" aria-label="terutaro トップページ"><span>terutaro</span></a><button class="menu-trigger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-menu" hidden><span class="menu-lines" aria-hidden="true"></span><span class="menu-trigger-text">Menu</span></button><nav class="rail-nav" aria-label="メインナビゲーション">{rail}</nav></header>
 <dialog id="site-menu" class="menu-panel" aria-label="メニュー"><div class="menu-panel-top"><a class="brand" href="index.html">terutaro</a><button class="menu-close" type="button" aria-label="メニューを閉じる" autofocus><span aria-hidden="true"></span></button></div><div class="menu-panel-body"><div class="menu-profile"><span class="profile-avatar"><img src="assets/portrait.png" alt="{e(PROFILE["name"])}のプロフィール写真" width="1254" height="1254" decoding="async"></span><p>{e(PROFILE["name"])}<span>terutaro</span></p>{social_links()}</div><nav id="main-nav" class="menu-links" aria-label="ページ一覧">{nav}</nav></div></dialog>
 <noscript><nav class="fallback-nav wrap" aria-label="ページ一覧">{rail}</nav></noscript>
 <main id="main">{body}</main>
-<footer class="site-footer wrap"><div class="footer-top"><a class="brand" href="index.html"><span>terutaro</span></a>{social_links()}<a class="back-top" href="#" aria-label="ページの先頭へ">Back to top <span>↑</span></a></div><div class="footer-bottom"><span>© <span data-year>2026</span> terutaro</span><span>Independent engineer · Okinawa, Japan</span></div></footer></body></html>'''
+<footer class="site-footer wrap"><div class="footer-top"><a class="brand" href="index.html"><span>terutaro</span></a>{social_links()}<a class="back-top" href="#" aria-label="ページの先頭へ">Back to top <span>↑</span></a></div><div class="footer-bottom"><span>© <span data-year>2026</span> terutaro</span><span>Independent engineer · Okinawa, Japan</span></div></footer>'''
 
 def contact_banner():
     return f'''<section class="contact-banner wrap"><h2>お問い合わせ</h2><a href="contact.html#contact-form" class="contact-action" aria-label="相談：お問い合わせフォームへ">{chat_icon()}<span>相談</span></a></section>'''
@@ -108,7 +106,7 @@ def generate_art():
         d = 'M' + 'L'.join(f'{x:.2f},{y:.2f}' for x, y, z in pts)
         paths.append(f'<path d="{d}" stroke="#748065" stroke-opacity=".25" stroke-width=".65"/>')
     svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 570" fill="none">' + ''.join(paths) + '</svg>'
-    (ROOT / 'assets' / 'continuity.svg').write_text(svg)
+    (PUBLIC / 'assets' / 'continuity.svg').write_text(svg)
 
 SKILL_GROUPS = [
     ('cloud', '01', 'Cloud & Infrastructure', 'クラウド・インフラ', '', [
@@ -144,7 +142,7 @@ PREVIEWS = json.loads(PREVIEW_PATH.read_text()) if PREVIEW_PATH.exists() else {}
 def site_image(key, title):
     item = PREVIEWS.get(key, {})
     path = item.get('image', '')
-    if item.get('available') and path and (ROOT / path).is_file():
+    if item.get('available') and path and (PUBLIC / path).is_file():
         return f'<img src="{e(path)}" alt="{e(title)}のWebサイト" width="960" height="600" loading="lazy" decoding="async">'
     return f'<span class="site-preview-fallback"><span>{e(title)}</span><span>Webサイトを開く {arrow()}</span></span>'
 
@@ -226,9 +224,22 @@ def main():
         ('events.html', 'イベント・コミュニティ', f'{PROFILE["name"]}主催のTIDAL WAIVEと、これまでのイベントアーカイブ。', events()),
         ('contact.html', 'お問い合わせ', 'インフラ、Web開発、AI基盤に関するお仕事のご相談。', contact()),
     ]
+    generated = {}
     for filename, title, description, body in pages:
-        (ROOT / filename).write_text(shell(filename, title, description, body))
-        print(f'Built {filename}')
+        scripts = [asset_url('assets/main.js')]
+        if filename == 'index.html':
+            scripts.append(asset_url('assets/water.js'))
+        if filename == 'works.html':
+            scripts.append(asset_url('assets/work-history.js'))
+        generated[filename.removesuffix('.html')] = {
+            'title': title,
+            'description': description,
+            'body': shell(filename, body),
+            'scripts': scripts,
+        }
+    OUTPUT.mkdir(exist_ok=True)
+    (OUTPUT / 'pages.json').write_text(json.dumps(generated, ensure_ascii=False, indent=2) + '\n')
+    print(f'Prepared {len(generated)} pages for Next.js')
 
 if __name__ == '__main__':
     main()

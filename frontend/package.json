@@ -1,0 +1,29 @@
+{
+  "name": "@terutaro/frontend",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "prepare:content": "python3 scripts/build.py",
+    "predev": "npm run prepare:content",
+    "dev": "next dev",
+    "prebuild": "npm run prepare:content",
+    "build": "next build",
+    "postbuild": "node scripts/copy-archive.mjs",
+    "typecheck": "next typegen && tsc --noEmit",
+    "preview": "python3 -m http.server 4173 --bind 127.0.0.1 --directory out"
+  },
+  "dependencies": {
+    "next": "16.3.7",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "5.9.3"
+  }
+}

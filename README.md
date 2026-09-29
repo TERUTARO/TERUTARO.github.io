@@ -1,89 +1,57 @@
-# terutaro — personal portfolio mock
+# terutaro
 
-沖縄を拠点に活動する照屋 朝太郎さんの個人サイトのモックです。外部パッケージ不要の HTML / CSS / JavaScript で制作しています。
+照屋 朝太郎の個人サイト。公開URL: https://terutaro.github.io/
 
-## 確認方法
+## ディレクトリ
 
-このディレクトリで次を実行してください。
-
-```sh
-python3 -m http.server 4173 --bind 127.0.0.1
+```text
+.
+├── frontend/                 # Next.js / TypeScript（サイト本体）
+│   ├── src/app/              # トップ・実績・企業様・イベント・お問い合わせ
+│   ├── src/components/       # 既存画面を表示する移行用コンポーネント
+│   ├── src/lib/              # ビルド済みコンテンツの読み込み
+│   ├── public/assets/        # 画像・既存CSS/JavaScript
+│   ├── content/              # プロフィール・実績・サイトプレビューのデータ
+│   └── scripts/              # コンテンツ生成・旧資料の公開出力へのコピー
+├── infrastructure/           # インフラ定義とLambda
+│   ├── lambda/contact/       # 問い合わせ用Lambdaの雛形
+│   └── terraform/            # Terraformの追加先
+├── archive/technical-notes/  # 過去の技術資料（元の階層を保持）
+├── docs/                     # デザイン・掲載情報の補足
+└── .github/workflows/        # Next.jsのビルド・GitHub Pages公開
 ```
 
-[http://localhost:4173](http://localhost:4173) を開くと確認できます。`index.html` をブラウザで直接開くこともできます。
+## ローカル開発
 
-公開URL: [https://terutaro.github.io/](https://terutaro.github.io/)
-
-GitHub Pagesは`master`ブランチのルートを配信します。HTMLとアセットは生成済みで、`.nojekyll`により静的ファイルとして公開します。既存の技術資料ディレクトリは保持しています。ローカル検証用の`previews/`はGit管理・公開の対象外です。
-
-## ページ
-
-| ページ | 内容 |
-| --- | --- |
-| `index.html` | プロフィール、4分類のスキル切り替え、最新実績、継続取引・イベントへの導線 |
-| `works.html` | 31件の実績、カテゴリ・タグ検索、開始年ごとの区切り、担当の開閉、2010年からの職歴、個人活動 |
-| `partners.html` | リアムス株式会社、合同会社ハラハチ、日乃出工業株式会社との取り組み |
-| `events.html` | TIDAL WAIVE、指定されたconnpassイベント4件 |
-| `contact.html` | 入力検証・確認画面・修正操作を試せるお問い合わせフォーム |
-
-お問い合わせ内容は送信・保存しません。実際の受付先は未設定です。分析タグ、外部フォント、外部JavaScriptは使用していません。
-
-## 更新方法
-
-- `content/profile.json`: 表示名とSNSプロフィールURL。URLが空のSNSは表示しません。
-- `content/career.json`: 職務経歴書から整理した実績と職歴。
-- `scripts/build.py`: 各ページの本文、共通ヘッダー・フッター、スキル、リンク、ベクターアートの生成。
-- `scripts/work_history.py`: 実績一覧、開始年の見出し、検索UIの生成。
-- `assets/style.css`: 配色、余白、タイポグラフィ、レスポンシブ対応。
-- `assets/main.js`: 全画面メニュー、スキルタブ、フォーム確認。
-- `assets/work-history.js` / `assets/work-history.css`: カテゴリとタグの絞り込み、年別表示、実績への直接リンク。
-- `assets/water.js` / `assets/water.css`: ホームのマウス・タッチに反応する水面の演出。
-- `assets/portrait.png`: 提供写真をもとに背景を透過したプロフィールアイコン。
-- `content/portrait-edit.md`: アイコン作成に使用した編集指示と制作方法。
-- `assets/sites/*.webp`: 企業・サービス・コミュニティ・connpassの実サイトを撮影した縮小プレビュー。
-- `content/site-previews.json`: 撮影元URL、ページタイトル、撮影日時、画像パス。
-
-内容やCSS・JavaScriptを変更後、以下でHTMLを再生成します。CSS・JavaScriptのURLには内容から計算したバージョンを付け、更新前のキャッシュとの混在を防ぎます。Python 3の標準ライブラリだけで動作します。
+Node.js 24 LTS / npm と Python 3.9以上を使用します。
 
 ```sh
-python3 scripts/build.py
+cd frontend
+npm ci
+npm run dev
 ```
 
-生成済みのHTMLを直接編集すると、再生成時に上書きされます。
+http://localhost:3000 を開きます。既存の `.html` 付きURLも開発サーバーで利用できます。
 
-## 確認済みの操作
+```sh
+cd frontend
+npm run build
+npm run typecheck
+npm run preview
+```
 
-Chromeで全5ページを幅320 / 390 / 768 / 1440pxで確認し、横方向のはみ出し、内部リンク切れ、JavaScript例外がないことを確認しました。スキルタブとキーボード操作、実績の絞り込みと詳細開閉、モバイルメニュー、フォームの必須入力・確認・修正を検証しています。
+`npm run build` はコンテンツ生成 → Next.jsの静的出力 → 旧資料のコピーを実行します。公開成果物は `frontend/out/` です。プレビューは http://localhost:4173 。生成物・依存パッケージはGitに含めません。
 
-## デザイン
+## 今回の整理範囲
 
-オフホワイト、深いグリーン、スレートブルーを基調にしたデザインです。ロゴマークと装飾的なキャッチコピーは削除し、プロフィール・スキル・実績などの項目名を見出しにしています。ヒーローにはプロフィールアイコンとオリジナルSVGを配置しています。トップの実績カードは装飾画像を使わず、案件名・担当先・期間を文字と余白でまとめています。実績一覧ページはGitの履歴を思わせる線と分岐で表現しています。
+サイトの配置とNext.jsの入口を整備しています。既存画面のHTML生成・CSS・JavaScriptは継続利用し、Next.jsのページから表示します。画面ごとのReactコンポーネント化は次の段階で進められる構成です。更新先と移行の仕組みは [frontend/README.md](frontend/README.md) に記載しています。
 
-PC（幅1001px以上）は左端に縦書きの固定メニューを表示し、上部ボタンから全画面メニューを開きます。幅1000px以下ではヘッダーのメニューボタンに切り替わります。全画面メニューにはネイティブの`dialog`を使用し、Escapeでの閉じる操作、フォーカスの制御、背景のスクロール停止に対応しています。JavaScriptが無効でも通常のリンクで移動できます。
+問い合わせフォームは現在も確認画面までのモックです。Lambdaは未実装を示す `501` を返す入口のみで、AWSリソースの作成・実送信・フロントからの接続はまだ行いません。詳細は [infrastructure/README.md](infrastructure/README.md) を参照してください。
 
-企業・イベントのプレビューは、外側の枠・ブラウザ風ツールバー・影を付けずに表示しています。
+## 公開
 
-スキルの番号はクラウド・コード・AI・ネットワークの線画アイコンに置き換えています。お問い合わせへの導線は「相談」の丸いボタンで、フォームへ直接移動します。SNSリンクはアイコン・文字・矢印を一組のボタンにし、スマートフォンでも横並びを維持します。
+`master` へのpush時にGitHub Actionsでビルドし、`frontend/out/` をGitHub Pagesへ公開します。Pagesの公開元は **GitHub Actions** を使用します。既存の `index.html` / `works.html` などのURLを維持します。
 
-実績は開始年で区切り、カテゴリとタグ名の部分一致検索を組み合わせて探せます。大文字・小文字や全角・半角は区別しません。タグを押すとその名前で検索し、同じタグを再度押すと解除します。検索結果のない年は非表示にし、全体・年ごとの件数を更新します。各実績への直接リンクでは、必要に応じて絞り込みを解除して対象を表示します。
+過去の技術資料はビルド後に元の公開階層へコピーするため、`/Ansible/Ansible-01.html` などのURLも維持します。原本の管理場所は [archive/](archive/README.md) です。
 
-トップの水面は画像背景ではなく、波の計算結果を使って実際の文字・写真・図形をSVGフィルターで屈折させています。透明な反射光を重ね、マウス移動やタップから波紋が広がります。入力が止まると収束して描画を止め、画面外・タブ非表示・メニュー展開中も停止します。端末の「視差効果を減らす」設定では演出を無効にします。リンクやスマートフォンのスクロール操作は通常どおり利用できます。
-
-参考として確認したサイト: [bokoko33](https://bokoko33.me/)、[Catalyst](https://www.chicagocatalyst.com/)、[Toshiyuki Hashimoto](https://toshiyukihashimoto.jp/)、[Re Loop](https://re-loop.jp/)、[fluence](https://fluence.co.jp/)、[Satoshi Watanabe](https://satoshiwatanabe.org/)。これらのサイトから画像・コード・文章は転用していません。
-
-## 掲載情報の扱い
-
-- 2025年6月19日版の職務経歴書と、今回の依頼内容をもとに編集しています。DOCX原本はサイト内に含めていません。
-- 2025年9月開始の2案件を最新として追加。既存資料の「現在」は2025年6月時点の表記として区別しています。
-- 類似する自治体案件、および同一案件の複数フェーズをまとめ、追加分を含めて31件の実績に整理しました。
-- 資料の匿名取引先は実名に置き換えていません。案件ごとに未確認の利用技術・成果数値は追加していません。
-- スキルの経験年数は資料の作成日時に依存するため掲載せず、技術名を中心にまとめています。
-- Codex / Claude / Cursor、Vertex AI / BigQuery、CloudFront / AWS WAF / Bedrockを反映しています。
-- SNSは本人から提示されたアカウントへの外部リンクです。ログイン連携や投稿の自動取得は行いません。Instagramは`asataro.teruya`、Xは`teruya_asataro`。FacebookはプロフィールURLが確定してから`content/profile.json`に追加できます。
-- 生年月日・年齢は掲載していません。プロフィールの表示名は依頼にある「照屋 朝太郎 / terutaro」です。
-- プロフィールアイコンは本人から提供された写真をbuilt-in imagegenで編集した透過PNGです。生成系の編集のため、元写真の画素を完全に保持した切り抜きではありません。元の写真は公開ファイルに含めていません。
-- connpassの4件は、実ブラウザで確認したページタイトルとスクリーンショットを掲載しています。開催日は掲載していません。
-- 取引先の名前は依頼内容を優先。資料中の「合同会社ハライチ」と依頼の「合同会社ハラハチ」の表記差は、依頼側に合わせています。
-- 企業・イベントのプレビューは実サイトのスクリーンショットです。サイト内のロゴ・文言は撮影元の表示をそのまま縮小しています。クリックすると元のサイトを新しいタブで開きます。
-- プレビューは2026年9月29日時点の静止画で、iframeによるライブ埋め込みではありません。Asset Compassは公開URLで表示されるログイン画面です。
-- モックとして各ページの`noindex,nofollow`を維持しています。お問い合わせは確認画面のみで、JavaScriptが無効な場合も入力内容を送信しません。実際の送信や検索掲載に対応する際は、受付先と公開設定を調整してください。
+デザイン・掲載情報については [docs/portfolio.md](docs/portfolio.md) を参照してください。

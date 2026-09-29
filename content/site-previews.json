@@ -1,0 +1,65 @@
+{
+  "riams": {
+    "url": "https://www.riams.co.jp/",
+    "title": "IT資産管理（ITAM）コンサルティング | RIAMS -",
+    "image": "assets/sites/riams.webp",
+    "capturedAt": "2026-09-29T07:57:58.669298+00:00",
+    "available": true
+  },
+  "asset-compass": {
+    "url": "https://asset-compass.jp/",
+    "title": "Asset Compass",
+    "image": "assets/sites/asset-compass.webp",
+    "capturedAt": "2026-09-29T07:58:03.320151+00:00",
+    "available": true
+  },
+  "harahachi": {
+    "url": "https://harahachi.co.jp/",
+    "title": "合同会社ハラハチ｜無駄を省きコストを抑えたWebサイト制作｜小中規模サイト対応",
+    "image": "assets/sites/harahachi.webp",
+    "capturedAt": "2026-09-29T07:58:07.317324+00:00",
+    "available": true
+  },
+  "hinode": {
+    "url": "https://hinode-hd.com/",
+    "title": "【オフィス引っ越しなら】HINODE CORPORATION(日乃出工業株式会社)",
+    "image": "assets/sites/hinode.webp",
+    "capturedAt": "2026-09-29T07:58:13.396738+00:00",
+    "available": true
+  },
+  "tidal-waive": {
+    "url": "https://tidal-waive.com/",
+    "title": "Tidal wAIve Ryukyu — AIと地域の潮流が、ゆるやかに交わる場所。",
+    "image": "assets/sites/tidal-waive.webp",
+    "capturedAt": "2026-09-29T07:58:17.824880+00:00",
+    "available": true
+  },
+  "connpass-153907": {
+    "url": "https://connpass.com/event/153907/",
+    "title": "【テルスタ】AnsibleでNginx／MySQL／PHP／Laravel環境をざっくりつくる - connpass",
+    "image": "assets/sites/connpass-153907.webp",
+    "capturedAt": "2026-09-29T07:58:22.531856+00:00",
+    "available": true
+  },
+  "connpass-150116": {
+    "url": "https://connpass.com/event/150116/",
+    "title": "【テルスタ】Webサーバをつくろう　其の参　ざっくりLAMP環境 - connpass",
+    "image": "assets/sites/connpass-150116.webp",
+    "capturedAt": "2026-09-29T07:58:26.384150+00:00",
+    "available": true
+  },
+  "connpass-142247": {
+    "url": "https://connpass.com/event/142247/",
+    "title": "【テルスタ】Webサーバをつくろう　其の弐　レッツロードバランシング - connpass",
+    "image": "assets/sites/connpass-142247.webp",
+    "capturedAt": "2026-09-29T07:58:30.684670+00:00",
+    "available": true
+  },
+  "connpass-139485": {
+    "url": "https://connpass.com/event/139485/",
+    "title": "【テルスタ】Webサーバをつくろう　其の壱 - connpass",
+    "image": "assets/sites/connpass-139485.webp",
+    "capturedAt": "2026-09-29T07:58:34.810051+00:00",
+    "available": true
+  }
+}

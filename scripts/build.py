@@ -29,14 +29,17 @@ def page_head(index, title, ja, desc):
     heading_class = ' long-title' if len(ja) > 10 else ''
     return f'<section class="page-heading wrap"><h1 class="{heading_class.strip()}">{e(ja)}</h1></section>'
 
-NAV = [('index.html', 'About', 'トップ'), ('works.html', 'Works', '実績'), ('partners.html', 'Partners', '継続のお取引'), ('events.html', 'Events', 'イベント')]
+NAV = [('index.html', 'About', 'トップ'), ('works.html', 'Works', '実績'), ('partners.html', 'Partners', '継続のお取引'), ('events.html', 'Events', 'イベント'), ('contact.html', 'Contact', 'お問い合わせ')]
 
 def shell(filename, title, description, body):
-    nav = ''.join(f'<a href="{url}" {current_attr(filename, url)}><span>{name}</span><span class="nav-ja">{ja}</span></a>' for url, name, ja in NAV)
+    nav = ''.join(f'<a href="{url}" {current_attr(filename, url)}><span class="menu-link-en">{name}</span><span class="menu-link-ja">{ja}</span>{arrow("right")}</a>' for url, name, ja in NAV)
+    rail = ''.join(f'<a href="{url}" {current_attr(filename, url)}>{ja}</a>' for url, name, ja in NAV)
     return f'''<!doctype html>
 <html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="{e(description)}"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#f4f5f1"><title>{e(title)} — terutaro</title><link rel="icon" href="data:,"><link rel="stylesheet" href="assets/style.css"><script src="assets/main.js" defer></script></head>
 <body class="page-{filename.split('.')[0]}"><a class="skip-link" href="#main">本文へスキップ</a>
-<header class="site-header wrap"><a class="brand" href="index.html" aria-label="terutaro トップページ"><span>terutaro</span></a><button class="menu-toggle" aria-expanded="false" aria-controls="main-nav"><span>Menu</span><span class="menu-icon" aria-hidden="true"></span></button><nav id="main-nav" aria-label="メインナビゲーション">{nav}<a href="contact.html" class="nav-contact" {"aria-current='page'" if filename == 'contact.html' else ''}>お仕事のご相談 {arrow()}</a></nav></header>
+<header class="site-header wrap"><a class="brand" href="index.html" aria-label="terutaro トップページ"><span>terutaro</span></a><button class="menu-trigger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-menu" hidden><span class="menu-lines" aria-hidden="true"></span><span class="menu-trigger-text">Menu</span></button><nav class="rail-nav" aria-label="メインナビゲーション">{rail}</nav></header>
+<dialog id="site-menu" class="menu-panel" aria-label="メニュー"><div class="menu-panel-top"><a class="brand" href="index.html">terutaro</a><button class="menu-close" type="button" aria-label="メニューを閉じる" autofocus><span aria-hidden="true"></span></button></div><div class="menu-panel-body"><div class="menu-profile"><span class="profile-avatar"><img src="assets/portrait.png" alt="照屋のプロフィール写真" width="1254" height="1254" decoding="async"></span><p>照屋<span>terutaro</span></p></div><nav id="main-nav" class="menu-links" aria-label="ページ一覧">{nav}</nav></div></dialog>
+<noscript><nav class="fallback-nav wrap" aria-label="ページ一覧">{rail}</nav></noscript>
 <main id="main">{body}</main>
 <footer class="site-footer wrap"><div class="footer-top"><a class="brand" href="index.html"><span>terutaro</span></a><a class="back-top" href="#" aria-label="ページの先頭へ">Back to top <span>↑</span></a></div><div class="footer-bottom"><span>© <span data-year>2026</span> terutaro</span><span>Independent engineer · Okinawa, Japan</span></div></footer></body></html>'''
 
@@ -115,7 +118,7 @@ def site_image(key, title):
 def site_preview(key, show_title=True):
     url, title, domain = SITE_INFO[key]
     caption = f'<span class="site-preview-title">{e(title)}{arrow()}</span>' if show_title else ''
-    return f'''<a class="site-preview" href="{e(url)}" target="_blank" rel="noopener noreferrer" aria-label="{e(title)}のWebサイトを開く（新しいタブ）"><span class="site-preview-frame"><span class="site-preview-toolbar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>{e(domain)}</span></span><span class="site-preview-screen">{site_image(key, title)}</span></span>{caption}</a>'''
+    return f'''<a class="site-preview" href="{e(url)}" target="_blank" rel="noopener noreferrer" aria-label="{e(title)}のWebサイトを開く（新しいタブ）"><span class="site-preview-screen">{site_image(key, title)}</span>{caption}</a>'''
 
 def skills():
     tabs = ''.join(f'<button id="tab-{key}" role="tab" aria-selected="{str(i == 0).lower()}" aria-controls="panel-{key}" tabindex="{0 if i == 0 else -1}"><span class="mono">{num}</span>{label}<span class="tab-arrow">↗</span></button>' for i, (key, num, label, *_rest) in enumerate(SKILL_GROUPS))
@@ -131,7 +134,7 @@ def home(data):
 <section class="hero wrap">
   <div class="hero-topline"><span class="eyebrow">FREELANCE ENGINEER</span><span class="location"><span class="small-dot"></span> OKINAWA, JAPAN <span class="mono" data-clock></span></span></div>
   <div class="hero-grid">
-    <div class="hero-copy"><h1>terutaro</h1><div class="hero-name">照屋</div><p>沖縄を拠点に活動するフリーランスエンジニア。<br>インフラ構築・運用保守、Web開発、AI基盤を担当。</p><a class="pill-link" href="works.html">実績を見る {arrow('right')}</a></div>
+    <div class="hero-copy"><h1>terutaro</h1><div class="hero-name"><span class="profile-avatar"><img src="assets/portrait.png" alt="照屋のプロフィール写真" width="1254" height="1254" fetchpriority="high"></span><span>照屋</span></div><p>沖縄を拠点に活動するフリーランスエンジニア。<br>インフラ構築・運用保守、Web開発、AI基盤を担当。</p><a class="pill-link" href="works.html">実績を見る {arrow('right')}</a></div>
     <div class="hero-art" aria-hidden="true"><span class="art-corner top-left">+</span><span class="art-corner top-right">+</span><div class="art-orbit"></div><img src="assets/continuity.svg" alt="" width="600" height="570" fetchpriority="high"><span class="art-corner bottom-left">+</span><span class="art-corner bottom-right">+</span></div>
   </div>
   <div class="hero-bottom"><a href="#about">プロフィール <span>↓</span></a></div>

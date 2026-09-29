@@ -1,26 +1,29 @@
 'use strict';
 
 // Native links and semantic HTML work without a framework or a build server.
-const menuButton = document.querySelector('.menu-toggle');
-const navigation = document.querySelector('#main-nav');
-function closeMenu(returnFocus = false) {
-  menuButton.setAttribute('aria-expanded', 'false');
-  navigation.classList.remove('is-open');
-  if (returnFocus) menuButton.focus();
+const menuButton = document.querySelector('.menu-trigger');
+const menuPanel = document.querySelector('#site-menu');
+menuButton.hidden = false;
+function closeMenu() {
+  menuPanel.close();
 }
 menuButton.addEventListener('click', () => {
-  const open = menuButton.getAttribute('aria-expanded') !== 'true';
-  menuButton.setAttribute('aria-expanded', String(open));
-  navigation.classList.toggle('is-open', open);
+  menuPanel.showModal();
+  menuButton.setAttribute('aria-expanded', 'true');
+  document.body.classList.add('menu-open');
 });
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') closeMenu(true);
+menuPanel.querySelector('.menu-close').addEventListener('click', closeMenu);
+menuPanel.addEventListener('close', () => {
+  menuButton.setAttribute('aria-expanded', 'false');
+  document.body.classList.remove('menu-open');
+  menuButton.focus({ preventScroll: true });
 });
-document.addEventListener('click', (event) => {
-  if (!event.target.closest('.site-header')) closeMenu();
+menuPanel.addEventListener('click', (event) => {
+  if (event.target === menuPanel) closeMenu();
 });
-matchMedia('(min-width: 801px)').addEventListener('change', (event) => {
-  if (event.matches) closeMenu();
+// Restore the normal page if the browser returns to a cached, open menu.
+window.addEventListener('pageshow', () => {
+  if (menuPanel.open) closeMenu();
 });
 
 const clock = document.querySelector('[data-clock]');

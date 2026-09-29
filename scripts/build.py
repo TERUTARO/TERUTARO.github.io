@@ -6,6 +6,7 @@ import json
 import math
 
 ROOT = Path(__file__).resolve().parents[1]
+PROFILE = json.loads((ROOT / 'content' / 'profile.json').read_text())
 
 def e(value):
     return escape(str(value), quote=True)
@@ -22,6 +23,10 @@ def link(url, label, cls='text-link'):
 def tags(items):
     return '<div class="tags">' + ''.join(f'<span>{e(t)}</span>' for t in items) + '</div>'
 
+def social_links():
+    links = ''.join(f'<a href="{e(item["url"])}" target="_blank" rel="me noopener noreferrer" aria-label="{e(item["label"])} {e(item["handle"])}（新しいタブ）"><span>{e(item["label"])}</span>{arrow()}</a>' for item in PROFILE['socials'] if item['url'])
+    return f'<nav class="social-links" aria-label="SNS">{links}</nav>'
+
 def section_label(n, title):
     return ''
 
@@ -34,14 +39,15 @@ NAV = [('index.html', 'About', 'トップ'), ('works.html', 'Works', '実績'), 
 def shell(filename, title, description, body):
     nav = ''.join(f'<a href="{url}" {current_attr(filename, url)}><span class="menu-link-en">{name}</span><span class="menu-link-ja">{ja}</span>{arrow("right")}</a>' for url, name, ja in NAV)
     rail = ''.join(f'<a href="{url}" {current_attr(filename, url)}>{ja}</a>' for url, name, ja in NAV)
+    water_assets = '<link rel="stylesheet" href="assets/water.css"><script src="assets/water.js" defer></script>' if filename == 'index.html' else ''
     return f'''<!doctype html>
-<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="{e(description)}"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#f4f5f1"><title>{e(title)} — terutaro</title><link rel="icon" href="data:,"><link rel="stylesheet" href="assets/style.css"><script src="assets/main.js" defer></script></head>
+<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="{e(description)}"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#f4f5f1"><title>{e(title)} — terutaro</title><link rel="icon" href="data:,"><link rel="stylesheet" href="assets/style.css"><script src="assets/main.js" defer></script>{water_assets}</head>
 <body class="page-{filename.split('.')[0]}"><a class="skip-link" href="#main">本文へスキップ</a>
 <header class="site-header wrap"><a class="brand" href="index.html" aria-label="terutaro トップページ"><span>terutaro</span></a><button class="menu-trigger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-menu" hidden><span class="menu-lines" aria-hidden="true"></span><span class="menu-trigger-text">Menu</span></button><nav class="rail-nav" aria-label="メインナビゲーション">{rail}</nav></header>
-<dialog id="site-menu" class="menu-panel" aria-label="メニュー"><div class="menu-panel-top"><a class="brand" href="index.html">terutaro</a><button class="menu-close" type="button" aria-label="メニューを閉じる" autofocus><span aria-hidden="true"></span></button></div><div class="menu-panel-body"><div class="menu-profile"><span class="profile-avatar"><img src="assets/portrait.png" alt="照屋のプロフィール写真" width="1254" height="1254" decoding="async"></span><p>照屋<span>terutaro</span></p></div><nav id="main-nav" class="menu-links" aria-label="ページ一覧">{nav}</nav></div></dialog>
+<dialog id="site-menu" class="menu-panel" aria-label="メニュー"><div class="menu-panel-top"><a class="brand" href="index.html">terutaro</a><button class="menu-close" type="button" aria-label="メニューを閉じる" autofocus><span aria-hidden="true"></span></button></div><div class="menu-panel-body"><div class="menu-profile"><span class="profile-avatar"><img src="assets/portrait.png" alt="{e(PROFILE["name"])}のプロフィール写真" width="1254" height="1254" decoding="async"></span><p>{e(PROFILE["name"])}<span>terutaro</span></p>{social_links()}</div><nav id="main-nav" class="menu-links" aria-label="ページ一覧">{nav}</nav></div></dialog>
 <noscript><nav class="fallback-nav wrap" aria-label="ページ一覧">{rail}</nav></noscript>
 <main id="main">{body}</main>
-<footer class="site-footer wrap"><div class="footer-top"><a class="brand" href="index.html"><span>terutaro</span></a><a class="back-top" href="#" aria-label="ページの先頭へ">Back to top <span>↑</span></a></div><div class="footer-bottom"><span>© <span data-year>2026</span> terutaro</span><span>Independent engineer · Okinawa, Japan</span></div></footer></body></html>'''
+<footer class="site-footer wrap"><div class="footer-top"><a class="brand" href="index.html"><span>terutaro</span></a>{social_links()}<a class="back-top" href="#" aria-label="ページの先頭へ">Back to top <span>↑</span></a></div><div class="footer-bottom"><span>© <span data-year>2026</span> terutaro</span><span>Independent engineer · Okinawa, Japan</span></div></footer></body></html>'''
 
 def contact_banner():
     return f'''<section class="contact-banner wrap"><h2>お問い合わせ</h2><a href="contact.html" class="contact-action">お仕事のご相談 {arrow('right')}</a></section>'''
@@ -131,22 +137,22 @@ def skills():
 def home(data):
     company_previews = ''.join(site_preview(key) for key in ['riams', 'harahachi', 'hinode'])
     return f'''
-<section class="hero wrap">
+<section class="hero wrap water-surface" data-water-surface><div data-water-content>
   <div class="hero-topline"><span class="eyebrow">FREELANCE ENGINEER</span><span class="location"><span class="small-dot"></span> OKINAWA, JAPAN <span class="mono" data-clock></span></span></div>
   <div class="hero-grid">
-    <div class="hero-copy"><h1>terutaro</h1><div class="hero-name"><span class="profile-avatar"><img src="assets/portrait.png" alt="照屋のプロフィール写真" width="1254" height="1254" fetchpriority="high"></span><span>照屋</span></div><p>沖縄を拠点に活動するフリーランスエンジニア。<br>インフラ構築・運用保守、Web開発、AI基盤を担当。</p><a class="pill-link" href="works.html">実績を見る {arrow('right')}</a></div>
+    <div class="hero-copy"><h1>terutaro</h1><div class="hero-name"><span class="profile-avatar"><img src="assets/portrait.png" alt="{e(PROFILE["name"])}のプロフィール写真" width="1254" height="1254" fetchpriority="high"></span><span>{e(PROFILE["name"])}</span></div><p>沖縄を拠点に活動するフリーランスエンジニア。<br>インフラ構築・運用保守、Web開発、AI基盤を担当。</p><a class="pill-link" href="works.html">実績を見る {arrow('right')}</a></div>
     <div class="hero-art" aria-hidden="true"><span class="art-corner top-left">+</span><span class="art-corner top-right">+</span><div class="art-orbit"></div><img src="assets/continuity.svg" alt="" width="600" height="570" fetchpriority="high"><span class="art-corner bottom-left">+</span><span class="art-corner bottom-right">+</span></div>
   </div>
   <div class="hero-bottom"><a href="#about">プロフィール <span>↓</span></a></div>
-</section>
-<section class="about-section wrap" id="about"><div class="about-grid"><div class="about-title"><h2>プロフィール</h2><div class="profile-name">照屋 <span>terutaro</span></div></div><div class="about-text"><p>沖縄在住。2019年4月からフリーランスエンジニアとして活動しています。</p><p>サーバー・ネットワークの設計構築、Webアプリケーション開発、クラウド・AI基盤の運用保守に携わっています。</p><p>コミュニティ「TIDAL WAIVE」を主催しています。</p><dl class="profile-facts"><div><dt>拠点</dt><dd>沖縄、日本</dd></div><div><dt>活動形態</dt><dd>フリーランス / 2019年4月〜</dd></div><div><dt>専門分野</dt><dd>インフラ / Web開発 / AI</dd></div></dl></div></div></section>
+</div></section>
+<section class="about-section wrap" id="about"><div class="about-grid"><div class="about-title"><h2>プロフィール</h2><div class="profile-name">{e(PROFILE["name"])} <span>terutaro</span></div>{social_links()}</div><div class="about-text"><p>沖縄在住。2019年4月からフリーランスエンジニアとして活動しています。</p><p>サーバー・ネットワークの設計構築、Webアプリケーション開発、クラウド・AI基盤の運用保守に携わっています。</p><p>コミュニティ「TIDAL WAIVE」を主催しています。</p><dl class="profile-facts"><div><dt>拠点</dt><dd>沖縄、日本</dd></div><div><dt>活動形態</dt><dd>フリーランス / 2019年4月〜</dd></div><div><dt>専門分野</dt><dd>インフラ / Web開発 / AI</dd></div></dl></div></div></section>
 {skills()}
 <section class="selected-section wrap"><div class="section-title"><h2>実績</h2><a class="text-link" href="works.html">すべての実績 {arrow()}</a></div><div class="selected-grid">
-<a class="project-feature" href="works.html#project-affiliate-platform-operations"><div class="project-visual infrastructure-visual"><div class="diagram-nodes"><span></span><span></span><span></span><span></span><span></span></div><span class="visual-number">01</span>{arrow()}</div><div class="project-meta"><span class="mono">INFRASTRUCTURE</span><span>2025.09 — 現在</span></div><h3>大手アフィリエイトサイト<br>基盤運用保守</h3><p>B社 D</p></a>
-<a class="project-feature" href="works.html#project-internal-ai-platform-operations"><div class="project-visual ai-visual"><div class="ai-orbits"><i></i><i></i><i></i><i></i></div><span class="visual-number">02</span>{arrow()}</div><div class="project-meta"><span class="mono">AI PLATFORM</span><span>2025.09 — 現在</span></div><h3>大手商品価格比較サイト<br>社内AI基盤運用保守</h3><p>E社 K</p></a>
+<a class="project-feature" href="works.html#project-affiliate-platform-operations"><div class="project-card-top"><span class="project-number">01</span><span class="project-category">INFRASTRUCTURE</span><span class="project-active"><i></i>進行中</span></div><div class="project-card-body"><p class="project-client">B社 D</p><h3>大手アフィリエイトサイト<br>基盤運用保守</h3></div><div class="project-card-bottom"><span class="mono">2025.09 — 現在</span><span class="project-card-action">実績を見る {arrow('right')}</span></div></a>
+<a class="project-feature" href="works.html#project-internal-ai-platform-operations"><div class="project-card-top"><span class="project-number">02</span><span class="project-category">AI PLATFORM</span><span class="project-active"><i></i>進行中</span></div><div class="project-card-body"><p class="project-client">E社 K</p><h3>大手商品価格比較サイト<br>社内AI基盤運用保守</h3></div><div class="project-card-bottom"><span class="mono">2025.09 — 現在</span><span class="project-card-action">実績を見る {arrow('right')}</span></div></a>
 </div></section>
 <section class="partner-showcase wrap"><div class="section-title"><h2>長期でお世話になっている企業様</h2><a class="text-link" href="partners.html">お取引について {arrow()}</a></div><div class="company-previews">{company_previews}</div></section>
-<section class="community-showcase wrap"><div class="section-title"><h2>イベント</h2><a class="text-link" href="events.html">イベント一覧 {arrow()}</a></div><div class="community-preview-grid">{site_preview('tidal-waive', False)}<div class="community-details"><h3>TIDAL WAIVE</h3><p>照屋が主催するコミュニティ。</p>{link('https://tidal-waive.com/', '公式サイト')}</div></div></section>
+<section class="community-showcase wrap"><div class="section-title"><h2>イベント</h2><a class="text-link" href="events.html">イベント一覧 {arrow()}</a></div><div class="community-preview-grid">{site_preview('tidal-waive', False)}<div class="community-details"><h3>TIDAL WAIVE</h3><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', '公式サイト')}</div></div></section>
 {contact_banner()}'''
 
 def works(data):
@@ -155,7 +161,7 @@ def works(data):
         current = item.get('current', False)
         projects.append(f'''<article class="timeline-item {'is-current' if current else ''}" data-category="{e(item['category'])}" id="project-{e(item['id'])}"><div class="timeline-date"><span class="mono">{e(item['period'])}</span>{'<span class="status"><i></i>進行中</span>' if current else ''}</div><div class="timeline-track"><span></span></div><div class="timeline-content"><div class="project-kicker"><span>{e(item['client'])}</span><span class="mono">{e(item['category'].upper())}</span></div><h2>{e(item['title'])}</h2><p>{e(item['summary'])}</p><details class="project-detail"><summary>担当・技術を見る <span>+</span></summary><div><p class="role"><span>ROLE</span>{e(item['role'])}</p>{tags(item['tags'])}</div></details></div></article>''')
     career = ''.join(f'<div class="career-item"><span class="mono">{e(item["year"])}</span><div><h3>{e(item["title"])}</h3><p>{e(item["description"])}</p></div></div>' for item in data['career'])
-    return page_head('01', 'Works', '実績', '') + f'''<section class="works-section wrap"><div class="works-toolbar"><div class="filters" role="group" aria-label="実績の絞り込み"><button class="active" data-filter="all" aria-pressed="true">All <span>{len(projects):02d}</span></button><button data-filter="infrastructure" aria-pressed="false">Infrastructure</button><button data-filter="development" aria-pressed="false">Development</button><button data-filter="network" aria-pressed="false">Network</button></div><span class="mono branch-label"><span aria-hidden="true">⑂</span> main / work-history</span></div><p class="filter-status sr-only" aria-live="polite">{len(projects)}件の実績を表示</p><div class="timeline">{''.join(projects)}</div><p class="source-note">2025年6月版の職務経歴書をもとに掲載し、2025年9月開始の2案件を追加しています。過去案件の期間・担当内容は資料作成時点の情報です。</p></section><section class="career-section wrap">{section_label('02', 'The journey')}<div class="career-grid"><div><h2>経歴</h2></div><div class="career-list">{career}</div></div></section><section class="personal-section wrap">{section_label('03', 'Personal projects')}<div class="section-title"><h2>個人活動</h2></div><div class="personal-grid"><article><span class="mono">COMMUNITY</span><h3>TIDAL WAIVE</h3><p>照屋が主催するコミュニティ。</p>{link('https://tidal-waive.com/', 'コミュニティサイト')}</article><article><span class="mono">PERSONAL PROJECT</span><h3>ぷろんぷとん</h3><span class="paused">現在保守停止中</span></article><article><span class="mono">PERSONAL PROJECT</span><h3>tideline</h3><span class="paused">現在保守停止中</span></article></div></section>{contact_banner()}'''
+    return page_head('01', 'Works', '実績', '') + f'''<section class="works-section wrap"><div class="works-toolbar"><div class="filters" role="group" aria-label="実績の絞り込み"><button class="active" data-filter="all" aria-pressed="true">All <span>{len(projects):02d}</span></button><button data-filter="infrastructure" aria-pressed="false">Infrastructure</button><button data-filter="development" aria-pressed="false">Development</button><button data-filter="network" aria-pressed="false">Network</button></div><span class="mono branch-label"><span aria-hidden="true">⑂</span> main / work-history</span></div><p class="filter-status sr-only" aria-live="polite">{len(projects)}件の実績を表示</p><div class="timeline">{''.join(projects)}</div><p class="source-note">2025年6月版の職務経歴書をもとに掲載し、2025年9月開始の2案件を追加しています。過去案件の期間・担当内容は資料作成時点の情報です。</p></section><section class="career-section wrap">{section_label('02', 'The journey')}<div class="career-grid"><div><h2>経歴</h2></div><div class="career-list">{career}</div></div></section><section class="personal-section wrap">{section_label('03', 'Personal projects')}<div class="section-title"><h2>個人活動</h2></div><div class="personal-grid"><article><span class="mono">COMMUNITY</span><h3>TIDAL WAIVE</h3><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', 'コミュニティサイト')}</article><article><span class="mono">PERSONAL PROJECT</span><h3>ぷろんぷとん</h3><span class="paused">現在保守停止中</span></article><article><span class="mono">PERSONAL PROJECT</span><h3>tideline</h3><span class="paused">現在保守停止中</span></article></div></section>{contact_banner()}'''
 
 def partners():
     rows = [
@@ -178,7 +184,7 @@ def events():
         title = item.get('title', f'イベント #{eid}').removesuffix(' - connpass')
         preview_class = 'has-preview' if image_html else ''
         event_rows += f'<a class="event-row {preview_class}" href="https://connpass.com/event/{eid}/" target="_blank" rel="noopener noreferrer">{image_html}<span class="mono event-index">{i+1:02d}</span><div><span class="event-id">connpass / #{eid}</span><h3>{e(title)}</h3></div><span class="event-action">イベントを見る {arrow()}</span></a>'
-    return page_head('03', 'Events', 'イベント', '') + f'''<section class="event-feature wrap">{site_preview('tidal-waive', False)}<div class="event-feature-copy"><h2>TIDAL WAIVE</h2><p>照屋が主催するコミュニティ。</p>{link('https://tidal-waive.com/', '公式サイト', 'pill-link')}</div></section><section class="event-archive wrap"><div class="section-title"><h2>イベントアーカイブ</h2></div>{event_rows}</section>{contact_banner()}'''
+    return page_head('03', 'Events', 'イベント', '') + f'''<section class="event-feature wrap">{site_preview('tidal-waive', False)}<div class="event-feature-copy"><h2>TIDAL WAIVE</h2><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', '公式サイト', 'pill-link')}</div></section><section class="event-archive wrap"><div class="section-title"><h2>イベントアーカイブ</h2></div>{event_rows}</section>{contact_banner()}'''
 
 def contact():
     return page_head('04', 'Contact', 'お問い合わせ', '') + '''<section class="contact-layout wrap"><div class="contact-aside"><h2>お仕事のご相談</h2><div class="contact-services"><span>01 / インフラ構築・運用保守</span><span>02 / Webシステム開発</span><span>03 / AI基盤・開発支援</span><span>04 / その他のご相談</span></div><div class="preview-note"><span class="small-dot"></span><div><strong>こちらはモックの確認用フォームです。</strong><p>内容は送信・保存されません。入力から確認画面までの操作をお試しいただけます。</p></div></div></div><div class="contact-form-area"><form id="contact-form"><div class="form-row"><label for="name">お名前 <span>必須</span></label><input id="name" name="name" autocomplete="name" required maxlength="100" placeholder="山田 太郎"></div><div class="form-row"><label for="company">会社名 / 屋号 <span class="optional">任意</span></label><input id="company" name="company" autocomplete="organization" maxlength="150" placeholder="株式会社〇〇"></div><div class="form-row"><label for="email">メールアドレス <span>必須</span></label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="hello@example.com"></div><div class="form-row"><label for="type">ご相談の種類 <span>必須</span></label><select id="type" name="type" required><option value="">選択してください</option><option>インフラ構築・運用保守</option><option>Webシステム開発</option><option>AI基盤・開発支援</option><option>その他のご相談</option></select></div><div class="form-row"><label for="message">ご相談内容 <span>必須</span></label><textarea id="message" name="message" required minlength="10" maxlength="3000" rows="6" placeholder="ご相談の背景や実現したいこと、ご希望の時期などをお聞かせください。（10文字以上）"></textarea><div class="field-counter"><span>10〜3,000文字</span><span><span id="message-count">0</span> / 3,000</span></div></div><p class="form-note">このモックでは実際のお問い合わせは送信されません。</p><noscript><p class="form-note">確認画面を表示するにはJavaScriptを有効にしてください。入力内容は送信されません。</p></noscript><button class="submit-button" id="review-contact" type="button">入力内容を確認する <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button></form><section class="contact-confirmation" id="contact-confirmation" hidden aria-labelledby="confirmation-title"><h2 id="confirmation-title" tabindex="-1">ご相談内容の確認</h2><p>確認画面のプレビューです。内容は送信されていません。</p><dl id="confirmation-values"></dl><button class="submit-button" type="button" id="edit-form">入力内容を修正する <span>←</span></button><p class="form-note">実際の送信機能は公開時に接続します。</p></section></div></section>'''
@@ -188,10 +194,10 @@ def main():
     data = json.loads(data_path.read_text())
     generate_art()
     pages = [
-        ('index.html', '照屋 | 沖縄のフリーランスエンジニア', '沖縄を拠点に活動する照屋のポートフォリオ。インフラ・Web開発・AI基盤の構築から運用保守まで。', home(data)),
-        ('works.html', '実績', 'インフラ構築、Web開発、ネットワーク、AI基盤。照屋の実績と経歴をご紹介します。', works(data)),
+        ('index.html', f'{PROFILE["name"]} | 沖縄のフリーランスエンジニア', f'沖縄を拠点に活動する{PROFILE["name"]}のポートフォリオ。インフラ・Web開発・AI基盤の構築から運用保守まで。', home(data)),
+        ('works.html', '実績', f'インフラ構築、Web開発、ネットワーク、AI基盤。{PROFILE["name"]}の実績と経歴をご紹介します。', works(data)),
         ('partners.html', '長期でお世話になっている企業様', 'リアムス株式会社、合同会社ハラハチ、日乃出工業株式会社との取り組み。', partners()),
-        ('events.html', 'イベント・コミュニティ', '照屋主催のTIDAL WAIVEと、これまでのイベントアーカイブ。', events()),
+        ('events.html', 'イベント・コミュニティ', f'{PROFILE["name"]}主催のTIDAL WAIVEと、これまでのイベントアーカイブ。', events()),
         ('contact.html', 'お問い合わせ', 'インフラ、Web開発、AI基盤に関するお仕事のご相談。', contact()),
     ]
     for filename, title, description, body in pages:

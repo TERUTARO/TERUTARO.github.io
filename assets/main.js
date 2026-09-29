@@ -60,32 +60,6 @@ tabs.forEach((tab, index) => {
   });
 });
 
-const filters = [...document.querySelectorAll('[data-filter]')];
-const projects = [...document.querySelectorAll('.timeline-item')];
-filters.forEach((filter) => filter.addEventListener('click', () => {
-  const category = filter.dataset.filter;
-  filters.forEach((button) => {
-    button.classList.toggle('active', button === filter);
-    button.setAttribute('aria-pressed', String(button === filter));
-  });
-  let count = 0;
-  projects.forEach((project) => {
-    project.hidden = category !== 'all' && project.dataset.category !== category;
-    if (!project.hidden) count++;
-  });
-  document.querySelector('.filter-status').textContent = `${count}件の実績を表示`;
-}));
-// Deep links reveal the project on initial navigation and later hash changes.
-function revealLinkedProject() {
-  if (!location.hash.startsWith('#project-')) return;
-  const project = document.getElementById(location.hash.slice(1));
-  if (!project) return;
-  if (project.hidden) document.querySelector('[data-filter="all"]').click();
-  project.querySelector('details').open = true;
-}
-revealLinkedProject();
-window.addEventListener('hashchange', revealLinkedProject);
-
 const form = document.getElementById('contact-form');
 if (form) {
   const message = form.elements.namedItem('message');

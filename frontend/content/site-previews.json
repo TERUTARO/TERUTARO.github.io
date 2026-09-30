@@ -34,6 +34,13 @@
     "capturedAt": "2026-09-29T07:58:17.824880+00:00",
     "available": true
   },
+  "prompton": {
+    "url": "https://prompton.site/",
+    "title": "prompton — 伝わる指示を、もっと、かんたんに。",
+    "image": "assets/sites/prompton.webp",
+    "capturedAt": "2026-09-30T08:45:29.265219+00:00",
+    "available": true
+  },
   "connpass-153907": {
     "url": "https://connpass.com/event/153907/",
     "title": "【テルスタ】AnsibleでNginx／MySQL／PHP／Laravel環境をざっくりつくる - connpass",

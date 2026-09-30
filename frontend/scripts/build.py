@@ -121,6 +121,7 @@ SITE_INFO = {
     'harahachi': ('https://harahachi.co.jp/', '合同会社ハラハチ', 'harahachi.co.jp'),
     'hinode': ('https://hinode-hd.com/', '日乃出工業株式会社', 'hinode-hd.com'),
     'tidal-waive': ('https://tidal-waive.com/', 'TIDAL WAIVE', 'tidal-waive.com'),
+    'prompton': ('https://prompton.site/', 'prompton', 'prompton.site'),
 }
 PREVIEW_PATH = ROOT / 'content' / 'site-previews.json'
 PREVIEWS = json.loads(PREVIEW_PATH.read_text()) if PREVIEW_PATH.exists() else {}
@@ -209,7 +210,20 @@ def works(data):
     return page_head('01', 'Works', '実績', '') + render_work_history(data) + f'''<!--
 <section class="career-section wrap">{section_label('02', 'The journey')}<div class="career-grid"><div><h2>経歴</h2></div><div class="career-list">{career}</div></div></section>
 -->
-<section class="personal-section wrap">{section_label('03', 'Personal projects')}<div class="section-title"><h2>個人活動</h2></div><div class="personal-grid"><article><span class="mono">COMMUNITY</span><h3>TIDAL WAIVE</h3><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', 'コミュニティサイト')}</article><article><span class="mono">PERSONAL PROJECT</span><h3>ぷろんぷとん</h3>{link('https://prompton.site/', 'サイトを見る')}</article><article><span class="mono">PERSONAL PROJECT</span><h3>tideline</h3><span class="paused">現在保守停止中</span></article></div></section>{contact_banner()}'''
+<section class="personal-section wrap">
+  <div class="section-title"><h2>個人活動</h2></div>
+  <div class="personal-grid">
+    <article class="personal-project">
+      {site_preview('tidal-waive', False)}
+      <div class="personal-project-copy"><span class="mono">COMMUNITY</span><h3>TIDAL WAIVE</h3><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', 'コミュニティサイト')}</div>
+    </article>
+    <article class="personal-project">
+      {site_preview('prompton', False)}
+      <div class="personal-project-copy"><span class="mono">PERSONAL PROJECT</span><h3>prompton</h3>{link('https://prompton.site/', 'サイトを見る')}</div>
+    </article>
+    <article class="personal-project-paused"><h3>tideline</h3><span class="paused">現在保守停止中</span></article>
+  </div>
+</section>{contact_banner()}'''
 
 def partners():
     body = ''

@@ -388,11 +388,20 @@ body.menu-open { overflow: hidden; }
 .menu-profile .social-links > a { font-size: 10px; }
 .footer-top > .social-links { margin-left: auto; }
 
-/* Project cards are built from type and spacing, without illustrations. */
+/* Matching project cards reveal a quiet geometric watermark on interaction. */
 .selected-grid { gap: 24px; }
-.project-feature { min-width: 0; min-height: 310px; display: flex; flex-direction: column; padding: 32px 34px 26px; border: 1px solid #d5dedc; border-radius: 14px; background: #e8eef0; transition: border-color .25s, background .25s, transform .25s; }
-.project-feature:nth-child(2) { background: #edf0e9; border-color: #dce1d5; }
-.project-feature:hover { border-color: #9fb3c8; background: #e2eaf0; transform: translateY(-3px); }
+.project-feature { position: relative; isolation: isolate; overflow: hidden; min-width: 0; min-height: 310px; display: flex; flex-direction: column; padding: 32px 34px 26px; border: 1px solid #d5dedc; border-radius: 14px; background: #e8eef0; transition: border-color .25s, background .25s, transform .25s; }
+.project-feature > * { position: relative; z-index: 1; }
+.project-feature::before { content: ''; position: absolute; z-index: 0; pointer-events: none; inset: -22% -21% -22% 15%; background: url('/assets/continuity.svg') no-repeat center / contain; opacity: 0; transform: translateX(20px) rotate(-12deg); transition: opacity .45s ease, transform .65s ease; }
+.project-feature:focus-visible::before { opacity: .28; transform: translateX(0) rotate(0); }
+@media (hover: hover) {
+  .project-feature:hover::before { opacity: .28; transform: translateX(0) rotate(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-feature, .project-feature::before { transition: none; }
+  .project-feature::before { transform: none; }
+}
+.project-feature:is(:hover, :focus-visible) { border-color: #9fb3c8; background: #e8eef0; }
 .project-card-top { display: flex; align-items: center; gap: 15px; }
 .project-number { font-family: var(--mono); font-size: 11px; color: var(--accent); }
 .project-category { font-family: var(--mono); font-size: 9px; letter-spacing: .05em; color: var(--muted); }

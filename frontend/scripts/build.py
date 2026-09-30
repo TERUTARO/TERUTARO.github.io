@@ -7,6 +7,7 @@ import json
 import math
 import hashlib
 from work_history import render_work_history
+from pricing import contact_tabs, render_pricing
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / 'public'
@@ -78,6 +79,8 @@ def contact_banner():
     return f'''<section class="contact-banner wrap"><h2>お問い合わせ</h2><a href="contact.html#contact-form" class="contact-action" aria-label="相談：お問い合わせフォームへ">{chat_icon()}<span>相談</span></a></section>'''
 
 def current_attr(filename, url):
+    if filename == 'pricing.html' and url == 'contact.html':
+        return 'aria-current="true"'
     return 'aria-current="page"' if filename == url else ''
 
 def generate_art():
@@ -187,7 +190,7 @@ def profile_resource():
         '}',
     ]
     code = '\n'.join(lines)
-    return f'<div class="profile-resource"><div class="profile-resource-header"><span>profile.tf</span><span aria-hidden="true">{{ }}</span></div><pre aria-label="Terraformリソース風のプロフィール"><code>{code}</code></pre></div>'
+    return f'<div class="profile-resource"><div class="profile-resource-header"><span>profile.details.at</span><span aria-hidden="true">{{ }}</span></div><pre aria-label="Terraformリソース風のプロフィール"><code>{code}</code></pre></div>'
 
 
 def home(data):
@@ -242,7 +245,12 @@ def events():
     return page_head('03', 'Events', 'イベント', '') + f'''<section class="event-feature wrap">{site_preview('tidal-waive', False)}<div class="event-feature-copy"><h2>TIDAL WAIVE</h2><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', '公式サイト', 'pill-link')}</div></section><section class="event-archive wrap"><div class="section-title"><h2>Conpass</h2></div>{event_rows}</section>{contact_banner()}'''
 
 def contact():
-    return page_head('04', 'Contact', 'お問い合わせ', '') + '''<section class="contact-layout wrap"><div class="contact-aside"><h2>相談</h2><div class="contact-services"><span>01 / インフラ構築・運用保守</span><span>02 / Webシステム開発</span><span>03 / AI基盤・開発支援</span><span>04 / その他のご相談</span></div><div class="preview-note"><span class="small-dot"></span><div><strong>こちらはモックの確認用フォームです。</strong><p>内容は送信・保存されません。入力から確認画面までの操作をお試しいただけます。</p></div></div></div><div class="contact-form-area"><form id="contact-form"><div class="form-row"><label for="name">お名前 <span>必須</span></label><input id="name" name="name" autocomplete="name" required maxlength="100" placeholder="山田 太郎"></div><div class="form-row"><label for="company">会社名 / 屋号 <span class="optional">任意</span></label><input id="company" name="company" autocomplete="organization" maxlength="150" placeholder="株式会社〇〇"></div><div class="form-row"><label for="email">メールアドレス <span>必須</span></label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="hello@example.com"></div><div class="form-row"><label for="type">ご相談の種類 <span>必須</span></label><select id="type" name="type" required><option value="">選択してください</option><option>インフラ構築・運用保守</option><option>Webシステム開発</option><option>AI基盤・開発支援</option><option>その他のご相談</option></select></div><div class="form-row"><label for="message">ご相談内容 <span>必須</span></label><textarea id="message" name="message" required minlength="10" maxlength="3000" rows="6" placeholder="ご相談の背景や実現したいこと、ご希望の時期などをお聞かせください。（10文字以上）"></textarea><div class="field-counter"><span>10〜3,000文字</span><span><span id="message-count">0</span> / 3,000</span></div></div><p class="form-note">このモックでは実際のお問い合わせは送信されません。</p><noscript><p class="form-note">確認画面を表示するにはJavaScriptを有効にしてください。入力内容は送信されません。</p></noscript><button class="submit-button" id="review-contact" type="button">入力内容を確認する <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button></form><section class="contact-confirmation" id="contact-confirmation" hidden aria-labelledby="confirmation-title"><h2 id="confirmation-title" tabindex="-1">ご相談内容の確認</h2><p>確認画面のプレビューです。内容は送信されていません。</p><dl id="confirmation-values"></dl><button class="submit-button" type="button" id="edit-form">入力内容を修正する <span>←</span></button><p class="form-note">実際の送信機能は公開時に接続します。</p></section></div></section>'''
+    return page_head('04', 'Contact', 'お問い合わせ', '') + contact_tabs('contact') + '''<section class="contact-layout wrap"><div class="contact-aside"><h2>相談</h2><div class="contact-services"><span>01 / インフラ構築・運用保守</span><span>02 / Webシステム開発</span><span>03 / AI基盤・開発支援</span><span>04 / その他のご相談</span></div><div class="preview-note"><span class="small-dot"></span><div><strong>こちらはモックの確認用フォームです。</strong><p>内容は送信・保存されません。入力から確認画面までの操作をお試しいただけます。</p></div></div></div><div class="contact-form-area"><form id="contact-form"><div class="form-row"><label for="name">お名前 <span>必須</span></label><input id="name" name="name" autocomplete="name" required maxlength="100" placeholder="山田 太郎"></div><div class="form-row"><label for="company">会社名 / 屋号 <span class="optional">任意</span></label><input id="company" name="company" autocomplete="organization" maxlength="150" placeholder="株式会社〇〇"></div><div class="form-row"><label for="email">メールアドレス <span>必須</span></label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="hello@example.com"></div><div class="form-row"><label for="type">ご相談の種類 <span>必須</span></label><select id="type" name="type" required><option value="">選択してください</option><option>インフラ構築・運用保守</option><option>Webシステム開発</option><option>AI基盤・開発支援</option><option>その他のご相談</option></select></div><div class="form-row"><label for="message">ご相談内容 <span>必須</span></label><textarea id="message" name="message" required minlength="10" maxlength="3000" rows="6" placeholder="ご相談の背景や実現したいこと、ご希望の時期などをお聞かせください。（10文字以上）"></textarea><div class="field-counter"><span>10〜3,000文字</span><span><span id="message-count">0</span> / 3,000</span></div></div><p class="form-note">このモックでは実際のお問い合わせは送信されません。</p><noscript><p class="form-note">確認画面を表示するにはJavaScriptを有効にしてください。入力内容は送信されません。</p></noscript><button class="submit-button" id="review-contact" type="button">入力内容を確認する <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button></form><section class="contact-confirmation" id="contact-confirmation" hidden aria-labelledby="confirmation-title"><h2 id="confirmation-title" tabindex="-1">ご相談内容の確認</h2><p>確認画面のプレビューです。内容は送信されていません。</p><dl id="confirmation-values"></dl><button class="submit-button" type="button" id="edit-form">入力内容を修正する <span>←</span></button><p class="form-note">実際の送信機能は公開時に接続します。</p></section></div></section>'''
+
+def pricing():
+    data = json.loads((ROOT / 'content' / 'pricing.json').read_text())
+    return page_head('05', 'Pricing', '料金の目安', '') + contact_tabs('pricing') + render_pricing(data)
+
 
 def main():
     data_path = ROOT / 'content' / 'career.json'
@@ -254,6 +262,7 @@ def main():
         ('partners.html', '長期でお世話になっている企業様', 'リアムス株式会社、合同会社ハラハチ、日乃出工業株式会社との取り組み。', partners()),
         ('events.html', 'イベント・コミュニティ', f'{PROFILE["name"]}主催のTIDAL WAIVEと、これまでのConpassイベント。', events()),
         ('contact.html', 'お問い合わせ', 'インフラ、Web開発、AI基盤に関するお仕事のご相談。', contact()),
+        ('pricing.html', '料金の目安', 'インフラ構築・設定などのサービス単価とエンジニアの時間単価。記載のない内容は都度お見積もりします。', pricing()),
     ]
     generated = {}
     for filename, title, description, body in pages:

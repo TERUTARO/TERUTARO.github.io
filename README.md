@@ -7,11 +7,11 @@
 ```text
 .
 ├── frontend/                 # Next.js / TypeScript（サイト本体）
-│   ├── src/app/              # トップ・実績・企業様・イベント・お問い合わせ
+│   ├── src/app/              # トップ・実績・企業様・イベント・お問い合わせ・料金
 │   ├── src/components/       # 既存画面を表示する移行用コンポーネント
 │   ├── src/lib/              # ビルド済みコンテンツの読み込み
 │   ├── public/assets/        # 画像・既存CSS/JavaScript
-│   ├── content/              # プロフィール・実績・サイトプレビューのデータ
+│   ├── content/              # プロフィール・実績・料金・サイトプレビューのデータ
 │   └── scripts/              # コンテンツ生成・旧資料の公開出力へのコピー
 ├── infrastructure/           # インフラ定義とLambda
 │   ├── lambda/contact/       # 問い合わせ用Lambdaの雛形

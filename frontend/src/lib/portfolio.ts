@@ -8,6 +8,7 @@ export const portfolioPageNames = [
   "partners",
   "events",
   "contact",
+  "pricing",
 ] as const;
 
 export type PortfolioPageName = (typeof portfolioPageNames)[number];

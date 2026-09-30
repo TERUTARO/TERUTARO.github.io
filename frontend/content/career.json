@@ -11,7 +11,30 @@
       "role": "復旧・調査・対策",
       "tags": ["WordPress", "AWS EC2", "AWS ALB", "AWS Security Groups", "AWS WAF", "Terraform", "Ansible", "AWS S3", "GitHub Cloud"],
       "current": false,
-      "source": "request"
+      "source": "request",
+      "phases": ["復旧", "調査", "対策"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["AWS EC2", "AWS S3"]
+        },
+        {
+          "label": "Network",
+          "tags": ["AWS ALB", "AWS Security Groups", "AWS WAF"]
+        },
+        {
+          "label": "Backend",
+          "tags": ["WordPress"]
+        },
+        {
+          "label": "IaC",
+          "tags": ["Terraform", "Ansible"]
+        },
+        {
+          "label": "Source Control",
+          "tags": ["GitHub Cloud"]
+        }
+      ]
     },
     {
       "id": "affiliate-platform-operations",
@@ -24,7 +47,38 @@
       "role": "インフラ運用保守",
       "tags": ["基盤運用", "保守", "AWS CloudFront", "AWS WAF", "AWS S3", "GitHub Enterprise", "GitHub Cloud", "CircleCI", "AWS Lambda", "AWS Route 53", "Datadog", "GitHub Actions", "GCP Cloud Load Balancing", "GCP BigQuery", "GCP Cloud Run", "GCP Cloud DNS", "Cursor", "AWS ACM"],
       "current": true,
-      "source": "request"
+      "source": "request",
+      "phases": ["基盤運用", "保守"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["AWS S3", "AWS Lambda", "GCP Cloud Run"]
+        },
+        {
+          "label": "Network",
+          "tags": ["AWS CloudFront", "AWS WAF", "AWS Route 53", "GCP Cloud Load Balancing", "GCP Cloud DNS", "AWS ACM"]
+        },
+        {
+          "label": "Database",
+          "tags": ["GCP BigQuery"]
+        },
+        {
+          "label": "CI/CD",
+          "tags": ["CircleCI", "GitHub Actions"]
+        },
+        {
+          "label": "Source Control",
+          "tags": ["GitHub Enterprise", "GitHub Cloud"]
+        },
+        {
+          "label": "AI",
+          "tags": ["Cursor"]
+        },
+        {
+          "label": "Monitoring",
+          "tags": ["Datadog"]
+        }
+      ]
     },
     {
       "id": "internal-ai-platform-operations",
@@ -37,7 +91,30 @@
       "role": "AI基盤運用保守",
       "tags": ["AI基盤", "基盤運用", "保守", "GCP GKE", "GCP Vertex AI", "GCP Compute Engine (GCE)", "GCP Cloud Run", "GCP Cloud DNS", "GCP Cloud Load Balancing", "Cursor", "Claude Code", "Dify", "GitHub Cloud", "GitHub Actions"],
       "current": true,
-      "source": "request"
+      "source": "request",
+      "phases": ["基盤運用", "保守"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["GCP GKE", "GCP Compute Engine (GCE)", "GCP Cloud Run"]
+        },
+        {
+          "label": "Network",
+          "tags": ["GCP Cloud DNS", "GCP Cloud Load Balancing"]
+        },
+        {
+          "label": "CI/CD",
+          "tags": ["GitHub Actions"]
+        },
+        {
+          "label": "Source Control",
+          "tags": ["GitHub Cloud"]
+        },
+        {
+          "label": "AI",
+          "tags": ["AI基盤", "GCP Vertex AI", "Cursor", "Claude Code", "Dify"]
+        }
+      ]
     },
     {
       "id": "security-appliance-introduction",
@@ -51,11 +128,18 @@
       "tags": ["FortiGate", "KOKOMO", "要件定義", "基本設計"],
       "current": false,
       "source": "resume",
-      "partner": "日乃出工業株式会社"
+      "partner": "日乃出工業株式会社",
+      "phases": ["実機検証", "要件定義", "基本設計", "課題管理"],
+      "stackGroups": [
+        {
+          "label": "Network",
+          "tags": ["FortiGate", "KOKOMO"]
+        }
+      ]
     },
     {
       "id": "asset-management-system-renewal",
-      "period": "2025.03 — 2025.06",
+      "period": "2025.03 — 現在",
       "year": "2025",
       "client": "リアムス株式会社",
       "title": "機器・ソフトウェア管理システムの改修・引き継ぎ",
@@ -63,10 +147,49 @@
       "summary": "既存システムの改修と開発引き継ぎを推進。進行管理からフロント・バックエンド、AI連携・インベントリAPI連携、AWS基盤構築まで担当。",
       "role": "PM / フロントエンド / バックエンド / インフラ",
       "tags": ["Ruby on Rails", "Nuxt.js", "AWS", "Terraform", "Docker", "AWS Route 53", "AWS ECS", "AWS RDS", "AWS S3", "AWS ACM", "AWS CloudFormation", "GitHub Cloud", "GitHub Actions", "Codex", "Claude Code", "Cursor"],
-      "current": false,
+      "current": true,
       "source": "resume",
       "partner": "リアムス株式会社",
-      "partnerHonorific": ""
+      "partnerHonorific": "",
+      "phases": ["改修", "引き継ぎ", "進行管理", "開発", "基盤構築"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["AWS", "Docker", "AWS ECS", "AWS S3"]
+        },
+        {
+          "label": "Network",
+          "tags": ["AWS Route 53", "AWS ACM"]
+        },
+        {
+          "label": "Frontend",
+          "tags": ["Nuxt.js"]
+        },
+        {
+          "label": "Backend",
+          "tags": ["Ruby on Rails"]
+        },
+        {
+          "label": "Database",
+          "tags": ["AWS RDS"]
+        },
+        {
+          "label": "IaC",
+          "tags": ["Terraform", "AWS CloudFormation"]
+        },
+        {
+          "label": "CI/CD",
+          "tags": ["GitHub Actions"]
+        },
+        {
+          "label": "Source Control",
+          "tags": ["GitHub Cloud"]
+        },
+        {
+          "label": "AI",
+          "tags": ["Codex", "Claude Code", "Cursor"]
+        }
+      ]
     },
     {
       "id": "vpn-emergency-response",
@@ -79,7 +202,14 @@
       "role": "ネットワークエンジニア",
       "tags": ["YAMAHA RTX830", "VPN", "障害対応"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["設定確認", "障害切り分け", "障害対応"],
+      "stackGroups": [
+        {
+          "label": "Network",
+          "tags": ["YAMAHA RTX830", "VPN"]
+        }
+      ]
     },
     {
       "id": "wordpress-environment-setup",
@@ -93,7 +223,18 @@
       "tags": ["WordPress", "AWS", "Apache", "Amazon Linux"],
       "current": false,
       "source": "resume",
-      "partner": "合同会社ハラハチ"
+      "partner": "合同会社ハラハチ",
+      "phases": ["環境整備", "セキュリティ設定", "証明書更新"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["AWS", "Apache", "Amazon Linux"]
+        },
+        {
+          "label": "Backend",
+          "tags": ["WordPress"]
+        }
+      ]
     },
     {
       "id": "fortigate-replacement",
@@ -107,7 +248,14 @@
       "tags": ["FortiGate", "IPsec VPN", "ファイアウォール"],
       "current": false,
       "source": "resume",
-      "partner": "日乃出工業株式会社"
+      "partner": "日乃出工業株式会社",
+      "phases": ["設計", "構築", "単体テスト", "結合テスト"],
+      "stackGroups": [
+        {
+          "label": "Network",
+          "tags": ["FortiGate", "IPsec VPN", "ファイアウォール"]
+        }
+      ]
     },
     {
       "id": "prelaunch-infrastructure",
@@ -121,7 +269,26 @@
       "role": "インフラエンジニア",
       "tags": ["AWS", "Terraform", "Azure OpenAI", "Datadog", "CloudFormation"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["基盤整備", "VPN設定", "監視環境整備"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["AWS"]
+        },
+        {
+          "label": "IaC",
+          "tags": ["Terraform", "CloudFormation"]
+        },
+        {
+          "label": "AI",
+          "tags": ["Azure OpenAI"]
+        },
+        {
+          "label": "Monitoring",
+          "tags": ["Datadog"]
+        }
+      ]
     },
     {
       "id": "asset-management-system-development",
@@ -134,7 +301,26 @@
       "role": "バックエンド / インフラエンジニア",
       "tags": ["Ruby on Rails", "Nuxt.js", "JWT", "AWS ECS", "Terraform"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["開発", "開発環境構築", "基盤構築"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["AWS ECS"]
+        },
+        {
+          "label": "Frontend",
+          "tags": ["Nuxt.js"]
+        },
+        {
+          "label": "Backend",
+          "tags": ["Ruby on Rails", "JWT"]
+        },
+        {
+          "label": "IaC",
+          "tags": ["Terraform"]
+        }
+      ]
     },
     {
       "id": "financial-platform-infrastructure",
@@ -147,7 +333,22 @@
       "role": "PM / インフラエンジニア",
       "tags": ["AWS", "Terraform", "vSphere", "Amazon Bedrock", "オフショア連携"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["要件定義", "設計", "構築", "運用", "保守", "進行管理", "オフショア連携"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["AWS", "vSphere"]
+        },
+        {
+          "label": "IaC",
+          "tags": ["Terraform"]
+        },
+        {
+          "label": "AI",
+          "tags": ["Amazon Bedrock"]
+        }
+      ]
     },
     {
       "id": "experience-database-service",
@@ -160,7 +361,26 @@
       "role": "バックエンド / インフラエンジニア",
       "tags": ["Ruby on Rails", "Tailwind CSS", "JWT", "AWS ECS", "Terraform"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["開発", "基盤構築"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["AWS ECS"]
+        },
+        {
+          "label": "Frontend",
+          "tags": ["Tailwind CSS"]
+        },
+        {
+          "label": "Backend",
+          "tags": ["Ruby on Rails", "JWT"]
+        },
+        {
+          "label": "IaC",
+          "tags": ["Terraform"]
+        }
+      ]
     },
     {
       "id": "influencer-matching-infrastructure",
@@ -173,7 +393,26 @@
       "role": "インフラエンジニア",
       "tags": ["AWS ECS", "Terraform", "CloudFormation", "GitHub Actions", "CloudFront"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["基盤構築", "CI/CD整備"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["AWS ECS"]
+        },
+        {
+          "label": "Network",
+          "tags": ["CloudFront"]
+        },
+        {
+          "label": "IaC",
+          "tags": ["Terraform", "CloudFormation"]
+        },
+        {
+          "label": "CI/CD",
+          "tags": ["GitHub Actions"]
+        }
+      ]
     },
     {
       "id": "municipality-policy-matching",
@@ -186,7 +425,22 @@
       "role": "PM / フロントエンド / バックエンド / インフラ",
       "tags": ["Next.js", "TypeScript", "Ruby on Rails", "Material UI", "AWS"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["開発", "進行管理", "事業側調整"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["AWS"]
+        },
+        {
+          "label": "Frontend",
+          "tags": ["Next.js", "TypeScript", "Material UI"]
+        },
+        {
+          "label": "Backend",
+          "tags": ["Ruby on Rails"]
+        }
+      ]
     },
     {
       "id": "branch-site-vpn",
@@ -200,7 +454,14 @@
       "tags": ["FortiGate", "IPsec VPN", "SSL VPN", "ルーティング"],
       "current": false,
       "source": "resume",
-      "partner": "日乃出工業株式会社"
+      "partner": "日乃出工業株式会社",
+      "phases": ["要件定義", "設計", "構築", "テスト"],
+      "stackGroups": [
+        {
+          "label": "Network",
+          "tags": ["FortiGate", "IPsec VPN", "SSL VPN", "ルーティング"]
+        }
+      ]
     },
     {
       "id": "care-assistance-application",
@@ -213,7 +474,26 @@
       "role": "バックエンド / インフラエンジニア",
       "tags": ["Ruby on Rails", "MySQL", "AWS ECS", "Docker", "Terraform"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["開発"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["AWS ECS", "Docker"]
+        },
+        {
+          "label": "Backend",
+          "tags": ["Ruby on Rails"]
+        },
+        {
+          "label": "Database",
+          "tags": ["MySQL"]
+        },
+        {
+          "label": "IaC",
+          "tags": ["Terraform"]
+        }
+      ]
     },
     {
       "id": "care-facility-portal",
@@ -226,7 +506,26 @@
       "role": "PM / フロントエンド / バックエンド / インフラ",
       "tags": ["WordPress", "AWS ECS", "Amazon EFS", "Terraform", "Datadog"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["基盤構築", "保守", "進行管理", "課題管理", "開発環境整備", "監視環境整備"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["AWS ECS", "Amazon EFS"]
+        },
+        {
+          "label": "Backend",
+          "tags": ["WordPress"]
+        },
+        {
+          "label": "IaC",
+          "tags": ["Terraform"]
+        },
+        {
+          "label": "Monitoring",
+          "tags": ["Datadog"]
+        }
+      ]
     },
     {
       "id": "gke-deployment-platform",
@@ -239,7 +538,22 @@
       "role": "PM / インフラエンジニア",
       "tags": ["Google Cloud", "GKE", "GitLab CI/CD", "Terraform", "Anthos"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["検証", "基盤構築", "自動化", "構成検討", "手順書作成"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["Google Cloud", "GKE", "Anthos"]
+        },
+        {
+          "label": "IaC",
+          "tags": ["Terraform"]
+        },
+        {
+          "label": "CI/CD",
+          "tags": ["GitLab CI/CD"]
+        }
+      ]
     },
     {
       "id": "inventory-order-management",
@@ -252,7 +566,22 @@
       "role": "バックエンド / インフラエンジニア",
       "tags": ["Ruby on Rails", "Google App Engine", "Cloud SQL", "Cloud Functions", "Docker"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["開発", "開発環境整備", "基盤整備"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["Google App Engine", "Cloud Functions", "Docker"]
+        },
+        {
+          "label": "Backend",
+          "tags": ["Ruby on Rails"]
+        },
+        {
+          "label": "Database",
+          "tags": ["Cloud SQL"]
+        }
+      ]
     },
     {
       "id": "ordering-system",
@@ -265,7 +594,22 @@
       "role": "フロントエンド / バックエンド / インフラ",
       "tags": ["PHP", "CodeIgniter", "Docker", "phpMyAdmin"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["開発"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["Docker"]
+        },
+        {
+          "label": "Backend",
+          "tags": ["PHP", "CodeIgniter"]
+        },
+        {
+          "label": "Database",
+          "tags": ["phpMyAdmin"]
+        }
+      ]
     },
     {
       "id": "hybrid-infrastructure-operations",
@@ -279,7 +623,18 @@
       "role": "インフラエンジニア",
       "tags": ["vSphere", "IDCF", "YAMAHA RTX", "Cisco Catalyst"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["基盤構築", "ネットワーク整備", "運用", "保守"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["vSphere", "IDCF"]
+        },
+        {
+          "label": "Network",
+          "tags": ["YAMAHA RTX", "Cisco Catalyst"]
+        }
+      ]
     },
     {
       "id": "personnel-management-tool",
@@ -292,7 +647,18 @@
       "role": "バックエンドエンジニア",
       "tags": ["Google Apps Script", "JavaScript", "HTML", "CSS"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["開発"],
+      "stackGroups": [
+        {
+          "label": "Frontend",
+          "tags": ["HTML", "CSS"]
+        },
+        {
+          "label": "Backend",
+          "tags": ["Google Apps Script", "JavaScript"]
+        }
+      ]
     },
     {
       "id": "laboratory-infrastructure-maintenance",
@@ -306,7 +672,22 @@
       "role": "インフラエンジニア",
       "tags": ["Dell PowerEdge", "GPUサーバー", "YAMAHA RTX", "Ubuntu", "Zabbix"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["保守", "障害対応", "設計", "構築"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["Dell PowerEdge", "GPUサーバー", "Ubuntu"]
+        },
+        {
+          "label": "Network",
+          "tags": ["YAMAHA RTX"]
+        },
+        {
+          "label": "Monitoring",
+          "tags": ["Zabbix"]
+        }
+      ]
     },
     {
       "id": "website-aws-improvement",
@@ -319,7 +700,18 @@
       "role": "インフラエンジニア",
       "tags": ["Amazon EC2", "Amazon EBS", "Apache", "WordPress"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["調査", "改善提案", "改善実施", "レポート作成"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["Amazon EC2", "Amazon EBS", "Apache"]
+        },
+        {
+          "label": "Backend",
+          "tags": ["WordPress"]
+        }
+      ]
     },
     {
       "id": "new-office-network",
@@ -333,7 +725,14 @@
       "tags": ["YAMAHA RTX1210", "YAMAHA WLX", "ネットワーク設計"],
       "current": false,
       "source": "resume",
-      "partner": "日乃出工業株式会社"
+      "partner": "日乃出工業株式会社",
+      "phases": ["要件ヒアリング", "機器選定", "見積", "ネットワーク設計", "構築", "単体テスト", "結合テスト"],
+      "stackGroups": [
+        {
+          "label": "Network",
+          "tags": ["YAMAHA RTX1210", "YAMAHA WLX"]
+        }
+      ]
     },
     {
       "id": "network-redundancy",
@@ -347,7 +746,14 @@
       "tags": ["YAMAHA RTX1210", "YAMAHA RTX830", "回線冗長化"],
       "current": false,
       "source": "resume",
-      "partner": "日乃出工業株式会社"
+      "partner": "日乃出工業株式会社",
+      "phases": ["要件定義", "設計", "物理結線", "ルーター設定", "単体テスト", "結合テスト", "回線冗長化"],
+      "stackGroups": [
+        {
+          "label": "Network",
+          "tags": ["YAMAHA RTX1210", "YAMAHA RTX830"]
+        }
+      ]
     },
     {
       "id": "active-directory-migration",
@@ -361,7 +767,14 @@
       "tags": ["Active Directory", "Windows Server", "富士通 PRIMERGY"],
       "current": false,
       "source": "resume",
-      "partner": "日乃出工業株式会社"
+      "partner": "日乃出工業株式会社",
+      "phases": ["詳細設計", "手順書作成", "構築スクリプト作成", "移行支援"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["Active Directory", "Windows Server", "富士通 PRIMERGY"]
+        }
+      ]
     },
     {
       "id": "utm-nas-introduction",
@@ -375,7 +788,18 @@
       "tags": ["Check Point UTM", "Synology NAS", "YAMAHA RTX1210"],
       "current": false,
       "source": "resume",
-      "partner": "日乃出工業株式会社"
+      "partner": "日乃出工業株式会社",
+      "phases": ["ネットワーク設計", "導入", "物理結線", "機器設定", "単体テスト", "結合テスト"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["Synology NAS"]
+        },
+        {
+          "label": "Network",
+          "tags": ["Check Point UTM", "YAMAHA RTX1210"]
+        }
+      ]
     },
     {
       "id": "public-sector-platform-renewal",
@@ -389,7 +813,18 @@
       "role": "インフラエンジニア",
       "tags": ["vSphere", "vSAN", "Windows Server", "Ansible", "NetBackup", "Arcserve"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["要件定義", "性能検証", "設計", "構築", "テスト", "障害対応", "手順書作成"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["vSphere", "vSAN", "Windows Server", "NetBackup", "Arcserve"]
+        },
+        {
+          "label": "IaC",
+          "tags": ["Ansible"]
+        }
+      ]
     },
     {
       "id": "university-infrastructure-operations",
@@ -403,7 +838,18 @@
       "role": "インフラエンジニア",
       "tags": ["vSphere", "AWS", "F5 BIG-IP", "Palo Alto", "Check Point"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["運用", "保守", "構築", "ファイアウォール設定", "VPN設定", "OS更新", "手順書作成", "検証"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["vSphere", "AWS"]
+        },
+        {
+          "label": "Network",
+          "tags": ["F5 BIG-IP", "Palo Alto", "Check Point"]
+        }
+      ]
     },
     {
       "id": "municipality-two-factor-authentication",
@@ -416,7 +862,14 @@
       "role": "インフラエンジニア",
       "tags": ["Windows Server", "Hyper-V", "SmartOn ID", "Active Directory"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["設計", "構築", "設定", "テスト"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["Windows Server", "Hyper-V", "SmartOn ID", "Active Directory"]
+        }
+      ]
     },
     {
       "id": "municipality-intermediate-server-connectors",
@@ -429,7 +882,14 @@
       "role": "インフラエンジニア",
       "tags": ["Windows Server", "Hyper-V", "NEC Express", "NEC ESMPRO"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "phases": ["詳細設計", "構築", "導入", "リリース適用", "カスタマイズ", "手順・試験項目作成"],
+      "stackGroups": [
+        {
+          "label": "Infrastructure",
+          "tags": ["Windows Server", "Hyper-V", "NEC Express", "NEC ESMPRO"]
+        }
+      ]
     }
   ],
   "career": [

@@ -9,7 +9,9 @@ Next.js App Router / TypeScript のサイト本体です。設定は `next.confi
 | ページ・メタデータの入口 | `src/app/` |
 | 既存HTMLを表示する移行用コンポーネント | `src/components/portfolio-page.tsx` |
 | 名前・SNS | `content/profile.json` |
-| 実績・職歴 | `content/career.json` |
+| 実績・職歴・担当フェーズ・分類スタック | `content/career.json` |
+| 料金表・転記元の行番号 | `content/pricing.json` |
+| 料金ページ・お問い合わせのタブ | `scripts/pricing.py` / `public/assets/pricing.css` |
 | 本文・共通メニュー・フッター・スキル | `scripts/build.py` |
 | 実績一覧・タグ・年区切り | `scripts/work_history.py` |
 | デザイン・メニュー・フォーム確認 | `public/assets/style.css` / `main.js` |

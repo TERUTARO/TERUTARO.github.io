@@ -4,6 +4,7 @@ import "../../public/assets/style.css";
 import "../../public/assets/water.css";
 import "../../public/assets/work-history.css";
 import "../../public/assets/menu.css";
+import "../../public/assets/pricing.css";
 
 export const metadata: Metadata = {
   title: {

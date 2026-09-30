@@ -1,0 +1,555 @@
+{
+  "currency": "JPY",
+  "taxIncluded": false,
+  "sourceSheets": {
+    "services": "サービス単価",
+    "engineers": "エンジニア単価"
+  },
+  "unlistedMessage": "記載のない内容は都度お見積もりします。",
+  "services": [
+    {
+      "sourceRow": 4,
+      "category": "ミドルウェア",
+      "product": "Apache",
+      "item": "基本設定",
+      "unit": "1サーバにつき",
+      "invoiceUnit": "",
+      "notes": "インストール・ルートディレクトリ設定・公開まで",
+      "priceYen": 3000
+    },
+    {
+      "sourceRow": 5,
+      "category": "ミドルウェア",
+      "product": "Apache",
+      "item": "証明書設定",
+      "unit": "証明書１つにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 5000
+    },
+    {
+      "sourceRow": 6,
+      "category": "ミドルウェア",
+      "product": "Apache",
+      "item": "証明書交換",
+      "unit": "証明書１つにつき",
+      "invoiceUnit": "",
+      "notes": "チェーン追加含む",
+      "priceYen": 5000
+    },
+    {
+      "sourceRow": 7,
+      "category": "ミドルウェア",
+      "product": "Apache",
+      "item": "Virtual Host設定",
+      "unit": "Virtual Host 1つにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 5000
+    },
+    {
+      "sourceRow": 8,
+      "category": "ミドルウェア",
+      "product": "WordPress",
+      "item": "基本設定",
+      "unit": "1サーバにつき",
+      "invoiceUnit": "",
+      "notes": "インストール・GUIでの初期設定まで",
+      "priceYen": 3000
+    },
+    {
+      "sourceRow": 9,
+      "category": "証明書",
+      "product": "CSR",
+      "item": "発行サポート",
+      "unit": "証明書１つにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 3000
+    },
+    {
+      "sourceRow": 10,
+      "category": "証明書",
+      "product": "CER",
+      "item": "発行サポート",
+      "unit": "証明書１つにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 3000
+    },
+    {
+      "sourceRow": 11,
+      "category": "証明書",
+      "product": "CER",
+      "item": "発行代行",
+      "unit": "証明書１つにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 12,
+      "category": "ネットワーク",
+      "product": "YAMAHA RTX",
+      "item": "基本設定",
+      "unit": "1ルータにつき",
+      "invoiceUnit": "",
+      "notes": "WAN 設定・LAN設定・ルーティング設定・フィルタリング設定・DHCP設定・NTP設定など",
+      "priceYen": 30000
+    },
+    {
+      "sourceRow": 13,
+      "category": "ネットワーク",
+      "product": "YAMAHA RTX",
+      "item": "設計・詳細設計",
+      "unit": "1ルータにつき",
+      "invoiceUnit": "",
+      "notes": "WAN 設定・LAN設定・ルーティング設定・フィルタリング設定・DHCP設定・NTP設定など",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 14,
+      "category": "ネットワーク",
+      "product": "YAMAHA RTX",
+      "item": "クライアントVPN設定",
+      "unit": "1ルータにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 15,
+      "category": "ネットワーク",
+      "product": "YAMAHA RTX",
+      "item": "拠点間VPN設定",
+      "unit": "1ルータにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 16,
+      "category": "ネットワーク",
+      "product": "Fortinet FortiGate",
+      "item": "設計・詳細設計",
+      "unit": "1ルータにつき",
+      "invoiceUnit": "",
+      "notes": "WAN 設定・LAN設定・ルーティング設定・フィルタリング設定・DHCP設定・NTP設定など",
+      "priceYen": 30000
+    },
+    {
+      "sourceRow": 17,
+      "category": "ネットワーク",
+      "product": "Fortinet FortiGate",
+      "item": "クライアントVPN設定",
+      "unit": "1ルータにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 18,
+      "category": "ネットワーク",
+      "product": "Fortinet FortiGate",
+      "item": "拠点間VPN設定",
+      "unit": "1ルータにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 19,
+      "category": "サーバ",
+      "product": "DELL",
+      "item": "OSインストール",
+      "unit": "1サーバにつき",
+      "invoiceUnit": "",
+      "notes": "CentOS / Ubuntu / Windows Server 実績あり",
+      "priceYen": 50000
+    },
+    {
+      "sourceRow": 20,
+      "category": "サーバ",
+      "product": "DELL",
+      "item": "基本設定",
+      "unit": "1サーバにつき",
+      "invoiceUnit": "",
+      "notes": "ホスト名・DNS設定・時刻設定・ネットワークインターフェース設定・パーティション設定・iDRAC設定",
+      "priceYen": 50000
+    },
+    {
+      "sourceRow": 21,
+      "category": "サーバ",
+      "product": "DELL",
+      "item": "詳細設計",
+      "unit": "1サーバにつき",
+      "invoiceUnit": "",
+      "notes": "ホスト名・DNS設定・時刻設定・ネットワークインターフェース設定・パーティション設定・iDRAC設定",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 22,
+      "category": "サーバ",
+      "product": "NEC",
+      "item": "OSインストール",
+      "unit": "1サーバにつき",
+      "invoiceUnit": "",
+      "notes": "Windows Server 実績あり",
+      "priceYen": 50000
+    },
+    {
+      "sourceRow": 23,
+      "category": "サーバ",
+      "product": "NEC",
+      "item": "設計・詳細設計",
+      "unit": "1サーバにつき",
+      "invoiceUnit": "",
+      "notes": "ホスト名・DNS設定・時刻設定・ネットワークインターフェース設定・パーティション設定・BMC設定",
+      "priceYen": 50000
+    },
+    {
+      "sourceRow": 24,
+      "category": "サーバ",
+      "product": "富士通",
+      "item": "OSインストール",
+      "unit": "1サーバにつき",
+      "invoiceUnit": "",
+      "notes": "Windows Server / ESXi ホスト実績あり",
+      "priceYen": 50000
+    },
+    {
+      "sourceRow": 25,
+      "category": "サーバ",
+      "product": "富士通",
+      "item": "基本設定",
+      "unit": "1サーバにつき",
+      "invoiceUnit": "",
+      "notes": "ホスト名・DNS設定・時刻設定・ネットワークインターフェース設定・パーティション設定・iRMC設定",
+      "priceYen": 50000
+    },
+    {
+      "sourceRow": 26,
+      "category": "サーバ",
+      "product": "富士通",
+      "item": "詳細設計",
+      "unit": "1サーバにつき",
+      "invoiceUnit": "",
+      "notes": "ホスト名・DNS設定・時刻設定・ネットワークインターフェース設定・パーティション設定・iRMC設定",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 27,
+      "category": "ローカルコンテナ",
+      "product": "Docker",
+      "item": "設計・詳細設計",
+      "unit": "1構成につき",
+      "invoiceUnit": "",
+      "notes": "1構成はdocker-compose.yml単位。例） Frontend / Backend / Database",
+      "priceYen": 50000
+    },
+    {
+      "sourceRow": 28,
+      "category": "ローカルコンテナ",
+      "product": "Docker",
+      "item": "操作ドキュメント作成",
+      "unit": "1構成につき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 29,
+      "category": "パブリッククラウド",
+      "product": "AWS ECS",
+      "item": "クラスター立ち上げ",
+      "unit": "1クラスターにつき",
+      "invoiceUnit": "",
+      "notes": "Terraform + CloudFormationベース（サービス・タスクが3つ以上になる場合には要相談）",
+      "priceYen": 100000
+    },
+    {
+      "sourceRow": 30,
+      "category": "パブリッククラウド",
+      "product": "AWS ECS",
+      "item": "設計・詳細設計",
+      "unit": "1クラスターにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 30000
+    },
+    {
+      "sourceRow": 31,
+      "category": "パブリッククラウド",
+      "product": "AWS ECS",
+      "item": "操作ドキュメント作成",
+      "unit": "1クラスターにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 32,
+      "category": "パブリッククラウド",
+      "product": "AWS RDS",
+      "item": "基本設定",
+      "unit": "1DBにつき",
+      "invoiceUnit": "",
+      "notes": "Terraform + CloudFormationベース",
+      "priceYen": 20000
+    },
+    {
+      "sourceRow": 33,
+      "category": "パブリッククラウド",
+      "product": "AWS RDS",
+      "item": "設計・詳細設計",
+      "unit": "1DBにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 30000
+    },
+    {
+      "sourceRow": 34,
+      "category": "パブリッククラウド",
+      "product": "AWS RDS",
+      "item": "操作ドキュメント作成",
+      "unit": "1DBにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 35,
+      "category": "パブリッククラウド",
+      "product": "AWS EC2",
+      "item": "インスタンス立ち上げ",
+      "unit": "1インスタンスにつき",
+      "invoiceUnit": "",
+      "notes": "Terraform + CloudFormationベース",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 36,
+      "category": "パブリッククラウド",
+      "product": "AWS EC2",
+      "item": "詳細設計書作成",
+      "unit": "1インスタンスにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 30000
+    },
+    {
+      "sourceRow": 37,
+      "category": "パブリッククラウド",
+      "product": "AWS EC2",
+      "item": "操作ドキュメント作成",
+      "unit": "1インスタンスにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 38,
+      "category": "パブリッククラウド",
+      "product": "AWS EC2",
+      "item": "Auto Scaling",
+      "unit": "1設定につき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 39,
+      "category": "パブリッククラウド",
+      "product": "AWS CloudFront",
+      "item": "設計・詳細設計",
+      "unit": "1ディストリビューションにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 40,
+      "category": "パブリッククラウド",
+      "product": "AWS CloudFront",
+      "item": "設定",
+      "unit": "1ディストリビューションにつき",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 41,
+      "category": "パブリッククラウド",
+      "product": "AWS WAF",
+      "item": "設計・詳細設計",
+      "unit": "1 ACL",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 10000
+    },
+    {
+      "sourceRow": 42,
+      "category": "パブリッククラウド",
+      "product": "AWS WAF",
+      "item": "設定",
+      "unit": "1 ACL",
+      "invoiceUnit": "",
+      "notes": "",
+      "priceYen": 10000
+    }
+  ],
+  "engineers": [
+    {
+      "sourceRow": 4,
+      "category": "ネットワークエンジニア",
+      "phase": "要件定義",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 5000
+    },
+    {
+      "sourceRow": 5,
+      "category": "ネットワークエンジニア",
+      "phase": "設計",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 3000
+    },
+    {
+      "sourceRow": 6,
+      "category": "ネットワークエンジニア",
+      "phase": "構築",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 3000
+    },
+    {
+      "sourceRow": 7,
+      "category": "ネットワークエンジニア",
+      "phase": "調査",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 3000
+    },
+    {
+      "sourceRow": 8,
+      "category": "ネットワークエンジニア",
+      "phase": "トラブルシュート",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 5000
+    },
+    {
+      "sourceRow": 9,
+      "category": "サーバエンジニア",
+      "phase": "要件定義",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 5000
+    },
+    {
+      "sourceRow": 10,
+      "category": "サーバエンジニア",
+      "phase": "設計",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 3000
+    },
+    {
+      "sourceRow": 11,
+      "category": "サーバエンジニア",
+      "phase": "構築",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 3000
+    },
+    {
+      "sourceRow": 12,
+      "category": "サーバエンジニア",
+      "phase": "調査",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 3000
+    },
+    {
+      "sourceRow": 13,
+      "category": "サーバエンジニア",
+      "phase": "トラブルシュート",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 5000
+    },
+    {
+      "sourceRow": 14,
+      "category": "クラウドエンジニア",
+      "phase": "要件定義",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 5000
+    },
+    {
+      "sourceRow": 15,
+      "category": "クラウドエンジニア",
+      "phase": "設計",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 5000
+    },
+    {
+      "sourceRow": 16,
+      "category": "クラウドエンジニア",
+      "phase": "構築",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 3000
+    },
+    {
+      "sourceRow": 17,
+      "category": "クラウドエンジニア",
+      "phase": "調査",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 3000
+    },
+    {
+      "sourceRow": 18,
+      "category": "クラウドエンジニア",
+      "phase": "トラブルシュート",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 5000
+    },
+    {
+      "sourceRow": 19,
+      "category": "バックエンドエンジニア",
+      "phase": "要件定義",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": null
+    },
+    {
+      "sourceRow": 20,
+      "category": "バックエンドエンジニア",
+      "phase": "設計",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 5000
+    },
+    {
+      "sourceRow": 21,
+      "category": "バックエンドエンジニア",
+      "phase": "開発",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 4000
+    },
+    {
+      "sourceRow": 22,
+      "category": "バックエンドエンジニア",
+      "phase": "テスト",
+      "unit": "円／時間",
+      "notes": "",
+      "priceYen": 2000
+    }
+  ]
+}

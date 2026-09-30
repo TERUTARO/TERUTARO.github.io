@@ -16,7 +16,7 @@ export default function nextConfig(phase: string): NextConfig {
           async rewrites() {
             return [
               { source: "/index.html", destination: "/" },
-              ...["works", "partners", "events", "contact"].map((page) => ({
+              ...["works", "partners", "events", "contact", "pricing"].map((page) => ({
                 source: `/${page}.html`,
                 destination: `/${page}`,
               })),

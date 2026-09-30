@@ -22,6 +22,15 @@ const response = (data, status = 200) => new Response(JSON.stringify(data), { st
 const authResult = (access = "access-only", expires = 3600) => ({ AuthenticationResult: { AccessToken: access, IdToken: "never-sent-to-api", RefreshToken: "refresh-memory", ExpiresIn: expires } });
 const sample = { id: "service-4", category: "ミドルウェア", product: "Apache", item: "基本設定", unit: "1サーバにつき", notes: "条件を保持", priceYen: 3000, sourceRow: 4, order: 0, published: true };
 
+test("management ID HTML pattern is valid in browser Unicode sets mode", () => {
+  const editor = fs.readFileSync(path.join(__dirname, "../src/components/admin-editor.tsx"), "utf8");
+  const attribute = editor.match(/pattern="([^"]+)"/);
+  assert.ok(attribute);
+  const pattern = new RegExp(`^(?:${attribute[1]})$`, "v");
+  for (const value of ["a", "9", "qa-admin_2026", "service-4"]) assert.equal(pattern.test(value), true);
+  for (const value of ["", "-id", "_id", "UpperCase", "id.name", "日本語"]) assert.equal(pattern.test(value), false);
+});
+
 test("default browser fetch is never invoked with the session or API as receiver", async () => {
   const original = global.fetch;
   const calls = [];

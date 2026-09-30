@@ -55,7 +55,7 @@ export function AdminEditor({ collection, record, api, onSaved, onClose, onReloa
     <form onSubmit={save}>
       <fieldset disabled={saving} className="admin-fieldset">
         <div className="admin-editor-meta">
-          <label className="admin-field"><span>管理ID <small>必須</small></span><input value={draft.id} onChange={event => update("id", event.target.value)} required maxLength={80} pattern="[a-z0-9][a-z0-9_-]*" readOnly={version !== null}/><small>{version === null ? "自動生成済み。必要に応じて半角小文字の英数字で変更できます。" : "登録後の管理IDは変更できません。"}</small></label>
+          <label className="admin-field"><span>管理ID <small>必須</small></span><input value={draft.id} onChange={event => update("id", event.target.value)} required maxLength={80} pattern="[a-z0-9](?:[a-z0-9_]|-)*" readOnly={version !== null}/><small>{version === null ? "自動生成済み。必要に応じて半角小文字の英数字で変更できます。" : "登録後の管理IDは変更できません。"}</small></label>
           <label className="admin-field"><span>表示順 <small>必須</small></span><input type="number" min={-1000000} max={1000000} step="1" required value={draft.order} onChange={event => update("order", event.target.value === "" ? "" : Number(event.target.value))}/><small>小さい数字から表示します。</small></label>
           <label className="admin-check"><input type="checkbox" checked={draft.published !== false} onChange={event => update("published", event.target.checked)}/><span>公開する</span></label>
         </div>

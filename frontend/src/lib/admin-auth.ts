@@ -22,7 +22,8 @@ export class AdminSession {
   private generation = 0;
   username = "";
 
-  constructor(private config: AdminConfig, private onExpired: () => void, private fetcher: Fetcher = fetch) {}
+  constructor(private config: AdminConfig, private onExpired: () => void,
+    private fetcher: Fetcher = (input, init) => fetch(input, init)) {}
 
   private async cognito(action: string, body: unknown): Promise<Record<string, unknown>> {
     let response: Response;

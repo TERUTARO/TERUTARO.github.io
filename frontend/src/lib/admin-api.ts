@@ -61,7 +61,8 @@ function contactRecord(value: unknown): ContactRecord {
 }
 
 export class AdminApi {
-  constructor(private config: AdminConfig, private session: AdminSession, private fetcher: Fetcher = fetch) {}
+  constructor(private config: AdminConfig, private session: AdminSession,
+    private fetcher: Fetcher = (input, init) => fetch(input, init)) {}
 
   private async request(path: string, method = "GET", body?: unknown): Promise<unknown> {
     // Obtain a fresh token before every request, including every mutation.

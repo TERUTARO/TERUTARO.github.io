@@ -22,6 +22,24 @@ const response = (data, status = 200) => new Response(JSON.stringify(data), { st
 const authResult = (access = "access-only", expires = 3600) => ({ AuthenticationResult: { AccessToken: access, IdToken: "never-sent-to-api", RefreshToken: "refresh-memory", ExpiresIn: expires } });
 const sample = { id: "service-4", category: "ミドルウェア", product: "Apache", item: "基本設定", unit: "1サーバにつき", notes: "条件を保持", priceYen: 3000, sourceRow: 4, order: 0, published: true };
 
+test("default browser fetch is never invoked with the session or API as receiver", async () => {
+  const original = global.fetch;
+  const calls = [];
+  global.fetch = function (url) {
+    "use strict";
+    // Window.fetch permits the global/default receiver, not a service instance.
+    if (this !== undefined && this !== globalThis) throw new TypeError("Illegal invocation");
+    calls.push(url);
+    return Promise.resolve(response(url.includes("cognito-idp") ? authResult() : { items: [] }));
+  };
+  try {
+    const session = new AdminSession(config, () => {});
+    await session.login("admin", "test-password");
+    assert.deepEqual(await new AdminApi(config, session).list("projects"), []);
+    assert.equal(calls.length, 2);
+  } finally { global.fetch = original; }
+});
+
 test("protected API never fetches before login", async () => {
   let calls = 0;
   const fetcher = async () => { calls++; return response({}); };

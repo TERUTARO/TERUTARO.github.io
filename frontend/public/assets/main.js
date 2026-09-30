@@ -102,6 +102,33 @@ window.addEventListener('pageshow', () => {
   else resetMenu();
 });
 
+const portraitNote = document.querySelector('.portrait-note');
+if (portraitNote) {
+  const portraitButton = portraitNote.querySelector('.portrait-trigger');
+  portraitNote.dataset.enhanced = 'true';
+  const showPortraitNote = (visible) => portraitNote.classList.toggle('is-open', visible);
+  portraitNote.addEventListener('pointerenter', (event) => {
+    if (event.pointerType === 'mouse') showPortraitNote(true);
+  });
+  portraitNote.addEventListener('pointerleave', (event) => {
+    if (event.pointerType === 'mouse' && !portraitButton.matches(':focus-visible')) showPortraitNote(false);
+  });
+  portraitButton.addEventListener('focus', () => {
+    if (portraitButton.matches(':focus-visible')) showPortraitNote(true);
+  });
+  portraitButton.addEventListener('blur', () => showPortraitNote(false));
+  portraitButton.addEventListener('click', (event) => {
+    showPortraitNote(event.pointerType === 'touch'
+      ? !portraitNote.classList.contains('is-open') : true);
+  });
+  document.addEventListener('pointerdown', (event) => {
+    if (!portraitNote.contains(event.target)) showPortraitNote(false);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') showPortraitNote(false);
+  });
+}
+
 const clock = document.querySelector('[data-clock]');
 function updateClock() {
   if (clock) clock.textContent = new Intl.DateTimeFormat('en-GB', {

@@ -484,3 +484,31 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   border-radius: 0;
   background: none;
 }
+
+/* A small note above the portrait, also available by keyboard and touch. */
+.portrait-note { position: relative; display: inline-flex; flex: 0 0 auto; }
+.portrait-trigger { display: block; padding: 0; border: 0; border-radius: 50%; background: none; color: inherit; }
+.portrait-trigger:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+.portrait-tooltip { position: absolute; z-index: 5; bottom: calc(100% + 12px); left: -6px; padding: 12px 17px; border-radius: 12px; background: var(--green); color: var(--paper); font-size: 12px; font-weight: 400; line-height: 1.5; white-space: nowrap; opacity: 0; visibility: hidden; transform: translateY(5px); transition: opacity .18s, transform .18s, visibility .18s; }
+.portrait-tooltip::before { content: ''; position: absolute; inset: 100% 0 -12px; }
+.portrait-tooltip::after { content: ''; position: absolute; top: 100%; left: 35px; border: 6px solid transparent; border-top-color: var(--green); }
+.portrait-note.is-open .portrait-tooltip,
+.portrait-note:not([data-enhanced]):is(:hover, :focus-within) .portrait-tooltip { opacity: 1; visibility: visible; transform: translateY(0); }
+.hero-copy .hero-strength { margin-top: 15px; color: var(--green); font-weight: 500; }
+
+/* Profile information follows the visual grammar of a Terraform resource. */
+.profile-resource { min-width: 0; align-self: start; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: #eef1ec; }
+.profile-resource-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 24px; border-bottom: 1px solid var(--line); font: 11px/1.5 var(--mono); color: var(--muted); }
+.profile-resource-header > span:last-child { color: var(--accent); }
+.profile-resource pre { margin: 0; padding: 24px; font: 12px/1.95 var(--mono); letter-spacing: -.015em; white-space: pre-wrap; overflow-wrap: anywhere; tab-size: 2; color: var(--ink); }
+.profile-resource code { font: inherit; }
+.hcl-keyword { color: #50658e; }
+.hcl-key { color: #40545d; }
+.hcl-string { color: #4f6844; }
+@media (max-width: 580px) {
+  .profile-resource-header { padding: 13px 16px; }
+  .profile-resource pre { padding: 19px 16px; font-size: 11px; line-height: 2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portrait-tooltip { transition: none; transform: none; }
+}

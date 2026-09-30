@@ -1,6 +1,11 @@
 /* Tag search and work history grouped by project start year. */
 .works-section .works-toolbar { display: block; padding: 25px 0 27px; }
 .work-filter-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.work-filter-actions { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.work-current-filter { display: inline-flex; align-items: center; gap: 9px; min-height: 42px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 24px; font-size: 11px; white-space: nowrap; cursor: pointer; }
+.work-current-filter input { width: 15px; height: 15px; margin: 0; accent-color: var(--accent); cursor: pointer; }
+.work-current-filter:has(input:checked) { border-color: var(--accent); color: #2e527f; background: #e4ebf4; }
+.work-current-count { font-family: var(--mono); font-size: 10px; color: var(--muted); }
 .work-clear { display: inline-flex; align-items: center; gap: 12px; border: 0; background: none; padding: 12px 0 12px 12px; font-size: 11px; white-space: nowrap; }
 .work-clear > span { font-size: 18px; }
 .work-clear:disabled { opacity: .35; cursor: default; }
@@ -60,6 +65,7 @@
 .work-empty-reset:hover { border-color: var(--accent); color: var(--accent); }
 @media (max-width: 800px) {
   .work-filter-top { align-items: start; flex-wrap: wrap; gap: 10px; }
+  .work-filter-actions { flex-wrap: wrap; }
   .work-search-row { grid-template-columns: 75px minmax(0,1fr); gap: 15px; }
   .work-search-hint { margin-left: 90px; }
   .popular-tags { gap: 15px; }
@@ -71,6 +77,8 @@
   .works-section .filters { gap: 5px; }
   .works-section .filters button { padding: 10px 12px; font-size: 10px; }
   .work-clear { padding-left: 0; font-size: 10px; }
+  .work-filter-actions { width: 100%; justify-content: space-between; gap: 10px; }
+  .work-current-filter { gap: 7px; padding-inline: 10px; font-size: 10px; }
   .work-search-row { grid-template-columns: 1fr; gap: 11px; margin-top: 15px; }
   .work-search-field input { font-size: 16px; padding-block: 13px; }
   .work-search-hint { margin-left: 0; font-size: 10px; }

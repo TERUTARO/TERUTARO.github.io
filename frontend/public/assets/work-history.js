@@ -1,10 +1,11 @@
-/* Work archive: category + case/width-insensitive tag search. */
+/* Work archive: categories, current status, and case/width-insensitive tags. */
 (() => {
   const archive = document.querySelector('[data-work-history]');
   if (!archive) return;
 
   const controls = archive.querySelector('[data-work-controls]');
   const input = archive.querySelector('#work-tag-search');
+  const currentOnly = archive.querySelector('#work-current-only');
   const filters = [...archive.querySelectorAll('[data-filter]')];
   const tagButtons = [...archive.querySelectorAll('[data-work-tag]')];
   const resetButtons = [...archive.querySelectorAll('[data-work-reset]')];
@@ -14,6 +15,7 @@
   const empty = archive.querySelector('[data-work-empty]');
   const normalize = value => value.normalize('NFKC').toLocaleLowerCase('ja').trim().replace(/\s+/g, ' ');
   const projectTags = new Map(projects.map(project => [project, JSON.parse(project.dataset.tags).map(normalize)]));
+  const projectCategories = new Map(projects.map(project => [project, JSON.parse(project.dataset.categories)]));
   let category = 'all';
   let composing = false;
 
@@ -21,9 +23,10 @@
     const query = normalize(input.value);
     let count = 0;
     projects.forEach(project => {
-      const matchesCategory = category === 'all' || project.dataset.category === category;
+      const matchesCategory = category === 'all' || projectCategories.get(project).includes(category);
       const matchesTag = !query || projectTags.get(project).some(tag => tag.includes(query));
-      project.hidden = !(matchesCategory && matchesTag);
+      const matchesCurrent = !currentOnly.checked || project.dataset.current === 'true';
+      project.hidden = !(matchesCategory && matchesTag && matchesCurrent);
       if (!project.hidden) count++;
     });
     years.forEach(year => {
@@ -37,15 +40,15 @@
       button.setAttribute('aria-pressed', String(active));
     });
     tagButtons.forEach(button => button.setAttribute('aria-pressed', String(Boolean(query) && normalize(button.dataset.workTag) === query)));
-    resetButtons.forEach(button => { button.disabled = category === 'all' && !input.value; });
+    resetButtons.forEach(button => { button.disabled = category === 'all' && !input.value && !currentOnly.checked; });
     status.replaceChildren();
     const number = document.createElement('strong');
     number.textContent = count;
     status.append(number, ` / ${projects.length} 件の実績`);
-    if (query || category !== 'all') {
+    if (query || category !== 'all' || currentOnly.checked) {
       const conditions = document.createElement('span');
       conditions.className = 'sr-only';
-      conditions.textContent = `。${category !== 'all' ? `カテゴリ ${category}。` : ''}${query ? `タグ「${input.value.trim()}」で検索。` : ''}`;
+      conditions.textContent = `。${category !== 'all' ? `カテゴリ ${category}。` : ''}${currentOnly.checked ? '現在進行中のみ。' : ''}${query ? `タグ「${input.value.trim()}」で検索。` : ''}`;
       status.append(conditions);
     }
     empty.hidden = count !== 0;
@@ -54,6 +57,7 @@
   function reset() {
     category = 'all';
     input.value = '';
+    currentOnly.checked = false;
     update();
   }
 
@@ -61,6 +65,7 @@
     category = button.dataset.filter;
     update();
   }));
+  currentOnly.addEventListener('change', update);
   input.addEventListener('compositionstart', () => { composing = true; });
   input.addEventListener('compositionend', () => { composing = false; update(); });
   input.addEventListener('input', event => {

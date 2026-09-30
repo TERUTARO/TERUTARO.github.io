@@ -139,7 +139,11 @@ updateClock();
 if (clock) setInterval(updateClock, 60_000);
 document.querySelectorAll('[data-year]').forEach((element) => { element.textContent = new Date().getFullYear(); });
 
-const tabs = [...document.querySelectorAll('[role="tab"]')];
+function initializeSkillTabs() {
+  const list = document.querySelector('.skill-tabs');
+  if (!list || list.dataset.initialized) return;
+  list.dataset.initialized = 'true';
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
 function activateTab(selected) {
   tabs.forEach((tab) => {
     const active = tab === selected;
@@ -163,17 +167,27 @@ tabs.forEach((tab, index) => {
   });
 });
 
+}
+initializeSkillTabs();
+window.addEventListener('portfolio:content-updated', initializeSkillTabs);
+
 const form = document.getElementById('contact-form');
 if (form) {
   const message = form.elements.namedItem('message');
   const counter = document.getElementById('message-count');
   const confirmation = document.getElementById('contact-confirmation');
   const values = document.getElementById('confirmation-values');
+  let requestKey = null;
+  let requestBody = null;
+  let sending = false;
+  const sendButton = document.getElementById('send-contact');
+  const editButton = document.getElementById('edit-form');
+  const sendError = document.getElementById('contact-send-error');
   const labels = { name: 'お名前', company: '会社名 / 屋号', email: 'メールアドレス', type: 'ご相談の種類', message: 'ご相談内容' };
   const validate = () => {
     form.elements.namedItem('name').setCustomValidity(form.elements.namedItem('name').value.trim() ? '' : 'お名前を入力してください。');
-    message.setCustomValidity(message.value.trim().length >= 10 ? '' : 'ご相談内容を10文字以上で入力してください。');
-    counter.textContent = String(message.value.length);
+    message.setCustomValidity([...message.value.trim()].length >= 10 ? '' : 'ご相談内容を10文字以上で入力してください。');
+    counter.textContent = String([...message.value].length);
   };
   form.addEventListener('input', validate);
   document.getElementById('review-contact').addEventListener('click', () => form.requestSubmit());
@@ -192,13 +206,54 @@ if (form) {
       row.append(term, detail);
       values.append(row);
     });
+    const payload = Object.fromEntries([...data].map(([key,value]) => [key,String(value).trim()]));
+    const serialized = JSON.stringify(payload);
+    if (serialized !== requestBody) { requestBody = serialized; requestKey = crypto.randomUUID(); }
+    sendError.hidden = true;
     form.hidden = true;
     confirmation.hidden = false;
     document.getElementById('confirmation-title').focus();
   });
-  document.getElementById('edit-form').addEventListener('click', () => {
+  editButton.addEventListener('click', () => {
+    if (sending) return;
     confirmation.hidden = true;
     form.hidden = false;
     form.elements.namedItem('name').focus();
+  });
+  sendButton.addEventListener('click', async () => {
+    if (sending || !requestBody || !requestKey) return;
+    sending = true;
+    sendButton.disabled = editButton.disabled = true;
+    sendButton.textContent = '送信しています…';
+    sendError.hidden = true;
+    try {
+      const configResponse = await fetch('/assets/runtime-config.json', { cache: 'no-store', signal: AbortSignal.timeout(8000) });
+      if (!configResponse.ok) throw new Error('送信先を取得できませんでした。時間をおいて再度お試しください。');
+      const { apiBaseUrl } = await configResponse.json();
+      if (!apiBaseUrl) throw new Error('現在、送信機能を準備しています。時間をおいて再度お試しください。');
+      const url = new URL(apiBaseUrl);
+      if (url.protocol !== 'https:' && !(url.protocol === 'http:' && ['localhost','127.0.0.1'].includes(url.hostname))) throw new Error('送信先を確認できませんでした。');
+      const response = await fetch(`${apiBaseUrl.replace(/\/$/,'')}/contact`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'Idempotency-Key': requestKey },
+        body: requestBody, signal: AbortSignal.timeout(20000),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.message || '送信できませんでした。時間をおいて再度お試しください。');
+      confirmation.hidden = true;
+      document.getElementById('contact-success').hidden = false;
+      document.getElementById('contact-receipt').textContent = result.id || '受付済み';
+      document.getElementById('contact-success-title').focus();
+      form.reset();
+      requestBody = requestKey = null;
+    } catch (error) {
+      sendError.textContent = error.name === 'TimeoutError' || error instanceof TypeError
+        ? '通信を確認できませんでした。もう一度送信できます。同じ内容が二重に登録されることはありません。'
+        : error.message;
+      sendError.hidden = false;
+    } finally {
+      sending = false;
+      sendButton.disabled = editButton.disabled = false;
+      sendButton.textContent = 'この内容で送信する ↗';
+    }
   });
 }

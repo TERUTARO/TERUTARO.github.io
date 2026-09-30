@@ -1,0 +1,1 @@
+"""Published portfolio content endpoint."""

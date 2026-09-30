@@ -1,0 +1,63 @@
+[
+  {
+    "id": "riams",
+    "name": "リアムス株式会社",
+    "summary": "IT資産管理システム「Asset Compass」の構築に、業務委託として携わっています。",
+    "tags": [
+      "IT資産管理システム構築",
+      "業務委託"
+    ],
+    "sites": [
+      {
+        "label": "リアムス株式会社",
+        "url": "https://www.riams.co.jp/",
+        "previewKey": "riams"
+      },
+      {
+        "label": "Asset Compass",
+        "url": "https://asset-compass.jp/",
+        "previewKey": "asset-compass"
+      }
+    ],
+    "order": 0,
+    "published": true
+  },
+  {
+    "id": "harahachi",
+    "name": "合同会社ハラハチ",
+    "summary": "各種WordPressサイトの運用保守と、新たなインフラ基盤の構築を担当しています。",
+    "tags": [
+      "WordPress",
+      "運用保守",
+      "インフラ新規構築"
+    ],
+    "sites": [
+      {
+        "label": "合同会社ハラハチ",
+        "url": "https://harahachi.co.jp/",
+        "previewKey": "harahachi"
+      }
+    ],
+    "order": 1,
+    "published": true
+  },
+  {
+    "id": "hinode",
+    "name": "日乃出工業株式会社",
+    "summary": "パートナーとして、拠点間VPNの構築やネットワーク機器の更改、セキュリティアプライアンスの導入支援に携わってきました。",
+    "tags": [
+      "ネットワーク設計・構築",
+      "VPN",
+      "セキュリティ"
+    ],
+    "sites": [
+      {
+        "label": "日乃出工業株式会社",
+        "url": "https://hinode-hd.com/",
+        "previewKey": "hinode"
+      }
+    ],
+    "order": 2,
+    "published": true
+  }
+]

@@ -1,0 +1,81 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Terraform remote state and lock storage for the portfolio
+Parameters:
+  Project:
+    Type: String
+    Default: terutaro
+    AllowedPattern: '[a-z][a-z0-9-]{1,15}'
+  Environment:
+    Type: String
+    AllowedValues: [dev, production]
+Resources:
+  StateBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketName: !Sub '${Project}-${Environment}-tfstate-${AWS::AccountId}-${AWS::Region}'
+      VersioningConfiguration:
+        Status: Enabled
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - {Key: Project, Value: !Ref Project}
+        - {Key: Environment, Value: !Ref Environment}
+        - {Key: ManagedBy, Value: cloudformation}
+  StateBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      Bucket: !Ref StateBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: DenyInsecureTransport
+            Effect: Deny
+            Principal: '*'
+            Action: 's3:*'
+            Resource:
+              - !GetAtt StateBucket.Arn
+              - !Sub '${StateBucket.Arn}/*'
+            Condition:
+              Bool:
+                aws:SecureTransport: 'false'
+  StateLockTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: !Sub '${Project}-${Environment}-terraform-locks'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - {AttributeName: LockID, AttributeType: S}
+      KeySchema:
+        - {AttributeName: LockID, KeyType: HASH}
+      SSESpecification:
+        SSEEnabled: true
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      DeletionProtectionEnabled: true
+      Tags:
+        - {Key: Project, Value: !Ref Project}
+        - {Key: Environment, Value: !Ref Environment}
+        - {Key: ManagedBy, Value: cloudformation}
+Outputs:
+  BackendBucketName:
+    Value: !Ref StateBucket
+  BackendLockTableName:
+    Value: !Ref StateLockTable
+  BackendRegion:
+    Value: !Ref AWS::Region

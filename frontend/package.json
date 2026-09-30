@@ -13,7 +13,8 @@
     "build": "next build",
     "postbuild": "node scripts/copy-archive.mjs",
     "typecheck": "next typegen && tsc --noEmit",
-    "preview": "python3 -m http.server 4173 --bind 127.0.0.1 --directory out"
+    "preview": "python3 -m http.server 4173 --bind 127.0.0.1 --directory out",
+    "prepare:pages": "node scripts/prepare-pages.mjs"
   },
   "dependencies": {
     "next": "16.3.7",

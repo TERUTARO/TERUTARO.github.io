@@ -111,25 +111,8 @@ def generate_art():
     svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 570" fill="none">' + ''.join(paths) + '</svg>'
     (PUBLIC / 'assets' / 'continuity.svg').write_text(svg)
 
-SKILL_GROUPS = [
-    ('cloud', '01', 'Cloud & Infrastructure', 'クラウド・インフラ', '', [
-        ('AWS', ['EC2', 'ECS / ECR', 'RDS', 'S3', 'Lambda', 'ALB', 'Route 53', 'CloudFront', 'AWS WAF', 'Bedrock', 'CloudFormation']),
-        ('Google Cloud', ['GCE', 'GAE', 'GKE', 'Cloud SQL', 'Cloud Functions', 'Vertex AI', 'BigQuery']),
-        ('Virtualization', ['VMware vSphere', 'Hyper-V', 'IDCF'])]),
-    ('development', '02', 'Web Development', 'Web開発', '', [
-        ('Languages', ['Ruby', 'TypeScript', 'JavaScript', 'PHP', 'Google Apps Script']),
-        ('Frameworks', ['Ruby on Rails', 'React', 'Next.js', 'Vue.js', 'Nuxt.js', 'Yii', 'CodeIgniter']),
-        ('Platform & Database', ['WordPress', 'MySQL', 'JWT'])]),
-    ('ai', '03', 'AI & Workflow', 'AI', '', [
-        ('Development tools', ['Codex', 'Claude', 'Cursor']),
-        ('AI platforms', ['Dify', 'Vertex AI', 'Amazon Bedrock', 'Azure OpenAI']),
-        ('Focus', ['AI連携機能の開発', '社内AI基盤の運用保守'])]),
-    ('devops', '04', 'DevOps & Network', 'DevOps・ネットワーク', '', [
-        ('Infrastructure as Code', ['Terraform', 'Ansible', 'Docker', 'Docker Compose']),
-        ('CI/CD & Observability', ['GitHub Actions', 'GitLab CI/CD', 'Datadog', 'Zabbix']),
-        ('Network', ['FortiGate', 'YAMAHA RTX / SWX / WLX', 'Cisco Catalyst', 'Aruba IAP', 'VPN']),
-        ('Collaboration', ['GitHub', 'GitLab', 'Jira', 'Backlog', 'Redmine', 'Confluence', 'Sphinx', 'Slack', 'Teams'])]),
-]
+SKILL_DATA = json.loads((ROOT / 'content' / 'skills.json').read_text())
+PARTNER_DATA = json.loads((ROOT / 'content' / 'partners.json').read_text())
 
 
 SITE_INFO = {
@@ -155,12 +138,19 @@ def site_preview(key, show_title=True):
     return f'''<a class="site-preview" href="{e(url)}" target="_blank" rel="noopener noreferrer" aria-label="{e(title)}のWebサイトを開く（新しいタブ）"><span class="site-preview-screen">{site_image(key, title)}</span>{caption}</a>'''
 
 def skills():
-    tabs = ''.join(f'<button id="tab-{key}" role="tab" aria-selected="{str(i == 0).lower()}" aria-controls="panel-{key}" tabindex="{0 if i == 0 else -1}">{skill_icon(key)}<span>{label}</span><span class="tab-arrow">↗</span></button>' for i, (key, num, label, *_rest) in enumerate(SKILL_GROUPS))
+    rows = sorted((r for r in SKILL_DATA if r.get('published', True)), key=lambda r: r.get('order', 0))
+    tabs = ''.join(f'<button id="tab-{e(row["id"])}" role="tab" aria-selected="{str(i == 0).lower()}" aria-controls="panel-{e(row["id"])}" tabindex="{0 if i == 0 else -1}">{skill_icon(row["icon"])}<span>{e(row["label"])}</span><span class="tab-arrow">↗</span></button>' for i, row in enumerate(rows))
     panels = ''
-    for i, (key, num, label, heading, desc, groups) in enumerate(SKILL_GROUPS):
-        rows = ''.join(f'<div class="skill-row"><h4>{name}</h4>{tags(items)}</div>' for name, items in groups)
-        panels += f'<div class="skill-panel" id="panel-{key}" role="tabpanel" aria-labelledby="tab-{key}" tabindex="0" {"hidden" if i else ""}><div class="skill-intro"><span class="skill-symbol">{skill_icon(key)}</span><h3>{heading}</h3></div><div class="skill-details">{rows}</div></div>'
-    return f'<section class="skills-section wrap" id="skills">{section_label("02", "My toolkit")}<div class="section-title"><h2>スキル</h2></div><div class="skill-tabs" role="tablist" aria-label="スキルの分類">{tabs}</div>{panels}</section>'
+    for i, row in enumerate(rows):
+        groups = ''.join(f'<div class="skill-row"><h4>{e(group["name"])}</h4>{tags(group["items"])}</div>' for group in row['groups'])
+        panels += f'<div class="skill-panel" id="panel-{e(row["id"])}" role="tabpanel" aria-labelledby="tab-{e(row["id"])}" tabindex="0" {"hidden" if i else ""}><div class="skill-intro"><span class="skill-symbol">{skill_icon(row["icon"])}</span><h3>{e(row["heading"])}</h3></div><div class="skill-details">{groups}</div></div>'
+    return f'<section class="skills-section wrap" id="skills"><div class="section-title"><h2>スキル</h2></div><div class="skill-tabs" role="tablist" aria-label="スキルの分類">{tabs}</div>{panels}</section>'
+
+
+def partner_preview(site):
+    title, url = site['label'], site['url']
+    return f'<a class="site-preview" href="{e(url)}" target="_blank" rel="noopener noreferrer" aria-label="{e(title)}のWebサイトを開く（新しいタブ）"><span class="site-preview-screen">{site_image(site.get("previewKey", ""), title)}</span><span class="site-preview-title">{e(title)}{arrow()}</span></a>'
+
 
 def profile_resource():
     def string(value):
@@ -194,7 +184,7 @@ def profile_resource():
 
 
 def home(data):
-    company_previews = ''.join(site_preview(key) for key in ['riams', 'harahachi', 'hinode'])
+    company_previews = ''.join(partner_preview(row['sites'][0]) for row in PARTNER_DATA if row.get('published', True) and row['sites'])
     return f'''
 <section class="hero wrap water-surface" data-water-surface><div data-water-content>
   <div class="hero-topline"><span class="eyebrow">FREELANCE ENGINEER</span><span class="location"><span class="small-dot"></span> OKINAWA / KANTO, JAPAN <span class="mono" data-clock></span></span></div>
@@ -222,16 +212,14 @@ def works(data):
 <section class="personal-section wrap">{section_label('03', 'Personal projects')}<div class="section-title"><h2>個人活動</h2></div><div class="personal-grid"><article><span class="mono">COMMUNITY</span><h3>TIDAL WAIVE</h3><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', 'コミュニティサイト')}</article><article><span class="mono">PERSONAL PROJECT</span><h3>ぷろんぷとん</h3><span class="paused">現在保守停止中</span></article><article><span class="mono">PERSONAL PROJECT</span><h3>tideline</h3><span class="paused">現在保守停止中</span></article></div></section>{contact_banner()}'''
 
 def partners():
-    rows = [
-        ('リアムス株式会社', 'IT資産管理システム「Asset Compass」の構築に、業務委託として携わっています。', ['IT資産管理システム構築', '業務委託'], ['riams', 'asset-compass']),
-        ('合同会社ハラハチ', '各種WordPressサイトの運用保守と、新たなインフラ基盤の構築を担当しています。', ['WordPress', '運用保守', 'インフラ新規構築'], ['harahachi']),
-        ('日乃出工業株式会社', 'パートナーとして、拠点間VPNの構築やネットワーク機器の更改、セキュリティアプライアンスの導入支援に携わってきました。', ['ネットワーク設計・構築', 'VPN', 'セキュリティ'], ['hinode'])
-    ]
     body = ''
-    for name, desc, ts, sites in rows:
-        gallery = ''.join(site_preview(key) for key in sites)
-        body += f'<article class="partner-row"><div class="partner-gallery">{gallery}</div><div class="partner-description"><h2>{e(name)}</h2><p>{desc}</p>{tags(ts)}</div></article>'
+    for row in sorted(PARTNER_DATA, key=lambda r: r.get('order', 0)):
+        if not row.get('published', True):
+            continue
+        gallery = ''.join(partner_preview(site) for site in row['sites'])
+        body += f'<article class="partner-row"><div class="partner-gallery">{gallery}</div><div class="partner-description"><h2>{e(row["name"])}</h2><p>{e(row["summary"])}</p>{tags(row["tags"])}</div></article>'
     return page_head('02', 'Partners', '長期でお世話になっている企業様', '') + f'<section class="partners-list wrap">{body}</section>{contact_banner()}'
+
 
 def events():
     event_rows = ''
@@ -245,7 +233,7 @@ def events():
     return page_head('03', 'Events', 'イベント', '') + f'''<section class="event-feature wrap">{site_preview('tidal-waive', False)}<div class="event-feature-copy"><h2>TIDAL WAIVE</h2><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', '公式サイト', 'pill-link')}</div></section><section class="event-archive wrap"><div class="section-title"><h2>Conpass</h2></div>{event_rows}</section>{contact_banner()}'''
 
 def contact():
-    return page_head('04', 'Contact', 'お問い合わせ', '') + contact_tabs('contact') + '''<section class="contact-layout wrap"><div class="contact-aside"><h2>相談</h2><div class="contact-services"><span>01 / インフラ構築・運用保守</span><span>02 / Webシステム開発</span><span>03 / AI基盤・開発支援</span><span>04 / その他のご相談</span></div><div class="preview-note"><span class="small-dot"></span><div><strong>こちらはモックの確認用フォームです。</strong><p>内容は送信・保存されません。入力から確認画面までの操作をお試しいただけます。</p></div></div></div><div class="contact-form-area"><form id="contact-form"><div class="form-row"><label for="name">お名前 <span>必須</span></label><input id="name" name="name" autocomplete="name" required maxlength="100" placeholder="山田 太郎"></div><div class="form-row"><label for="company">会社名 / 屋号 <span class="optional">任意</span></label><input id="company" name="company" autocomplete="organization" maxlength="150" placeholder="株式会社〇〇"></div><div class="form-row"><label for="email">メールアドレス <span>必須</span></label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="hello@example.com"></div><div class="form-row"><label for="type">ご相談の種類 <span>必須</span></label><select id="type" name="type" required><option value="">選択してください</option><option>インフラ構築・運用保守</option><option>Webシステム開発</option><option>AI基盤・開発支援</option><option>その他のご相談</option></select></div><div class="form-row"><label for="message">ご相談内容 <span>必須</span></label><textarea id="message" name="message" required minlength="10" maxlength="3000" rows="6" placeholder="ご相談の背景や実現したいこと、ご希望の時期などをお聞かせください。（10文字以上）"></textarea><div class="field-counter"><span>10〜3,000文字</span><span><span id="message-count">0</span> / 3,000</span></div></div><p class="form-note">このモックでは実際のお問い合わせは送信されません。</p><noscript><p class="form-note">確認画面を表示するにはJavaScriptを有効にしてください。入力内容は送信されません。</p></noscript><button class="submit-button" id="review-contact" type="button">入力内容を確認する <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button></form><section class="contact-confirmation" id="contact-confirmation" hidden aria-labelledby="confirmation-title"><h2 id="confirmation-title" tabindex="-1">ご相談内容の確認</h2><p>確認画面のプレビューです。内容は送信されていません。</p><dl id="confirmation-values"></dl><button class="submit-button" type="button" id="edit-form">入力内容を修正する <span>←</span></button><p class="form-note">実際の送信機能は公開時に接続します。</p></section></div></section>'''
+    return page_head('04', 'Contact', 'お問い合わせ', '') + contact_tabs('contact') + '''<section class="contact-layout wrap"><div class="contact-aside"><h2>相談</h2><div class="contact-services"><span>01 / インフラ構築・運用保守</span><span>02 / Webシステム開発</span><span>03 / AI基盤・開発支援</span><span>04 / その他のご相談</span></div><div class="preview-note"><span class="small-dot"></span><div><strong>お仕事のご相談を受け付けています。</strong><p>担当内容やご希望の時期などをお知らせください。</p></div></div></div><div class="contact-form-area"><form id="contact-form"><div class="contact-honeypot" aria-hidden="true"><label for="website">この欄は入力しないでください</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div><div class="form-row"><label for="name">お名前 <span>必須</span></label><input id="name" name="name" autocomplete="name" required maxlength="100" placeholder="山田 太郎"></div><div class="form-row"><label for="company">会社名 / 屋号 <span class="optional">任意</span></label><input id="company" name="company" autocomplete="organization" maxlength="150" placeholder="株式会社〇〇"></div><div class="form-row"><label for="email">メールアドレス <span>必須</span></label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="hello@example.com"></div><div class="form-row"><label for="type">ご相談の種類 <span>必須</span></label><select id="type" name="type" required><option value="">選択してください</option><option>インフラ構築・運用保守</option><option>Webシステム開発</option><option>AI基盤・開発支援</option><option>その他のご相談</option></select></div><div class="form-row"><label for="message">ご相談内容 <span>必須</span></label><textarea id="message" name="message" required minlength="10" maxlength="3000" rows="6" placeholder="ご相談の背景や実現したいこと、ご希望の時期などをお聞かせください。（10文字以上）"></textarea><div class="field-counter"><span>10〜3,000文字</span><span><span id="message-count">0</span> / 3,000</span></div></div><p class="form-note">入力内容はお問い合わせへの対応のために使用します。</p><noscript><p class="form-note">確認画面を表示するにはJavaScriptを有効にしてください。入力内容は送信されません。</p></noscript><button class="submit-button" id="review-contact" type="button">入力内容を確認する <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button></form><section class="contact-confirmation" id="contact-confirmation" hidden aria-labelledby="confirmation-title"><h2 id="confirmation-title" tabindex="-1">ご相談内容の確認</h2><p>内容をご確認のうえ、送信ボタンを押してください。</p><dl id="confirmation-values"></dl><button class="submit-button" type="button" id="edit-form">入力内容を修正する <span>←</span></button><p id="contact-send-error" class="form-note" role="alert" hidden></p><button class="submit-button" id="send-contact" type="button">この内容で送信する <span>↗</span></button></section><section id="contact-success" class="contact-confirmation" hidden><h2 id="contact-success-title" tabindex="-1">お問い合わせを受け付けました</h2><p>内容を確認のうえ、ご連絡します。</p><p class="form-note">受付番号：<span id="contact-receipt"></span></p></section></div></section>'''
 
 def pricing():
     data = json.loads((ROOT / 'content' / 'pricing.json').read_text())
@@ -266,7 +254,7 @@ def main():
     ]
     generated = {}
     for filename, title, description, body in pages:
-        scripts = [asset_url('assets/main.js')]
+        scripts = [asset_url('assets/main.js'), asset_url('assets/content.js')]
         if filename == 'index.html':
             scripts.append(asset_url('assets/water.js'))
         if filename == 'works.html':

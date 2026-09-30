@@ -123,3 +123,27 @@
   .pricing-consultation h2 { font-size: 21px; }
   .pricing-consultation p { font-size: 11px; margin-top: 12px; }
 }
+
+/* Every price category starts closed and keeps native keyboard disclosure. */
+.pricing-section-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+details.pricing-category { border-bottom: 1px solid var(--line); }
+summary.pricing-category-heading { list-style: none; cursor: pointer; min-height: 70px; margin: 0; padding: 18px 0; }
+summary.pricing-category-heading::-webkit-details-marker { display: none; }
+.pricing-category-count { margin-left: auto; }
+.pricing-category-heading > .pricing-toggle { width: 30px; height: 30px; flex: 0 0 30px; display: grid; place-items: center; font: 24px/1 var(--sans); color: var(--accent); transition: transform .2s; }
+.pricing-category[open] > summary .pricing-toggle { transform: rotate(45deg); }
+.pricing-category > .pricing-table-scroll { margin-bottom: 24px; }
+.pricing-hourly-grid { align-items: start; }
+.advisory-rate { display: flex; justify-content: space-between; align-items: center; gap: 28px; padding: 32px 0; border-bottom: 1px solid var(--line); }
+.advisory-rate h3 { font-size: 21px; font-weight: 500; }
+.advisory-rate p { margin-top: 12px; font-size: 12px; color: var(--muted); line-height: 1.9; }
+.advisory-rate strong { display: block; font-size: 25px; font-weight: 500; white-space: nowrap; color: var(--accent); }
+.advisory-rate > div > span { display: block; margin-top: 8px; font-size: 11px; }
+@media (max-width: 800px) {
+  .pricing-section-nav { grid-template-columns: 1fr; }
+}
+@media (max-width: 580px) {
+  summary.pricing-category-heading { gap: 10px; min-height: 65px; }
+  .advisory-rate { align-items: start; flex-direction: column; gap: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .pricing-toggle { transition: none; } }

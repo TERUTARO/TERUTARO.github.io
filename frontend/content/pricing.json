@@ -551,5 +551,16 @@
       "notes": "",
       "priceYen": 2000
     }
+  ],
+  "advisory": [
+    {
+      "id": "advisory",
+      "title": "顧問",
+      "summary": "顧問契約については、ご相談内容に応じてお見積もりします。",
+      "unit": "",
+      "priceYen": null,
+      "order": 0,
+      "published": true
+    }
   ]
 }

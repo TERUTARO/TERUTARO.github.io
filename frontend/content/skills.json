@@ -1,0 +1,174 @@
+[
+  {
+    "id": "cloud",
+    "label": "Cloud & Infrastructure",
+    "heading": "クラウド・インフラ",
+    "icon": "cloud",
+    "groups": [
+      {
+        "name": "AWS",
+        "items": [
+          "EC2",
+          "ECS / ECR",
+          "RDS",
+          "S3",
+          "Lambda",
+          "ALB",
+          "Route 53",
+          "CloudFront",
+          "AWS WAF",
+          "Bedrock",
+          "CloudFormation"
+        ]
+      },
+      {
+        "name": "Google Cloud",
+        "items": [
+          "GCE",
+          "GAE",
+          "GKE",
+          "Cloud SQL",
+          "Cloud Functions",
+          "Vertex AI",
+          "BigQuery"
+        ]
+      },
+      {
+        "name": "Virtualization",
+        "items": [
+          "VMware vSphere",
+          "Hyper-V",
+          "IDCF"
+        ]
+      }
+    ],
+    "order": 0,
+    "published": true
+  },
+  {
+    "id": "development",
+    "label": "Web Development",
+    "heading": "Web開発",
+    "icon": "development",
+    "groups": [
+      {
+        "name": "Languages",
+        "items": [
+          "Ruby",
+          "TypeScript",
+          "JavaScript",
+          "PHP",
+          "Google Apps Script"
+        ]
+      },
+      {
+        "name": "Frameworks",
+        "items": [
+          "Ruby on Rails",
+          "React",
+          "Next.js",
+          "Vue.js",
+          "Nuxt.js",
+          "Yii",
+          "CodeIgniter"
+        ]
+      },
+      {
+        "name": "Platform & Database",
+        "items": [
+          "WordPress",
+          "MySQL",
+          "JWT"
+        ]
+      }
+    ],
+    "order": 1,
+    "published": true
+  },
+  {
+    "id": "ai",
+    "label": "AI & Workflow",
+    "heading": "AI",
+    "icon": "ai",
+    "groups": [
+      {
+        "name": "Development tools",
+        "items": [
+          "Codex",
+          "Claude",
+          "Cursor"
+        ]
+      },
+      {
+        "name": "AI platforms",
+        "items": [
+          "Dify",
+          "Vertex AI",
+          "Amazon Bedrock",
+          "Azure OpenAI"
+        ]
+      },
+      {
+        "name": "Focus",
+        "items": [
+          "AI連携機能の開発",
+          "社内AI基盤の運用保守"
+        ]
+      }
+    ],
+    "order": 2,
+    "published": true
+  },
+  {
+    "id": "devops",
+    "label": "DevOps & Network",
+    "heading": "DevOps・ネットワーク",
+    "icon": "devops",
+    "groups": [
+      {
+        "name": "Infrastructure as Code",
+        "items": [
+          "Terraform",
+          "Ansible",
+          "Docker",
+          "Docker Compose"
+        ]
+      },
+      {
+        "name": "CI/CD & Observability",
+        "items": [
+          "GitHub Actions",
+          "GitLab CI/CD",
+          "Datadog",
+          "Zabbix"
+        ]
+      },
+      {
+        "name": "Network",
+        "items": [
+          "FortiGate",
+          "YAMAHA RTX / SWX / WLX",
+          "Cisco Catalyst",
+          "Aruba IAP",
+          "VPN"
+        ]
+      },
+      {
+        "name": "Collaboration",
+        "items": [
+          "GitHub",
+          "GitLab",
+          "Jira",
+          "Backlog",
+          "Redmine",
+          "Confluence",
+          "Sphinx",
+          "Slack",
+          "Teams"
+        ]
+      }
+    ],
+    "order": 3,
+    "published": true
+  }
+]

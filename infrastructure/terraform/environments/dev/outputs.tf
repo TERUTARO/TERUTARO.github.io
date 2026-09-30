@@ -1,0 +1,10 @@
+output "api_base_url" { value = module.api.api_base_url }
+output "admin_url" { value = module.frontend.admin_url }
+output "admin_bucket_name" { value = module.frontend.bucket_name }
+output "admin_distribution_id" { value = module.frontend.distribution_id }
+output "user_pool_id" { value = module.auth.user_pool_id }
+output "user_pool_client_id" { value = module.auth.user_pool_client_id }
+output "content_table_name" { value = module.data.content_table_name }
+output "contacts_table_name" { value = module.data.contacts_table_name }
+output "rate_limit_table_name" { value = module.data.rate_limit_table_name }
+output "region" { value = var.region }

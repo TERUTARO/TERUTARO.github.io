@@ -17,3 +17,14 @@ npm-debug.log*
 *.tfvars
 *.tfvars.json
 !*.tfvars.example
+
+# Local AWS deployment/state outputs (never credentials in the repository)
+backend.hcl
+*.tfplan
+infrastructure/.build/
+infrastructure/.local/
+frontend/public/admin-config.json
+
+.build/
+
+.pages/

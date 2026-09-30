@@ -35,11 +35,17 @@ jobs:
         run: npm run build
       - name: Check TypeScript
         run: npm run typecheck
+      - name: Check admin authentication and API client
+        run: node --test tests/admin-api.test.cjs
+      - name: Check Lambda validation and authorization
+        run: python3 -m unittest discover -s ../infrastructure/lambda/tests -v
+      - name: Prepare public Pages export
+        run: npm run prepare:pages
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
         uses: actions/upload-pages-artifact@v4
         with:
-          path: frontend/out
+          path: frontend/.pages
 
   deploy:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'

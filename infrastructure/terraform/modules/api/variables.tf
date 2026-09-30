@@ -1,0 +1,14 @@
+variable "name_prefix" { type = string }
+variable "account_id" { type = string }
+variable "tags" { type = map(string) }
+variable "lambda_source_dir" { type = string }
+variable "content_table_name" { type = string }
+variable "content_table_arn" { type = string }
+variable "contacts_table_name" { type = string }
+variable "contacts_table_arn" { type = string }
+variable "rate_limit_table_name" { type = string }
+variable "rate_limit_table_arn" { type = string }
+variable "user_pool_client_id" { type = string }
+variable "user_pool_issuer" { type = string }
+variable "admin_group" { type = string }
+variable "cors_allow_origins" { type = list(string) }

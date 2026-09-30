@@ -521,3 +521,11 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 @media (prefers-reduced-motion: reduce) {
   .portrait-tooltip { transition: none; transform: none; }
 }
+
+.content-notice { margin-block: 15px; padding: 14px 18px; font-size: 11px; line-height: 1.8; color: var(--muted); background: #e9ece6; border-radius: 6px; }
+.content-empty { margin-top: 22px; font-size: 12px; color: var(--muted); }
+.contact-honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+#send-contact { margin-top: 15px; }
+#contact-send-error { color: #95493e; }
+.submit-button:disabled { cursor: wait; opacity: .6; }
+.skill-tabs { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }

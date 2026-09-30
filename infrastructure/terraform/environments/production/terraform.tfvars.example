@@ -1,0 +1,4 @@
+# Copy to terraform.tfvars (ignored by Git). Use the intended account ID.
+allowed_account_id = "123456789012"
+region             = "ap-northeast-1"
+additional_cors_origins = []

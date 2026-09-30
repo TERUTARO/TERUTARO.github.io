@@ -1,7 +1,10 @@
 /* Work archive: one category/status filter plus case/width-insensitive tags. */
 (() => {
+  let activeArchive;
+  function initialize() {
   const archive = document.querySelector('[data-work-history]');
-  if (!archive) return;
+  if (!archive || archive === activeArchive) return;
+  activeArchive = archive;
 
   const controls = archive.querySelector('[data-work-controls]');
   const input = archive.querySelector('#work-tag-search');
@@ -100,5 +103,9 @@
   controls.hidden = false;
   update();
   revealLinkedProject();
-  window.addEventListener('hashchange', revealLinkedProject);
+  window.onPortfolioProjectHash = revealLinkedProject;
+  }
+  initialize();
+  window.addEventListener('portfolio:content-updated', initialize);
+  window.addEventListener('hashchange', () => window.onPortfolioProjectHash?.());
 })();

@@ -1,0 +1,1 @@
+"""Public contact submission endpoint."""

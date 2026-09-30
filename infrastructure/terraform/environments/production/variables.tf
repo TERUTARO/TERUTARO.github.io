@@ -44,3 +44,10 @@ variable "additional_cors_origins" {
     error_message = "Origins must be exact HTTPS origins without paths (dev also permits http://localhost[:port])."
   }
 }
+
+variable "enable_deletion_protection" {
+  description = "Protect DynamoDB tables and Cognito from deletion. Disable only after verified migration or intentional teardown."
+  type        = bool
+  default     = true
+  nullable    = false
+}

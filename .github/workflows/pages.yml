@@ -39,6 +39,8 @@ jobs:
         run: node --test tests/admin-api.test.cjs
       - name: Check Lambda validation and authorization
         run: python3 -m unittest discover -s ../infrastructure/lambda/tests -v
+      - name: Check data migration safeguards
+        run: python3 -m unittest discover -s ../infrastructure/scripts/tests -v
       - name: Prepare public Pages export
         run: npm run prepare:pages
       - name: Upload Pages artifact

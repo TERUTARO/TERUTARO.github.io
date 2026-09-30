@@ -11,14 +11,14 @@ module "data" {
   source                 = "../../modules/data"
   name_prefix            = local.name_prefix
   point_in_time_recovery = var.environment == "production"
-  deletion_protection    = var.environment == "production"
+  deletion_protection    = var.enable_deletion_protection
   tags                   = local.tags
 }
 
 module "auth" {
   source              = "../../modules/auth"
   name_prefix         = local.name_prefix
-  deletion_protection = var.environment == "production"
+  deletion_protection = var.enable_deletion_protection
   tags                = local.tags
 }
 

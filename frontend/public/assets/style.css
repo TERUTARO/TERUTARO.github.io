@@ -470,3 +470,17 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   .footer-top > .social-links { grid-column: 1 / -1; grid-row: 2; width: auto; margin: 0; order: initial; }
   .footer-top > .back-top { grid-column: 2; grid-row: 1; margin: 0; }
 }
+
+/* Profile social links stay vertical on desktop and mobile. */
+:is(.about-title, .menu-profile) .social-links {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+:is(.about-title, .menu-profile) .social-links > a {
+  min-width: 0;
+  padding: 10px 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}

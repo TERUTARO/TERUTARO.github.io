@@ -119,7 +119,7 @@ SKILL_GROUPS = [
         ('Platform & Database', ['WordPress', 'MySQL', 'JWT'])]),
     ('ai', '03', 'AI & Workflow', 'AI', '', [
         ('Development tools', ['Codex', 'Claude', 'Cursor']),
-        ('AI platforms', ['Vertex AI', 'Amazon Bedrock', 'Azure OpenAI']),
+        ('AI platforms', ['Dify', 'Vertex AI', 'Amazon Bedrock', 'Azure OpenAI']),
         ('Focus', ['AI連携機能の開発', '社内AI基盤の運用保守'])]),
     ('devops', '04', 'DevOps & Network', 'DevOps・ネットワーク', '', [
         ('Infrastructure as Code', ['Terraform', 'Ansible', 'Docker', 'Docker Compose']),

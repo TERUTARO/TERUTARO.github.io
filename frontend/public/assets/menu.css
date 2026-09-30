@@ -1,0 +1,63 @@
+/* Observed KUBE interaction: a rising desktop sheet, a right-hand mobile sheet,
+   and content that fades from a smaller scale. Existing navigation stays put. */
+.menu-panel {
+  height: 100dvh;
+  background: transparent;
+  overflow: hidden;
+  isolation: isolate;
+  --menu-sheet-offscreen: translate3d(0, 100%, 0);
+  --menu-content-offscreen: translate3d(0, 100dvh, 0) scale(.8);
+}
+.menu-panel[open] { animation: none; }
+.menu-panel::backdrop { background: transparent; }
+/* Only the dialog's header is visible while its sheet is moving. */
+body.menu-open .site-header > .brand,
+body.menu-open .menu-trigger { visibility: hidden; }
+.menu-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--paper);
+  transform: var(--menu-sheet-offscreen);
+  transition: transform .8s cubic-bezier(.76, 0, .24, 1);
+  pointer-events: none;
+}
+.menu-panel::before { z-index: 2; pointer-events: none; }
+.menu-panel-top { position: relative; z-index: 2; }
+.menu-panel-body {
+  position: relative;
+  z-index: 1;
+  min-height: 0;
+  max-height: calc(100dvh - 108px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  transform: var(--menu-content-offscreen);
+  transform-origin: center center;
+  opacity: 0;
+  transition: transform .8s cubic-bezier(.76, 0, .24, 1), opacity .8s ease;
+}
+.menu-panel.is-visible::after,
+.menu-panel.is-visible .menu-panel-body { transform: none; }
+.menu-panel.is-visible .menu-panel-body { opacity: 1; }
+.menu-panel.is-closing::after { transition-duration: .62s; }
+.menu-panel.is-closing .menu-panel-body { transition-duration: .62s, .28s; }
+.menu-panel .menu-close { flex-shrink: 0; }
+@media (max-width: 1000px) {
+  .menu-panel {
+    --menu-sheet-offscreen: translate3d(100%, 0, 0);
+    --menu-content-offscreen: translate3d(100vw, 0, 0) scale(.8);
+  }
+}
+@media (max-width: 800px) {
+  .menu-panel-body { max-height: calc(100dvh - 86px); }
+}
+@media (max-width: 580px) {
+  .menu-panel-body { max-height: calc(100dvh - 76px); margin-block: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-panel::after,
+  .menu-panel .menu-panel-body { transition: none; }
+}

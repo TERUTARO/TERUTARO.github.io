@@ -13,6 +13,7 @@ Next.js App Router / TypeScript のサイト本体です。設定は `next.confi
 | 本文・共通メニュー・フッター・スキル | `scripts/build.py` |
 | 実績一覧・タグ・年区切り | `scripts/work_history.py` |
 | デザイン・メニュー・フォーム確認 | `public/assets/style.css` / `main.js` |
+| メニュー開閉の演出 | `public/assets/menu.css` / `main.js` |
 | 実績検索 | `public/assets/work-history.css` / `work-history.js` |
 | 水面の演出 | `public/assets/water.css` / `water.js` |
 | 画像・サイト縮小表示 | `public/assets/` / `content/site-previews.json` |

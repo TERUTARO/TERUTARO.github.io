@@ -3,27 +3,103 @@
 // Native links and semantic HTML work without a framework or a build server.
 const menuButton = document.querySelector('.menu-trigger');
 const menuPanel = document.querySelector('#site-menu');
+const menuMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+let menuFrame = 0;
+let menuCloseTimer = 0;
+let menuOpenTimer = 0;
+let menuRestoreFocus = true;
 menuButton.hidden = false;
-function closeMenu() {
-  menuPanel.close();
+menuPanel.dataset.menuState = 'closed';
+
+function cancelMenuTimers() {
+  cancelAnimationFrame(menuFrame);
+  clearTimeout(menuCloseTimer);
+  clearTimeout(menuOpenTimer);
+  menuFrame = menuCloseTimer = menuOpenTimer = 0;
 }
-menuButton.addEventListener('click', () => {
+
+function resetMenu() {
+  cancelMenuTimers();
+  menuPanel.classList.remove('is-visible', 'is-closing');
+  menuPanel.dataset.menuState = 'closed';
+  menuButton.setAttribute('aria-expanded', 'false');
+  document.body.classList.remove('menu-open');
+}
+
+function finishMenuClose() {
+  if (menuPanel.open) menuPanel.close();
+  resetMenu();
+}
+
+function openMenu() {
+  if (menuPanel.open && menuPanel.dataset.menuState !== 'closing') return;
+  cancelMenuTimers();
+  menuRestoreFocus = true;
+  menuPanel.classList.remove('is-closing');
+  menuPanel.dataset.menuState = 'opening';
+  if (!menuPanel.open) {
+    menuPanel.scrollTop = 0;
+    menuPanel.querySelector('.menu-panel-body').scrollTop = 0;
+  }
   menuPanel.showModal();
   menuButton.setAttribute('aria-expanded', 'true');
   document.body.classList.add('menu-open');
+  // Resolve the off-screen start position before revealing the sheet.
+  getComputedStyle(menuPanel, '::after').transform;
+  const reveal = () => {
+    menuPanel.classList.add('is-visible');
+    menuOpenTimer = window.setTimeout(() => {
+      menuPanel.dataset.menuState = 'open';
+    }, menuMotion.matches ? 0 : 1000);
+  };
+  if (menuMotion.matches) reveal();
+  else menuFrame = requestAnimationFrame(reveal);
+}
+
+function closeMenu({ immediate = false, restoreFocus = true } = {}) {
+  if (!menuPanel.open) return;
+  if (menuPanel.dataset.menuState === 'closing' && !immediate) return;
+  cancelMenuTimers();
+  menuRestoreFocus = restoreFocus;
+  menuPanel.dataset.menuState = 'closing';
+  menuPanel.classList.remove('is-visible');
+  menuPanel.classList.add('is-closing');
+  // Keep the native modal, focus trap and scroll lock until the sheet has left.
+  if (immediate || menuMotion.matches) finishMenuClose();
+  else menuCloseTimer = window.setTimeout(finishMenuClose, 680);
+}
+
+menuButton.addEventListener('click', openMenu);
+menuPanel.querySelector('.menu-close').addEventListener('click', () => closeMenu());
+menuPanel.addEventListener('cancel', (event) => {
+  event.preventDefault();
+  closeMenu();
 });
-menuPanel.querySelector('.menu-close').addEventListener('click', closeMenu);
 menuPanel.addEventListener('close', () => {
-  menuButton.setAttribute('aria-expanded', 'false');
-  document.body.classList.remove('menu-open');
-  menuButton.focus({ preventScroll: true });
+  // A queued close event must not clear a menu that was already reopened.
+  if (menuPanel.open) return;
+  resetMenu();
+  if (menuRestoreFocus) menuButton.focus({ preventScroll: true });
 });
 menuPanel.addEventListener('click', (event) => {
   if (event.target === menuPanel) closeMenu();
 });
-// Restore the normal page if the browser returns to a cached, open menu.
+menuMotion.addEventListener('change', () => {
+  if (!menuMotion.matches || !menuPanel.open) return;
+  if (menuPanel.dataset.menuState === 'closing') finishMenuClose();
+  else {
+    cancelMenuTimers();
+    menuPanel.classList.add('is-visible');
+    menuPanel.dataset.menuState = 'open';
+  }
+});
+// Store and restore a closed menu when navigating through the back-forward cache.
+window.addEventListener('pagehide', () => {
+  if (menuPanel.open) closeMenu({ immediate: true, restoreFocus: false });
+});
 window.addEventListener('pageshow', () => {
-  if (menuPanel.open) closeMenu();
+  if (menuPanel.open) closeMenu({ immediate: true });
+  else resetMenu();
 });
 
 const clock = document.querySelector('[data-clock]');

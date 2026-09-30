@@ -28,9 +28,13 @@ def render_work_history(data):
             current = item.get('current', False)
             status = '<span class="status"><i></i>進行中</span>' if current else ''
             tags = ''.join(tag_button(tag) for tag in item['tags'])
+            partner = item.get('partner', '')
+            partner_honorific = item.get('partnerHonorific', '様')
+            partner_label = f'<p class="partner-label"><span>長期パートナー</span>：{e(partner)}{e(partner_honorific)}</p>' if partner else ''
+            client_label = f'<span class="project-client-label">{e(item["client"])}</span>' if item['client'] and item['client'] != partner else ''
             articles.append(f'''<article class="timeline-item {'is-current' if current else ''}" data-category="{e(item['category'])}" data-project-year="{e(year)}" data-tags="{e(json.dumps(item['tags'], ensure_ascii=False))}" id="project-{e(item['id'])}" tabindex="-1">
 <div class="timeline-date"><span class="mono">{e(item['period'])}</span>{status}</div><div class="timeline-track" aria-hidden="true"><span></span></div>
-<div class="timeline-content"><div class="project-kicker"><span>{e(item['client'])}</span><span class="mono">{e(item['category'].upper())}</span></div><h3>{e(item['title'])}</h3><p>{e(item['summary'])}</p><div class="project-tags" role="group" aria-label="この実績のタグ">{tags}</div><details class="project-detail"><summary>担当を見る <span aria-hidden="true">+</span></summary><div><p class="role"><span>ROLE</span>{e(item['role'])}</p></div></details></div></article>''')
+<div class="timeline-content">{partner_label}<div class="project-kicker">{client_label}<span class="mono">{e(item['category'].upper())}</span></div><h3>{e(item['title'])}</h3><p>{e(item['summary'])}</p><div class="project-tags" role="group" aria-label="この実績のタグ">{tags}</div><details class="project-detail"><summary>担当を見る <span aria-hidden="true">+</span></summary><div><p class="role"><span>ROLE</span>{e(item['role'])}</p></div></details></div></article>''')
         years.append(f'''<section class="work-year" data-work-year="{e(year)}" aria-labelledby="year-{e(year)}"><header class="work-year-heading"><h2 id="year-{e(year)}">{e(year)}<span>年</span></h2><span class="work-year-count"><span data-year-count>{len(articles)}</span>件</span><span class="work-year-line" aria-hidden="true"></span></header><div class="year-projects">{''.join(articles)}</div></section>''')
 
     return f'''<section class="works-section wrap" data-work-history aria-label="実績一覧">
@@ -38,4 +42,4 @@ def render_work_history(data):
 <div class="work-search-row"><label for="work-tag-search">タグ検索</label><div class="work-search-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="work-tag-search" type="search" placeholder="AWS、Terraform、VPN…" aria-describedby="work-search-hint" autocomplete="off" spellcheck="false" maxlength="100"></div></div><p id="work-search-hint" class="work-search-hint">タグ名の一部で検索できます。タグを押すと検索欄に入ります。</p><div class="popular-tags"><span class="popular-tags-label">よく使うタグ</span><div class="work-tag-list" role="group" aria-label="よく使うタグ">{popular}</div></div></div>
 <div class="work-results-bar"><p class="filter-status" role="status" aria-live="polite" aria-atomic="true"><strong>{len(projects)}</strong> / {len(projects)} 件の実績</p><span class="work-sort-note">開始年の新しい順</span></div>
 <div class="timeline">{''.join(years)}</div><div class="work-empty" data-work-empty hidden><p>該当する実績がありません。</p><span>タグ名やカテゴリを変えてお試しください。</span><button type="button" class="work-empty-reset" data-work-reset>すべての実績を表示 <span aria-hidden="true">↗</span></button></div>
-<p class="source-note">2025年6月版の職務経歴書をもとに掲載し、2025年9月開始の2案件を追加しています。過去案件の期間・担当内容は資料作成時点の情報です。</p></section>'''
+<p class="source-note">2025年6月版の職務経歴書をもとに、2025年9月開始の案件・2026年の実績と追加情報を反映しています。過去資料の「現在」表記は2025年6月時点です。</p></section>'''

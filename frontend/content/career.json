@@ -1,6 +1,19 @@
 {
   "projects": [
     {
+      "id": "wordpress-security-incident-response",
+      "period": "2026.07 — 2026.09",
+      "year": "2026",
+      "client": "H社",
+      "title": "WordPressサイト侵害の復旧・調査・対策",
+      "category": "infrastructure",
+      "summary": "WordPressサイトへの侵害に対し、復旧・調査・対策を担当。",
+      "role": "復旧・調査・対策",
+      "tags": ["WordPress"],
+      "current": false,
+      "source": "request"
+    },
+    {
       "id": "affiliate-platform-operations",
       "period": "2025.09 — 現在",
       "year": "2025",
@@ -9,7 +22,7 @@
       "category": "infrastructure",
       "summary": "大手アフィリエイトサイトを支える基盤の運用保守を担当。",
       "role": "インフラ運用保守",
-      "tags": ["基盤運用", "保守"],
+      "tags": ["基盤運用", "保守", "AWS CloudFront", "AWS WAF", "AWS S3", "GitHub Enterprise", "GitHub Cloud", "CircleCI", "AWS Lambda", "AWS Route 53", "Datadog", "GitHub Actions", "GCP Cloud Load Balancing", "GCP BigQuery", "GCP Cloud Run", "GCP Cloud DNS", "Cursor", "AWS ACM"],
       "current": true,
       "source": "request"
     },
@@ -22,7 +35,7 @@
       "category": "infrastructure",
       "summary": "大手商品価格比較サイトの社内AI基盤の運用保守を担当。",
       "role": "AI基盤運用保守",
-      "tags": ["AI基盤", "基盤運用", "保守"],
+      "tags": ["AI基盤", "基盤運用", "保守", "GCP GKE", "GCP Vertex AI", "GCP Compute Engine (GCE)", "GCP Cloud Run", "GCP Cloud DNS", "GCP Cloud Load Balancing", "Cursor", "Claude Code", "Dify", "GitHub Cloud", "GitHub Actions"],
       "current": true,
       "source": "request"
     },
@@ -30,27 +43,30 @@
       "id": "security-appliance-introduction",
       "period": "2025.04 —（2025.06時点）",
       "year": "2025",
-      "client": "L社",
+      "client": "日乃出工業株式会社",
       "title": "セキュリティアプライアンス導入支援",
       "category": "network",
-      "summary": "既存ネットワークへの導入に向け、実機検証、要件定義、WBS・課題管理、基本設計を担当。日乃出工業のパートナーとして参画。",
+      "summary": "日乃出工業株式会社のパートナーとして参画。既存ネットワークへの導入に向け、実機検証、要件定義、WBS・課題管理、基本設計を担当。",
       "role": "PM / ネットワークエンジニア",
       "tags": ["FortiGate", "KOKOMO", "要件定義", "基本設計"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "partner": "日乃出工業株式会社"
     },
     {
       "id": "asset-management-system-renewal",
       "period": "2025.03 — 2025.06",
       "year": "2025",
-      "client": "R社",
+      "client": "リアムス株式会社",
       "title": "機器・ソフトウェア管理システムの改修・引き継ぎ",
       "category": "development",
       "summary": "既存システムの改修と開発引き継ぎを推進。進行管理からフロント・バックエンド、AI連携・インベントリAPI連携、AWS基盤構築まで担当。",
       "role": "PM / フロントエンド / バックエンド / インフラ",
-      "tags": ["Ruby on Rails", "Nuxt.js", "AWS", "Terraform", "Docker"],
+      "tags": ["Ruby on Rails", "Nuxt.js", "AWS", "Terraform", "Docker", "AWS Route 53", "AWS ECS", "AWS RDS", "AWS S3", "AWS ACM", "AWS CloudFormation", "GitHub Cloud", "GitHub Actions", "Codex", "Claude Code", "Cursor"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "partner": "リアムス株式会社",
+      "partnerHonorific": ""
     },
     {
       "id": "vpn-emergency-response",
@@ -69,14 +85,15 @@
       "id": "wordpress-environment-setup",
       "period": "2024.12 — 2025.01",
       "year": "2024",
-      "client": "A社 / H社",
+      "client": "合同会社ハラハチ",
       "title": "WordPress環境整備",
       "category": "infrastructure",
       "summary": "各社のWordPress環境に対し、AWS設定、Apache設定、セキュリティ設定、証明書更新を実施。",
       "role": "インフラエンジニア",
       "tags": ["WordPress", "AWS", "Apache", "Amazon Linux"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "partner": "合同会社ハラハチ"
     },
     {
       "id": "fortigate-replacement",
@@ -85,11 +102,12 @@
       "client": "N社",
       "title": "FortiGate機器更改",
       "category": "network",
-      "summary": "ハードウェアのサポート終了に伴う機器更改を担当。既存設定から新機種・新OS向けの設計を行い、構築・単体・結合テストまで実施。",
+      "summary": "日乃出工業株式会社のパートナーとしてN社へ提供。ハードウェアのサポート終了に伴う機器更改を担当。既存設定から新機種・新OS向けの設計を行い、構築・単体・結合テストまで実施。",
       "role": "ネットワークエンジニア",
       "tags": ["FortiGate", "IPsec VPN", "ファイアウォール"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "partner": "日乃出工業株式会社"
     },
     {
       "id": "prelaunch-infrastructure",
@@ -176,11 +194,12 @@
       "client": "N社",
       "title": "拠点間VPN構築",
       "category": "network",
-      "summary": "東京本社と神奈川・大阪・福岡拠点を相互接続するVPN環境を構築。要件定義から設計、現地構築、テストまで担当。",
+      "summary": "日乃出工業株式会社のパートナーとしてN社へ提供。東京本社と神奈川・大阪・福岡拠点を相互接続するVPN環境を構築。要件定義から設計、現地構築、テストまで担当。",
       "role": "ネットワークエンジニア",
       "tags": ["FortiGate", "IPsec VPN", "SSL VPN", "ルーティング"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "partner": "日乃出工業株式会社"
     },
     {
       "id": "care-assistance-application",
@@ -303,62 +322,66 @@
       "id": "new-office-network",
       "period": "2019.09 — 2019.11",
       "year": "2019",
-      "client": "I社",
+      "client": "N社",
       "title": "新拠点の社内ネットワーク構築",
       "category": "network",
-      "summary": "新拠点のネットワークについて、要件ヒアリング、機器選定・見積、設計、構築、単体・結合テストを一貫して担当。",
+      "summary": "日乃出工業株式会社のパートナーとしてN社へ提供。新拠点のネットワークについて、要件ヒアリング、機器選定・見積、設計、構築、単体・結合テストを一貫して担当。",
       "role": "ネットワークエンジニア",
       "tags": ["YAMAHA RTX1210", "YAMAHA WLX", "ネットワーク設計"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "partner": "日乃出工業株式会社"
     },
     {
       "id": "network-redundancy",
       "period": "2019.07 — 2019.08",
       "year": "2019",
-      "client": "K社",
+      "client": "N社",
       "title": "ネットワーク回線冗長化",
       "category": "network",
-      "summary": "既存ネットワークの回線冗長化を実施。要件定義、設計、物理結線、ルーター設定、単体・結合テストを担当。",
+      "summary": "日乃出工業株式会社のパートナーとしてN社へ提供。既存ネットワークの回線冗長化を実施。要件定義、設計、物理結線、ルーター設定、単体・結合テストを担当。",
       "role": "ネットワークエンジニア",
       "tags": ["YAMAHA RTX1210", "YAMAHA RTX830", "回線冗長化"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "partner": "日乃出工業株式会社"
     },
     {
       "id": "active-directory-migration",
       "period": "2019.06 — 2019.08",
       "year": "2019",
-      "client": "P社",
+      "client": "N社",
       "title": "Active Directoryリプレース",
       "category": "infrastructure",
-      "summary": "SAMBA ADからActive Directoryへの移行を支援。詳細設計書、構築手順書、構築スクリプトを作成。",
+      "summary": "日乃出工業株式会社のパートナーとしてN社へ提供。SAMBA ADからActive Directoryへの移行を支援。詳細設計書、構築手順書、構築スクリプトを作成。",
       "role": "インフラエンジニア",
       "tags": ["Active Directory", "Windows Server", "富士通 PRIMERGY"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "partner": "日乃出工業株式会社"
     },
     {
       "id": "utm-nas-introduction",
       "period": "2019.06",
       "year": "2019",
-      "client": "L社",
+      "client": "N社",
       "title": "Check Point UTM・NAS導入",
       "category": "network",
-      "summary": "UTM導入に伴うネットワーク構成の設計・変更とNAS導入を担当。物理結線、機器設定、単体・結合テストを実施。",
+      "summary": "日乃出工業株式会社のパートナーとしてN社へ提供。UTM導入に伴うネットワーク構成の設計・変更とNAS導入を担当。物理結線、機器設定、単体・結合テストを実施。",
       "role": "ネットワークエンジニア",
       "tags": ["Check Point UTM", "Synology NAS", "YAMAHA RTX1210"],
       "current": false,
-      "source": "resume"
+      "source": "resume",
+      "partner": "日乃出工業株式会社"
     },
     {
-      "id": "national-health-insurance-platform",
+      "id": "public-sector-platform-renewal",
       "period": "2017.10 — 2019.06",
       "year": "2017",
-      "client": "国民健康保険関連システム",
-      "title": "障害者総合支援給付審査支払等システムの基盤更改",
+      "client": "公共分野",
+      "title": "公共分野の業務システム基盤更改",
       "category": "infrastructure",
-      "summary": "要件定義、仮想化基盤の性能検証、ミドルウェア・ネットワーク設計、構築・テスト・障害対応まで参画。全国配布用の構築手順書も作成。",
+      "summary": "要件定義、仮想化基盤の性能検証、ミドルウェア・ネットワーク設計、構築・テスト・障害対応まで参画。構築手順書の作成も担当。",
       "role": "インフラエンジニア",
       "tags": ["vSphere", "vSAN", "Windows Server", "Ansible", "NetBackup", "Arcserve"],
       "current": false,

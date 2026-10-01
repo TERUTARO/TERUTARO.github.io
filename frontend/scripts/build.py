@@ -177,6 +177,7 @@ def profile_resource():
     lines = [
         f'<span class="hcl-keyword">resource</span> {string("profile")} {string("terutaro")} {{',
         field('name', string(PROFILE['name'])),
+        field('birthday', string(PROFILE['birthday'])),
         field('base', f'[{string("沖縄")}, {string("関東")}]'),
         field('work_style', string('フリーランス')),
         field('since', string('2019-04')),

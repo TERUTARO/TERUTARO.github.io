@@ -36,6 +36,7 @@
 .featured-buttons button[data-featured-prev] .arrow { transform: rotate(180deg); }
 .featured-buttons button .arrow { width: 21px; height: 21px; }
 .featured-buttons button:not(:disabled):hover { background: var(--accent); border-color: var(--accent); }
+.featured-buttons button:not(:disabled):is(:active, :focus) { background: #fff; border-color: var(--green); color: var(--green); }
 .featured-buttons button:disabled { background: #bcc6b9; border-color: #bcc6b9; cursor: default; }
 .featured-empty { min-height: 180px; padding-block: 60px; }
 @media (max-width: 1000px) {

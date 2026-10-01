@@ -1,6 +1,7 @@
 Local skill watermarks
 
-SVG files are unmodified copies from the pinned source URLs in sources.json.
+SVG files are copies from the pinned source URLs in sources.json, with
+whitespace normalization. Original vector geometry is retained.
 Devicon: MIT (devicon-LICENSE.txt).
 Lobe Icons: MIT (lobe-icons-LICENSE.txt).
 Simple Icons: CC0 (simple-icons-LICENSE.txt).

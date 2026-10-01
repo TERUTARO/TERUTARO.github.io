@@ -46,7 +46,7 @@
 #skills .skill-symbol.has-product-logo > .skill-icon { opacity: 0; }
 #skills .skill-symbol.has-product-logo .skill-brand-mark { opacity: .14; }
 #skills .skill-details { min-width: 0; }
-#skills .skill-credits { margin-top: 12px; font-size: 10px; line-height: 1.8; color: var(--muted); }
+#skills .skill-credits { margin-top: 12px; font-size: 11px; line-height: 1.8; color: var(--muted); }
 #skills .skill-credits a { display: inline-block; margin-left: .6em; text-decoration: underline; text-underline-offset: 3px; }
 #skills .skill-credits a:hover { color: var(--ink); }
 
@@ -58,7 +58,7 @@
   border-radius: 2px;
   color: inherit;
   background: transparent;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.5;
   text-align: left;
   overflow-wrap: anywhere;
@@ -89,7 +89,7 @@
 @media (max-width: 480px) {
   #skills .skill-panel { grid-template-columns: 48px minmax(0, 1fr); gap: 16px; padding: 25px 17px; }
   #skills .skill-intro { top: 80px; }
-  #skills .tags > .skill-tag { font-size: 9px; }
+  #skills .tags > .skill-tag { font-size: 11px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

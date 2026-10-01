@@ -48,6 +48,12 @@ def social_icon(label):
     return f'<svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">{shapes.get(label, "")}</svg>'
 
 
+def portrait_img(alt='', cls='', extra='decoding="async"'):
+    """320px portrait (largest rendered size is 144px, so 2x), WebP with PNG fallback."""
+    class_attr = f' class="{cls}"' if cls else ''
+    return (f'<picture><source srcset="assets/portrait.webp" type="image/webp">'
+            f'<img{class_attr} src="assets/portrait.png" alt="{alt}" width="320" height="320" {extra}></picture>')
+
 def link(url, label, cls='text-link'):
     return f'<a class="{cls}" href="{e(url)}" target="_blank" rel="noopener noreferrer">{label}{arrow()}</a>'
 
@@ -71,8 +77,8 @@ def shell(filename, body):
     nav = ''.join(f'<a href="{url}" {current_attr(filename, url)}><span class="menu-link-en">{name}</span><span class="menu-link-ja">{ja}</span>{arrow("right")}</a>' for url, name, ja in NAV)
     rail = ''.join(f'<a href="{url}" {current_attr(filename, url)}>{ja}</a>' for url, name, ja in NAV)
     return f'''<a class="skip-link" href="#main">本文へスキップ</a>
-<header class="site-header wrap"><a class="brand" href="index.html" aria-label="terutaro トップページ"><img class="header-portrait" src="assets/portrait.png" alt="" width="36" height="36" decoding="async"><span>terutaro</span></a><button class="menu-trigger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-menu" hidden><span class="menu-lines" aria-hidden="true"></span><span class="menu-trigger-text">Menu</span></button><nav class="rail-nav" aria-label="メインナビゲーション">{rail}</nav></header>
-<dialog id="site-menu" class="menu-panel" aria-label="メニュー"><div class="menu-panel-top"><a class="brand" href="index.html">terutaro</a><button class="menu-close" type="button" aria-label="メニューを閉じる" autofocus><span aria-hidden="true"></span></button></div><div class="menu-panel-body"><div class="menu-profile"><span class="profile-avatar"><img src="assets/portrait.png" alt="{e(PROFILE["name"])}のプロフィール写真" width="1254" height="1254" decoding="async"></span><p>{e(PROFILE["name"])}<span>terutaro</span></p>{social_links()}</div><nav id="main-nav" class="menu-links" aria-label="ページ一覧">{nav}</nav></div></dialog>
+<header class="site-header wrap"><a class="brand" href="index.html" aria-label="terutaro トップページ">{portrait_img(cls="header-portrait")}<span>terutaro</span></a><button class="menu-trigger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-menu" hidden><span class="menu-lines" aria-hidden="true"></span><span class="menu-trigger-text">Menu</span></button><nav class="rail-nav" aria-label="メインナビゲーション">{rail}</nav></header>
+<dialog id="site-menu" class="menu-panel" aria-label="メニュー"><div class="menu-panel-top"><a class="brand" href="index.html">terutaro</a><button class="menu-close" type="button" aria-label="メニューを閉じる" autofocus><span aria-hidden="true"></span></button></div><div class="menu-panel-body"><div class="menu-profile"><span class="profile-avatar">{portrait_img(alt=e(PROFILE["name"]) + "のプロフィール写真")}</span><p>{e(PROFILE["name"])}<span>terutaro</span></p>{social_links()}</div><nav id="main-nav" class="menu-links" aria-label="ページ一覧">{nav}</nav></div></dialog>
 <noscript><nav class="fallback-nav wrap" aria-label="ページ一覧">{rail}</nav></noscript>
 <main id="main">{body}</main>
 <footer class="site-footer wrap"><div class="footer-top"><a class="brand" href="index.html"><span>terutaro</span></a><a class="back-top" href="#" aria-label="ページの先頭へ">Back to top <span>↑</span></a></div><div class="footer-bottom"><span>© <span data-year>2026</span> terutaro</span><span>Independent engineer · Okinawa / Kanto, Japan</span></div></footer>{contact_corner() if filename != "contact.html" else ""}'''
@@ -113,13 +119,13 @@ def generate_art():
         return 300 + x * 1.16, 286 + y * 1.30, z
     for i in range(96):
         u = i * math.tau / 96
-        pts = [point(u, j * math.tau / 100) for j in range(101)]
-        d = 'M' + 'L'.join(f'{x:.2f},{y:.2f}' for x, y, z in pts)
+        pts = [point(u, j * math.tau / 60) for j in range(61)]
+        d = 'M' + 'L'.join(f'{x:.1f},{y:.1f}' for x, y, z in pts)
         paths.append(f'<path d="{d}" stroke="#526247" stroke-opacity=".51" stroke-width=".75"/>')
     for i in range(18):
         v = i * math.tau / 18
-        pts = [point(j * math.tau / 180, v) for j in range(181)]
-        d = 'M' + 'L'.join(f'{x:.2f},{y:.2f}' for x, y, z in pts)
+        pts = [point(j * math.tau / 120, v) for j in range(121)]
+        d = 'M' + 'L'.join(f'{x:.1f},{y:.1f}' for x, y, z in pts)
         paths.append(f'<path d="{d}" stroke="#748065" stroke-opacity=".25" stroke-width=".65"/>')
     svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 570" fill="none">' + ''.join(paths) + '</svg>'
     (PUBLIC / 'assets' / 'continuity.svg').write_text(svg)
@@ -212,7 +218,7 @@ def home(data):
 <section class="hero wrap water-surface" data-water-surface><div data-water-content>
   <div class="hero-topline"><span class="eyebrow">FREELANCE ENGINEER</span><span class="location"><span class="small-dot"></span> OKINAWA / KANTO, JAPAN <span class="mono" data-clock></span></span></div>
   <div class="hero-grid">
-    <div class="hero-copy"><h1>terutaro</h1><div class="hero-name"><span class="portrait-note"><button type="button" class="portrait-trigger" aria-label="{e(PROFILE["name"])}のプロフィール写真" aria-describedby="portrait-tooltip"><span class="profile-avatar"><img src="assets/portrait.png" alt="" width="1254" height="1254" fetchpriority="high"></span></button><span class="portrait-tooltip" id="portrait-tooltip" role="tooltip">今はアフロだよ</span></span><span>{e(PROFILE["name"])}</span></div><p>沖縄・関東を拠点に活動するフリーランスエンジニア。<br>インフラ構築・運用保守、Web開発、AI基盤などできます</p><p class="hero-strength">インフラが得意</p></div>
+    <div class="hero-copy"><h1>terutaro</h1><div class="hero-name"><span class="portrait-note"><button type="button" class="portrait-trigger" aria-label="{e(PROFILE["name"])}のプロフィール写真" aria-describedby="portrait-tooltip"><span class="profile-avatar">{portrait_img(extra='fetchpriority="high"')}</span></button><span class="portrait-tooltip" id="portrait-tooltip" role="tooltip">今はアフロだよ</span></span><span>{e(PROFILE["name"])}</span></div><p>沖縄・関東を拠点に活動するフリーランスエンジニア。<br>インフラ構築・運用保守、Web開発、AI基盤などできます</p><p class="hero-strength">インフラが得意</p></div>
     <div class="hero-art" aria-hidden="true"><span class="art-corner top-left">+</span><span class="art-corner top-right">+</span><div class="art-orbit"></div><img src="assets/continuity.svg" alt="" width="600" height="570" fetchpriority="high"><span class="art-corner bottom-left">+</span><span class="art-corner bottom-right">+</span></div>
   </div>
   <div class="hero-bottom"><a href="#about">プロフィール <span>↓</span></a></div>
@@ -272,7 +278,7 @@ def events():
         title = item.get('title', f'イベント #{eid}').removesuffix(' - connpass')
         preview_class = 'has-preview' if image_html else ''
         event_rows += f'<a class="event-row {preview_class}" href="https://connpass.com/event/{eid}/" target="_blank" rel="noopener noreferrer">{image_html}<span class="mono event-index">{i+1:02d}</span><div><span class="event-id">connpass / #{eid}</span><h3>{e(title)}</h3></div><span class="event-action">イベントを見る {arrow()}</span></a>'
-    return page_head('03', 'Events', 'イベント', '') + f'''<section class="event-feature wrap">{site_preview('tidal-waive', False)}<div class="event-feature-copy"><h2>TIDAL WAIVE</h2><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', '公式サイト', 'pill-link')}</div></section><section class="event-archive wrap"><div class="section-title"><h2>Conpass</h2></div>{event_rows}</section>'''
+    return page_head('03', 'Events', 'イベント', '') + f'''<section class="event-feature wrap">{site_preview('tidal-waive', False)}<div class="event-feature-copy"><h2>TIDAL WAIVE</h2><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', '公式サイト', 'pill-link')}</div></section><section class="event-archive wrap"><div class="section-title"><h2>connpass</h2></div>{event_rows}</section>'''
 
 def contact():
     return page_head('04', 'Contact', 'お問い合わせ', '') + contact_tabs('contact') + '''<section class="contact-layout wrap"><div class="contact-aside"><h2>相談</h2><div class="contact-services"><span>01 / インフラ構築・運用保守</span><span>02 / Webシステム開発</span><span>03 / AI基盤・開発支援</span><span>04 / その他のご相談</span></div><div class="preview-note"><span class="small-dot"></span><div><strong>お仕事のご相談を受け付けています。</strong><p>担当内容やご希望の時期などをお知らせください。</p></div></div></div><div class="contact-form-area"><form id="contact-form"><div class="contact-honeypot" aria-hidden="true"><label for="website">この欄は入力しないでください</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div><div class="form-row"><label for="name">お名前 <span>必須</span></label><input id="name" name="name" autocomplete="name" required maxlength="100" placeholder="山田 太郎"></div><div class="form-row"><label for="company">会社名 / 屋号 <span class="optional">任意</span></label><input id="company" name="company" autocomplete="organization" maxlength="150" placeholder="株式会社〇〇"></div><div class="form-row"><label for="email">メールアドレス <span>必須</span></label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="hello@example.com"></div><div class="form-row"><label for="type">ご相談の種類 <span>必須</span></label><select id="type" name="type" required><option value="">選択してください</option><option>インフラ構築・運用保守</option><option>Webシステム開発</option><option>AI基盤・開発支援</option><option>その他のご相談</option></select></div><div class="form-row"><label for="message">ご相談内容 <span>必須</span></label><textarea id="message" name="message" required minlength="10" maxlength="3000" rows="6" placeholder="ご相談の背景や実現したいこと、ご希望の時期などをお聞かせください。（10文字以上）"></textarea><div class="field-counter"><span>10〜3,000文字</span><span><span id="message-count">0</span> / 3,000</span></div></div><p class="form-note">入力内容はお問い合わせへの対応のために使用します。</p><noscript><p class="form-note">確認画面を表示するにはJavaScriptを有効にしてください。入力内容は送信されません。</p></noscript><button class="submit-button" id="review-contact" type="button">入力内容を確認する <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button></form><section class="contact-confirmation" id="contact-confirmation" hidden aria-labelledby="confirmation-title"><h2 id="confirmation-title" tabindex="-1">ご相談内容の確認</h2><p>内容をご確認のうえ、送信ボタンを押してください。</p><dl id="confirmation-values"></dl><button class="submit-button" type="button" id="edit-form">入力内容を修正する <span>←</span></button><p id="contact-send-error" class="form-note" role="alert" hidden></p><button class="submit-button" id="send-contact" type="button">この内容で送信する <span>↗</span></button></section><section id="contact-success" class="contact-confirmation" hidden><h2 id="contact-success-title" tabindex="-1">お問い合わせを受け付けました</h2><p>内容を確認のうえ、ご連絡します。</p><p class="form-note">受付番号：<span id="contact-receipt"></span></p></section></div></section>'''
@@ -290,7 +296,7 @@ def main():
         ('index.html', f'{PROFILE["name"]} | 沖縄・関東のフリーランスエンジニア', f'沖縄・関東を拠点に活動する{PROFILE["name"]}のポートフォリオ。インフラ・Web開発・AI基盤の構築から運用保守まで。', home(data)),
         ('works.html', '実績', f'インフラ構築、Web開発、ネットワーク、AI基盤。{PROFILE["name"]}の実績をご紹介します。', works(data)),
         ('partners.html', '長期でお世話になっている企業様', 'リアムス株式会社、日乃出工業株式会社との取り組み。', partners()),
-        ('events.html', 'イベント・コミュニティ', f'{PROFILE["name"]}主催のTIDAL WAIVEと、これまでのConpassイベント。', events()),
+        ('events.html', 'イベント・コミュニティ', f'{PROFILE["name"]}主催のTIDAL WAIVEと、これまでのconnpassイベント。', events()),
         ('contact.html', 'お問い合わせ', 'インフラ、Web開発、AI基盤に関するお仕事のご相談。', contact()),
         ('pricing.html', '料金の目安', 'インフラ構築・設定などのサービス単価とエンジニアの時間単価。記載のない内容は都度お見積もりします。', pricing()),
     ]

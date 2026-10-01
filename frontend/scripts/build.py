@@ -9,6 +9,7 @@ import hashlib
 from work_history import render_work_history
 from pricing import contact_tabs, render_pricing
 from featured_works import render_featured_works
+from content_visibility import HIDDEN_PARTNER_IDS
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / 'public'
@@ -125,8 +126,6 @@ def generate_art():
 
 SKILL_DATA = json.loads((ROOT / 'content' / 'skills.json').read_text())
 PARTNER_DATA = json.loads((ROOT / 'content' / 'partners.json').read_text())
-# Temporarily comment out these entries on both the home and partner pages.
-HIDDEN_PARTNER_IDS = {'harahachi'}
 
 
 SITE_INFO = {

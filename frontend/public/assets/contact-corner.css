@@ -61,13 +61,12 @@
 .menu-open .contact-corner { visibility: hidden; }
 .site-footer:has(+ .contact-corner) { padding-bottom: 80px; }
 @media (max-width: 580px) {
-  /* The preceding footer reserves this space, so the fold meets its lower edge. */
-  .contact-corner { --corner-size: 128px; position: relative; right: auto; bottom: auto; margin-top: calc(-1 * var(--corner-size)); margin-left: auto; }
+  .contact-corner { --corner-size: 128px; right: env(safe-area-inset-right, 0px); bottom: env(safe-area-inset-bottom, 0px); }
   .contact-corner-toggle, .contact-corner-fallback { padding-right: 14px; padding-bottom: 14px; }
   .contact-corner-label { font-size: 11px; }
   .contact-corner-panel { padding: 12px 10px 52px; gap: 6px; }
   .contact-corner-link { font-size: 12px; }
-  .site-footer:has(+ .contact-corner) { padding-bottom: 128px; }
+  .site-footer:has(+ .contact-corner) { padding-bottom: calc(128px + env(safe-area-inset-bottom, 0px)); }
 }
 @media (prefers-reduced-motion: reduce) {
   .contact-corner-flap, .contact-corner-panel, .contact-corner-paper::after, .contact-corner-link .arrow { transition: none; }

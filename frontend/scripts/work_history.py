@@ -2,6 +2,7 @@
 from collections import Counter, defaultdict
 from html import escape
 import json
+from content_visibility import public_company_name
 
 
 def e(value):
@@ -71,10 +72,11 @@ def render_work_history(data):
             category_label = ' / '.join(category.upper() for category in categories)
             status = '<span class="status"><i></i>進行中</span>' if current else ''
             search_tags = project_search_tags(item)
-            partner = item.get('partner', '')
+            partner = public_company_name(item.get('partner'))
+            client = public_company_name(item.get('client'))
             partner_honorific = item.get('partnerHonorific', '様')
             partner_label = f'<p class="partner-label"><span>長期パートナー</span>：{e(partner)}{e(partner_honorific)}</p>' if partner else ''
-            client_label = f'<span class="project-client-label">{e(item["client"])}</span>' if item['client'] and item['client'] != partner else ''
+            client_label = f'<span class="project-client-label">{e(client)}</span>' if client and client != partner else ''
             articles.append(f'''<article class="timeline-item {'is-current' if current else ''}" data-category="{e(item['category'])}" data-categories="{e(json.dumps(categories, ensure_ascii=False))}" data-current="{str(current).lower()}" data-project-year="{e(year)}" data-tags="{e(json.dumps(search_tags, ensure_ascii=False))}" id="project-{e(item['id'])}" tabindex="-1">
 <div class="timeline-date"><span class="mono">{e(item['period'])}</span>{status}</div><div class="timeline-track" aria-hidden="true"><span></span></div>
 <div class="timeline-content">{partner_label}<div class="project-kicker">{client_label}<span class="mono">{e(category_label)}</span></div><h3>{e(item['title'])}</h3><p>{e(item['summary'])}</p>{project_details(item)}</div></article>''')

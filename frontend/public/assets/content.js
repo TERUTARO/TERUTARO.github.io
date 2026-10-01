@@ -5,6 +5,8 @@
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const arr = value => Array.isArray(value) ? value : [];
   const uniq = values => [...new Set(values)];
+  // Company names can be hidden without removing their project history.
+  const publicCompanyName = value => /ハラハチ|harahachi/i.test(String(value??'').normalize('NFKC').replace(/\s+/g,'')) ? '' : String(value??'');
   const arrow = '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg>';
   const rightArrow = '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg>';
   const tags = values => `<div class="tags">${arr(values).map(t => `<span>${esc(t)}</span>`).join('')}</div>`;
@@ -34,10 +36,11 @@
   }
   function projectTags(p) { return uniq([...arr(p.tags),...arr(p.phases),...arr(p.stackGroups).flatMap(g=>arr(g.tags))]); }
   function projectArticle(p) {
-    const partner = p.partner ? `<p class="partner-label"><span>長期パートナー</span>：${esc(p.partner)}${esc(p.partnerHonorific ?? '様')}</p>` : '';
+    const partnerName=publicCompanyName(p.partner), clientName=publicCompanyName(p.client);
+    const partner = partnerName ? `<p class="partner-label"><span>長期パートナー</span>：${esc(partnerName)}${esc(p.partnerHonorific ?? '様')}</p>` : '';
     const phase = `<section class="project-detail-section project-phases" aria-label="担当フェーズ"><h4>担当フェーズ</h4><div class="project-tags" role="group" aria-label="担当フェーズのタグ">${arr(p.phases).map(tagButton).join('')}</div></section>`;
     const stacks = `<section class="project-detail-section project-stack" aria-label="技術スタック"><h4>技術スタック</h4><dl class="stack-groups">${arr(p.stackGroups).map(g=>`<div class="stack-group"><dt>${esc(g.label)}</dt><dd><div class="project-tags" role="group" aria-label="${esc(g.label)}のタグ">${arr(g.tags).map(tagButton).join('')}</div></dd></div>`).join('')}</dl></section>`;
-    return `<article class="timeline-item ${p.current?'is-current':''}" data-category="${esc(p.category)}" data-categories="${esc(JSON.stringify(projectCategories(p)))}" data-current="${p.current===true}" data-project-year="${esc(p.year)}" data-tags="${esc(JSON.stringify(projectTags(p)))}" id="project-${esc(p.id)}" tabindex="-1"><div class="timeline-date"><span class="mono">${esc(p.period)}</span>${p.current?'<span class="status"><i></i>進行中</span>':''}</div><div class="timeline-track" aria-hidden="true"><span></span></div><div class="timeline-content">${partner}<div class="project-kicker">${p.client&&p.client!==p.partner?`<span class="project-client-label">${esc(p.client)}</span>`:''}<span class="mono">${esc(projectCategories(p).join(' / ').toUpperCase())}</span></div><h3>${esc(p.title)}</h3><p>${esc(p.summary)}</p><details class="project-detail"><summary>担当・技術を見る <span aria-hidden="true">+</span></summary><div class="project-detail-body"><div class="project-role"><h4>ROLE</h4><p>${esc(p.role)}</p></div>${phase}${stacks}</div></details></div></article>`;
+    return `<article class="timeline-item ${p.current?'is-current':''}" data-category="${esc(p.category)}" data-categories="${esc(JSON.stringify(projectCategories(p)))}" data-current="${p.current===true}" data-project-year="${esc(p.year)}" data-tags="${esc(JSON.stringify(projectTags(p)))}" id="project-${esc(p.id)}" tabindex="-1"><div class="timeline-date"><span class="mono">${esc(p.period)}</span>${p.current?'<span class="status"><i></i>進行中</span>':''}</div><div class="timeline-track" aria-hidden="true"><span></span></div><div class="timeline-content">${partner}<div class="project-kicker">${clientName&&clientName!==partnerName?`<span class="project-client-label">${esc(clientName)}</span>`:''}<span class="mono">${esc(projectCategories(p).join(' / ').toUpperCase())}</span></div><h3>${esc(p.title)}</h3><p>${esc(p.summary)}</p><details class="project-detail"><summary>担当・技術を見る <span aria-hidden="true">+</span></summary><div class="project-detail-body"><div class="project-role"><h4>ROLE</h4><p>${esc(p.role)}</p></div>${phase}${stacks}</div></details></div></article>`;
   }
   function renderWorks(rows) {
     const target = document.querySelector('[data-work-history]');
@@ -67,14 +70,14 @@
     controls.hidden=cards.length<2;
     track.tabIndex=cards.length>1?0:-1;
     track.scrollLeft=0;
-    controls.querySelector('[data-featured-total]').textContent=String(cards.length).padStart(2,'0');
     const position=index=>Math.min(cards[index].offsetLeft-cards[0].offsetLeft,Math.max(0,track.scrollWidth-track.clientWidth));
     const update=()=>{
       frame=0;if(!cards.length)return;
       active=cards.reduce((best,_,i)=>Math.abs(track.scrollLeft-position(i))<Math.abs(track.scrollLeft-position(best))?i:best,0);
       prev.disabled=active===0;next.disabled=active===cards.length-1;
-      const count=String(active+1).padStart(2,'0'),label=controls.querySelector('[data-featured-current]');
-      if(label.textContent!==count)label.textContent=count;
+      const label=controls.querySelector('[data-featured-status]');
+      const title=cards[active].querySelector('h3').textContent;
+      if(label.textContent!==title)label.textContent=title;
       cards.forEach((card,i)=>card.classList.toggle('is-selected',i===active));
     };
     const schedule=()=>{if(!frame)frame=requestAnimationFrame(update);};
@@ -99,7 +102,7 @@
     const published=rows.filter(p=>p.published!==false && /^[0-9]{4}$/.test(String(p.year??'')));
     const latestYear=published.length?Math.max(...published.map(p=>Number(p.year))):null;
     const selected=published.filter(p=>Number(p.year)===latestYear || Number(p.year)===latestYear-1).sort((a,b)=>Number(b.year)-Number(a.year));
-    target.innerHTML=selected.map((p,i)=>`<a class="project-feature featured-case${i===0?' is-selected':''}" href="works.html#project-${esc(p.id)}"><div class="featured-case-meta"><span class="mono">${esc(p.period)}</span>${p.current?'<span class="project-active"><i></i>進行中</span>':''}</div><div class="featured-case-body"><p class="project-client">${esc(p.partner||p.client)}</p><h3>${esc(p.title)}</h3><p class="featured-case-summary">${esc(p.summary)}</p></div><div class="featured-case-bottom"><span class="project-category">${esc(String(p.category??'').toUpperCase())}</span><span class="featured-case-action"><span>詳細を見る</span>${rightArrow}</span></div></a>`).join('') || '<p class="featured-empty">現在掲載している実績はありません。</p>';
+    target.innerHTML=selected.map((p,i)=>`<a class="project-feature featured-case${i===0?' is-selected':''}" href="works.html#project-${esc(p.id)}"><div class="featured-case-meta"><span class="mono">${esc(p.period)}</span>${p.current?'<span class="project-active"><i></i>進行中</span>':''}</div><div class="featured-case-body">${publicCompanyName(p.partner)||publicCompanyName(p.client)?`<p class="project-client">${esc(publicCompanyName(p.partner)||publicCompanyName(p.client))}</p>`:''}<h3>${esc(p.title)}</h3><p class="featured-case-summary">${esc(p.summary)}</p></div><div class="featured-case-bottom"><span class="project-category">${esc(String(p.category??'').toUpperCase())}</span><span class="featured-case-action"><span>詳細を見る</span>${rightArrow}</span></div></a>`).join('') || '<p class="featured-empty">現在掲載している実績はありません。</p>';
     initFeatured();
   }
   function renderPartners(rows) {

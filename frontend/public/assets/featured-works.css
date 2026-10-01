@@ -1,10 +1,8 @@
 /* Text-only recent projects with controls on the central card's boundaries. */
 .selected-section.featured-works {
-  --featured-gutter: max(56px, calc((100% - 1280px) / 2));
   --featured-card: min(800px, calc(100vw - 174px));
   padding-bottom: 80px;
 }
-.featured-works-body { padding-bottom: 56px; }
 .featured-frame { position: relative; }
 .featured-works .featured-track { position: relative; display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: var(--featured-card); gap: 0; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; padding: 0 calc((100% - var(--featured-card)) / 2); border-block: 1px solid #bdcabc; background: #e9ebe2; scrollbar-width: none; -ms-overflow-style: none; }
 .featured-track::-webkit-scrollbar { display: none; }
@@ -13,7 +11,11 @@
 .featured-works .featured-case.is-selected { background: var(--paper); }
 .featured-works .featured-case:is(:hover, :focus-visible) { background: #f1f3ec; }
 .featured-works .featured-case:focus-visible { outline-offset: -5px; }
-.featured-works .featured-case::before { inset: -3% -12% -15% 28%; }
+.featured-works .featured-case::before { inset: -8% 32% -8% -65px; background: url('/assets/work-pattern.svg') no-repeat left center / contain; opacity: 0; transform: translateX(-16px); transition: opacity .4s ease, transform .6s ease; }
+.featured-works .featured-case:focus-visible::before { opacity: .3; transform: translateX(0); }
+@media (hover: hover) {
+  .featured-works .featured-case:hover::before { opacity: .3; transform: translateX(0); }
+}
 .featured-case-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
 .featured-case-meta > .mono { color: var(--muted); font-size: 11px; }
 .featured-case-meta > .mono::before { content: '// '; color: #73856f; }
@@ -27,8 +29,6 @@
 .featured-case-action .arrow { width: 23px; height: 23px; transition: transform .25s; }
 .featured-case:is(:hover, :focus-visible) .featured-case-action .arrow { transform: translateX(5px); }
 .featured-controls { position: absolute; inset: 0; pointer-events: none; }
-.featured-count { position: absolute; top: calc(100% + 22px); left: var(--featured-gutter); color: #7b877b; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; }
-.featured-count [data-featured-current] { color: var(--ink); }
 .featured-buttons { position: absolute; inset: 0; width: var(--featured-card); margin-inline: auto; }
 .featured-buttons button { position: absolute; top: 50%; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--green); background: var(--green); color: var(--paper); pointer-events: auto; transition: background .2s, color .2s; }
 .featured-buttons button[data-featured-prev] { left: 0; transform: translate(-50%, -50%); }
@@ -39,14 +39,15 @@
 .featured-buttons button:disabled { background: #bcc6b9; border-color: #bcc6b9; cursor: default; }
 .featured-empty { min-height: 180px; padding-block: 60px; }
 @media (max-width: 1000px) {
-  .selected-section.featured-works { --featured-card: min(800px, calc(100vw - 88px)); --featured-gutter: 22px; padding-bottom: 55px; }
+  .selected-section.featured-works { --featured-card: min(800px, calc(100vw - 88px)); padding-bottom: 55px; }
   .featured-works .featured-case { padding: 35px 32px 29px; min-height: 420px; }
   .featured-case-body { padding-block: 33px 29px; }
   .featured-case h3 { font-size: clamp(24px, 3.6vw, 29px); }
 }
 @media (max-width: 580px) {
-  .selected-section.featured-works { --featured-card: calc(100vw - 64px); --featured-gutter: 20px; padding-bottom: 40px; }
+  .selected-section.featured-works { --featured-card: calc(100vw - 64px); padding-bottom: 40px; }
   .featured-works .featured-case { min-height: 390px; padding: 25px 27px; }
+  .featured-works .featured-case::before { left: -40px; }
   .featured-case-meta { gap: 10px; }
   .featured-case-meta > .mono { font-size: 9px; }
   .featured-case .project-active { font-size: 9px; }
@@ -60,4 +61,5 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .featured-works *, .featured-works *::before { transition: none !important; scroll-behavior: auto !important; }
+  .featured-works .featured-case::before { transform: none; }
 }

@@ -9,9 +9,19 @@ def e(value):
     return escape(str(value or ''), quote=True)
 
 
+def select_recent_projects(projects):
+    rows = [project for project in projects if project.get('published', True)
+            and len(str(project.get('year', ''))) == 4 and str(project.get('year', '')).isascii()
+            and str(project.get('year', '')).isdigit()]
+    if not rows:
+        return []
+    latest_year = max(int(project['year']) for project in rows)
+    return sorted((project for project in rows if int(project['year']) in (latest_year, latest_year - 1)),
+                  key=lambda project: int(project['year']), reverse=True)
+
+
 def render_featured_works(projects):
-    rows = [project for project in projects if project.get('published', True)]
-    selected = ([project for project in rows if project.get('current')] or rows)[:2]
+    selected = select_recent_projects(projects)
     cards = []
     for index, project in enumerate(selected):
         current = '<span class="project-active"><i></i>進行中</span>' if project.get('current') else ''
@@ -22,7 +32,7 @@ def render_featured_works(projects):
 </a>''')
     content = ''.join(cards) or '<p class="featured-empty">現在掲載している実績はありません。</p>'
     return f'''<section class="selected-section featured-works" aria-labelledby="featured-works-heading" data-featured-works>
-  <div class="featured-works-header"><div class="wrap"><div class="featured-works-heading"><h2 id="featured-works-heading">実績</h2><a class="text-link" href="works.html">すべての実績 {ARROW}</a></div><div class="featured-works-word" aria-hidden="true">WORKS<span> / WORKS</span></div></div></div>
-  <div class="featured-works-body"><div class="selected-grid featured-track" id="featured-works-track" role="region" aria-label="ピックアップした実績" tabindex="0">{content}</div>
-  <div class="featured-controls wrap" data-featured-controls hidden><span class="featured-count" aria-live="polite" aria-atomic="true"><span data-featured-current>01</span><span aria-hidden="true"> / </span><span class="sr-only">件目 / </span><span data-featured-total>{len(selected):02}</span><span class="sr-only">件</span></span><div class="featured-buttons"><button type="button" data-featured-prev aria-controls="featured-works-track" aria-label="前の実績" disabled>{ARROW}</button><button type="button" data-featured-next aria-controls="featured-works-track" aria-label="次の実績">{ARROW}</button></div></div></div>
+  <div class="section-title wrap"><h2 id="featured-works-heading">実績</h2><a class="text-link" href="works.html">すべての実績 {ARROW}</a></div>
+  <div class="featured-works-body"><div class="featured-frame"><div class="selected-grid featured-track" id="featured-works-track" role="region" aria-label="直近2年の実績" tabindex="0">{content}</div>
+  <div class="featured-controls" data-featured-controls hidden><span class="featured-count" aria-live="polite" aria-atomic="true"><span data-featured-current>01</span><span aria-hidden="true"> / </span><span class="sr-only">件目 / </span><span data-featured-total>{len(selected):02}</span><span class="sr-only">件</span></span><div class="featured-buttons"><button type="button" data-featured-prev aria-controls="featured-works-track" aria-label="前の実績" disabled>{ARROW}</button><button type="button" data-featured-next aria-controls="featured-works-track" aria-label="次の実績">{ARROW}</button></div></div></div></div>
 </section>'''

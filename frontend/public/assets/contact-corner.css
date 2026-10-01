@@ -1,6 +1,6 @@
 /* Two halves of one square, hinged along its top-right / bottom-left diagonal. */
 .contact-corner {
-  --corner-size: 224px;
+  --corner-size: 144px;
   position: fixed;
   z-index: 25;
   right: 0;
@@ -8,22 +8,24 @@
   width: var(--corner-size);
   height: var(--corner-size);
   pointer-events: none;
-  color: var(--green);
+  color: var(--ink);
 }
 .contact-corner-surface { position: relative; width: 100%; height: 100%; pointer-events: none; }
 .contact-corner-paper { position: absolute; inset: 0; perspective: 900px; pointer-events: none; }
-.contact-corner-base, .contact-corner-flap { position: absolute; inset: 0; display: block; background: var(--panel); }
-.contact-corner-base { clip-path: polygon(100% 0, 100% 100%, 0 100%); }
-.contact-corner-base::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, transparent calc(50% - 1px), var(--paper) calc(50% - 1px), var(--paper) calc(50% + 1px), transparent calc(50% + 1px)); transition: opacity .35s; }
+.contact-corner-paper::after { content: ''; position: absolute; left: 0; bottom: 0; width: 141.4214%; height: 1px; background: var(--line); transform: rotate(-45deg); transform-origin: left center; transition: opacity .35s; }
+.contact-corner-base, .contact-corner-flap { position: absolute; inset: 0; display: block; background: var(--paper); }
+.contact-corner-base { clip-path: polygon(100% 0, 100% 100%, 0 100%); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .contact-corner-flap {
   clip-path: polygon(0 0, 100% 0, 0 100%);
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
   transform-origin: 50% 50%;
   transform: rotate3d(1, -1, 0, -180deg);
   transition: transform .68s cubic-bezier(.4, 0, .2, 1);
 }
 .contact-corner.is-open .contact-corner-surface { pointer-events: auto; }
 .contact-corner.is-open .contact-corner-flap { transform: rotate3d(1, -1, 0, 0deg); }
-.contact-corner.is-open .contact-corner-base::after { opacity: 0; }
+.contact-corner.is-open .contact-corner-paper::after { opacity: 0; }
 .contact-corner-toggle, .contact-corner-fallback {
   position: absolute;
   z-index: 2;
@@ -34,7 +36,7 @@
   justify-content: flex-end;
   width: 100%;
   height: 100%;
-  padding: 0 max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) 0;
+  padding: 0 16px 16px 0;
   border: 0;
   background: none;
   color: inherit;
@@ -42,30 +44,31 @@
   clip-path: polygon(100% 0, 100% 100%, 0 100%);
   outline-offset: -5px;
 }
-.contact-corner-icon { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
-.contact-corner.is-open .contact-corner-toggle { width: 68px; height: 68px; clip-path: none; }
-.contact-corner.is-open .contact-corner-icon { display: none; }
+.contact-corner-label { position: absolute; top: 68%; left: 68%; font: 12px/1 var(--mono); letter-spacing: .09em; transform: translate(-50%, -50%) rotate(-45deg); }
+.contact-corner.is-open .contact-corner-toggle { width: 48px; height: 48px; clip-path: none; }
+.contact-corner.is-open .contact-corner-label { display: none; }
 .contact-corner-close { position: relative; display: none; width: 20px; height: 20px; }
 .contact-corner-close::before, .contact-corner-close::after { content: ''; position: absolute; top: 9px; left: 0; width: 20px; height: 1px; background: currentColor; transform: rotate(45deg); }
 .contact-corner-close::after { transform: rotate(-45deg); }
 .contact-corner.is-open .contact-corner-close { display: block; }
-.contact-corner-panel { position: absolute; z-index: 1; inset: 0; padding: 28px 24px 76px; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; opacity: 0; visibility: hidden; transition: opacity .15s; }
-.contact-corner-panel > .mono { font-size: 10px; letter-spacing: .15em; }
+.contact-corner-panel { position: absolute; z-index: 1; inset: 0; padding: 18px 12px 52px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; opacity: 0; visibility: hidden; transition: opacity .15s; }
+.contact-corner-panel > .mono { font-size: 9px; letter-spacing: .15em; }
 .contact-corner.is-open .contact-corner-panel { opacity: 1; visibility: visible; transition-delay: .4s; }
 .contact-corner.is-open:has(:focus-visible) .contact-corner-panel { transition-delay: 0s; }
-.contact-corner-link { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 15px; border-bottom: 1px solid var(--line); font-size: 18px; white-space: nowrap; }
-.contact-corner-link .arrow { width: 20px; height: 20px; transition: transform .2s; }
+.contact-corner-link { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; padding-block: 10px; border-bottom: 1px solid var(--line); font-size: 13px; white-space: nowrap; }
+.contact-corner-link .arrow { width: 17px; height: 17px; transition: transform .2s; }
 .contact-corner-link:hover .arrow { transform: translateX(3px); }
 .menu-open .contact-corner { visibility: hidden; }
-.site-footer:has(+ .contact-corner) { padding-bottom: 140px; }
+.site-footer:has(+ .contact-corner) { padding-bottom: 80px; }
 @media (max-width: 580px) {
-  .contact-corner { --corner-size: 192px; }
-  .contact-corner-icon { width: 27px; height: 27px; }
-  .contact-corner-toggle, .contact-corner-fallback { padding-right: max(20px, env(safe-area-inset-right)); padding-bottom: max(20px, env(safe-area-inset-bottom)); }
-  .contact-corner-panel { padding: 22px 20px 64px; }
-  .contact-corner-link { font-size: 16px; }
-  .site-footer:has(+ .contact-corner) { padding-bottom: 120px; }
+  /* The preceding footer reserves this space, so the fold meets its lower edge. */
+  .contact-corner { --corner-size: 128px; position: relative; right: auto; bottom: auto; margin-top: calc(-1 * var(--corner-size)); margin-left: auto; }
+  .contact-corner-toggle, .contact-corner-fallback { padding-right: 14px; padding-bottom: 14px; }
+  .contact-corner-label { font-size: 11px; }
+  .contact-corner-panel { padding: 12px 10px 52px; gap: 6px; }
+  .contact-corner-link { font-size: 12px; }
+  .site-footer:has(+ .contact-corner) { padding-bottom: 128px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .contact-corner-flap, .contact-corner-panel, .contact-corner-base::after, .contact-corner-link .arrow { transition: none; }
+  .contact-corner-flap, .contact-corner-panel, .contact-corner-paper::after, .contact-corner-link .arrow { transition: none; }
 }

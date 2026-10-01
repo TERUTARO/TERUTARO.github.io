@@ -96,8 +96,9 @@
   }
   function renderFeatured(rows) {
     const target=document.querySelector('.selected-grid');if(!target)return;
-    const published=rows.filter(p=>p.published!==false);
-    let selected=published.filter(p=>p.current);if(!selected.length)selected=published;selected=selected.slice(0,2);
+    const published=rows.filter(p=>p.published!==false && /^[0-9]{4}$/.test(String(p.year??'')));
+    const latestYear=published.length?Math.max(...published.map(p=>Number(p.year))):null;
+    const selected=published.filter(p=>Number(p.year)===latestYear || Number(p.year)===latestYear-1).sort((a,b)=>Number(b.year)-Number(a.year));
     target.innerHTML=selected.map((p,i)=>`<a class="project-feature featured-case${i===0?' is-selected':''}" href="works.html#project-${esc(p.id)}"><div class="featured-case-meta"><span class="mono">${esc(p.period)}</span>${p.current?'<span class="project-active"><i></i>進行中</span>':''}</div><div class="featured-case-body"><p class="project-client">${esc(p.partner||p.client)}</p><h3>${esc(p.title)}</h3><p class="featured-case-summary">${esc(p.summary)}</p></div><div class="featured-case-bottom"><span class="project-category">${esc(String(p.category??'').toUpperCase())}</span><span class="featured-case-action"><span>詳細を見る</span>${rightArrow}</span></div></a>`).join('') || '<p class="featured-empty">現在掲載している実績はありません。</p>';
     initFeatured();
   }
@@ -107,7 +108,11 @@
       const hidden=new Set(JSON.parse(target.dataset.hiddenPartners||'[]'));
       target.innerHTML=rows.filter(p=>!hidden.has(p.id)).map(p=>`<article class="partner-row"><div class="partner-gallery">${arr(p.sites).map(preview).join('')}</div><div class="partner-description"><h2>${esc(p.name)}</h2><p>${esc(p.summary)}</p>${tags(p.tags)}</div></article>`).join('') || '<p>現在掲載しているパートナーはありません。</p>';
     }
-    const home=document.querySelector('.company-previews');if(home)home.innerHTML=rows.flatMap(p=>arr(p.sites).slice(0,1)).map(preview).join('');
+    const home=document.querySelector('.company-previews');
+    if(home){
+      const hidden=new Set(JSON.parse(home.dataset.hiddenPartners||'[]'));
+      home.innerHTML=rows.filter(p=>!hidden.has(p.id)).flatMap(p=>arr(p.sites).slice(0,1)).map(preview).join('');
+    }
   }
   function price(item,hourly=false) {
     return item.priceYen===null?'<span class="pricing-quote">都度お見積もり</span>':`<span class="pricing-amount">${Number(item.priceYen).toLocaleString('ja-JP')}</span>${hourly?'':'<span class="pricing-currency">円</span>'}`;

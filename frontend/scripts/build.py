@@ -70,19 +70,19 @@ def shell(filename, body):
     nav = ''.join(f'<a href="{url}" {current_attr(filename, url)}><span class="menu-link-en">{name}</span><span class="menu-link-ja">{ja}</span>{arrow("right")}</a>' for url, name, ja in NAV)
     rail = ''.join(f'<a href="{url}" {current_attr(filename, url)}>{ja}</a>' for url, name, ja in NAV)
     return f'''<a class="skip-link" href="#main">本文へスキップ</a>
-<header class="site-header wrap"><a class="brand" href="index.html" aria-label="terutaro トップページ"><span>terutaro</span></a><button class="menu-trigger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-menu" hidden><span class="menu-lines" aria-hidden="true"></span><span class="menu-trigger-text">Menu</span></button><nav class="rail-nav" aria-label="メインナビゲーション">{rail}</nav></header>
+<header class="site-header wrap"><a class="brand" href="index.html" aria-label="terutaro トップページ"><img class="header-portrait" src="assets/portrait.png" alt="" width="36" height="36" decoding="async"><span>terutaro</span></a><button class="menu-trigger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-menu" hidden><span class="menu-lines" aria-hidden="true"></span><span class="menu-trigger-text">Menu</span></button><nav class="rail-nav" aria-label="メインナビゲーション">{rail}</nav></header>
 <dialog id="site-menu" class="menu-panel" aria-label="メニュー"><div class="menu-panel-top"><a class="brand" href="index.html">terutaro</a><button class="menu-close" type="button" aria-label="メニューを閉じる" autofocus><span aria-hidden="true"></span></button></div><div class="menu-panel-body"><div class="menu-profile"><span class="profile-avatar"><img src="assets/portrait.png" alt="{e(PROFILE["name"])}のプロフィール写真" width="1254" height="1254" decoding="async"></span><p>{e(PROFILE["name"])}<span>terutaro</span></p>{social_links()}</div><nav id="main-nav" class="menu-links" aria-label="ページ一覧">{nav}</nav></div></dialog>
 <noscript><nav class="fallback-nav wrap" aria-label="ページ一覧">{rail}</nav></noscript>
 <main id="main">{body}</main>
 <footer class="site-footer wrap"><div class="footer-top"><a class="brand" href="index.html"><span>terutaro</span></a><a class="back-top" href="#" aria-label="ページの先頭へ">Back to top <span>↑</span></a></div><div class="footer-bottom"><span>© <span data-year>2026</span> terutaro</span><span>Independent engineer · Okinawa / Kanto, Japan</span></div></footer>{contact_corner() if filename != "contact.html" else ""}'''
 
 def contact_corner():
-    icon = '<svg class="contact-corner-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="m3.5 6 8.5 7 8.5-7"/></svg>'
+    label = '<span class="contact-corner-label" aria-hidden="true">contact</span>'
     return f'''<aside class="contact-corner" aria-label="お問い合わせ">
   <div class="contact-corner-surface">
     <span class="contact-corner-paper" aria-hidden="true"><span class="contact-corner-base"></span><span class="contact-corner-flap"></span></span>
-    <a class="contact-corner-fallback" href="contact.html#contact-form" aria-label="お問い合わせフォームへ">{icon}</a>
-    <button class="contact-corner-toggle" type="button" aria-label="お問い合わせを開く" aria-expanded="false" aria-controls="contact-corner-panel" hidden>{icon}<span class="contact-corner-close" aria-hidden="true"></span></button>
+    <a class="contact-corner-fallback" href="contact.html#contact-form" aria-label="お問い合わせフォームへ">{label}</a>
+    <button class="contact-corner-toggle" type="button" aria-label="お問い合わせを開く" aria-expanded="false" aria-controls="contact-corner-panel" hidden>{label}<span class="contact-corner-close" aria-hidden="true"></span></button>
     <div class="contact-corner-panel" id="contact-corner-panel" inert aria-hidden="true">
       <span class="mono">CONTACT</span>
       <a class="contact-corner-link" href="contact.html#contact-form"><span>お問い合わせ</span>{arrow('right')}</a>
@@ -125,7 +125,7 @@ def generate_art():
 
 SKILL_DATA = json.loads((ROOT / 'content' / 'skills.json').read_text())
 PARTNER_DATA = json.loads((ROOT / 'content' / 'partners.json').read_text())
-# Temporarily comment out these entries on the partner detail page.
+# Temporarily comment out these entries on both the home and partner pages.
 HIDDEN_PARTNER_IDS = {'harahachi'}
 
 
@@ -199,7 +199,13 @@ def profile_resource():
 
 
 def home(data):
-    company_previews = ''.join(partner_preview(row['sites'][0]) for row in PARTNER_DATA if row.get('published', True) and row['sites'])
+    company_previews = ''
+    for row in PARTNER_DATA:
+        if not row.get('published', True) or not row['sites']:
+            continue
+        preview = partner_preview(row['sites'][0])
+        company_previews += f'<!-- Temporarily hidden partner: {e(row["id"])}\n{preview}\n-->' if row['id'] in HIDDEN_PARTNER_IDS else preview
+    hidden_partners = e(json.dumps(sorted(HIDDEN_PARTNER_IDS)))
     return f'''
 <section class="hero wrap water-surface" data-water-surface><div data-water-content>
   <div class="hero-topline"><span class="eyebrow">FREELANCE ENGINEER</span><span class="location"><span class="small-dot"></span> OKINAWA / KANTO, JAPAN <span class="mono" data-clock></span></span></div>
@@ -212,7 +218,7 @@ def home(data):
 <section class="about-section wrap" id="about"><div class="about-grid"><div class="about-title"><h2>プロフィール</h2><div class="profile-name">{e(PROFILE["name"])} <span>terutaro</span></div>{social_links()}</div>{profile_resource()}</div></section>
 {skills()}
 {render_featured_works(data['projects'])}
-<section class="partner-showcase wrap"><div class="section-title"><h2>長期でお世話になっている企業様</h2><a class="text-link" href="partners.html">お取引について {arrow()}</a></div><div class="company-previews">{company_previews}</div></section>
+<section class="partner-showcase wrap"><div class="section-title"><h2>長期でお世話になっている企業様</h2><a class="text-link" href="partners.html">お取引について {arrow()}</a></div><div class="company-previews" data-hidden-partners="{hidden_partners}">{company_previews}</div></section>
 <section class="community-showcase wrap"><div class="section-title"><h2>イベント</h2><a class="text-link" href="events.html">イベント一覧 {arrow()}</a></div><div class="community-preview-grid">{site_preview('tidal-waive', False)}<div class="community-details"><h3>TIDAL WAIVE</h3><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', '公式サイト')}</div></div></section>
 '''
 
@@ -281,14 +287,14 @@ def main():
     pages = [
         ('index.html', f'{PROFILE["name"]} | 沖縄・関東のフリーランスエンジニア', f'沖縄・関東を拠点に活動する{PROFILE["name"]}のポートフォリオ。インフラ・Web開発・AI基盤の構築から運用保守まで。', home(data)),
         ('works.html', '実績', f'インフラ構築、Web開発、ネットワーク、AI基盤。{PROFILE["name"]}の実績をご紹介します。', works(data)),
-        ('partners.html', '長期でお世話になっている企業様', 'リアムス株式会社、合同会社ハラハチ、日乃出工業株式会社との取り組み。', partners()),
+        ('partners.html', '長期でお世話になっている企業様', 'リアムス株式会社、日乃出工業株式会社との取り組み。', partners()),
         ('events.html', 'イベント・コミュニティ', f'{PROFILE["name"]}主催のTIDAL WAIVEと、これまでのConpassイベント。', events()),
         ('contact.html', 'お問い合わせ', 'インフラ、Web開発、AI基盤に関するお仕事のご相談。', contact()),
         ('pricing.html', '料金の目安', 'インフラ構築・設定などのサービス単価とエンジニアの時間単価。記載のない内容は都度お見積もりします。', pricing()),
     ]
     generated = {}
     for filename, title, description, body in pages:
-        scripts = [asset_url('assets/main.js'), asset_url('assets/content.js')]
+        scripts = [asset_url('assets/main.js'), asset_url('assets/navigation.js'), asset_url('assets/content.js')]
         if filename != 'contact.html':
             scripts.append(asset_url('assets/contact-corner.js'))
         if filename == 'index.html':

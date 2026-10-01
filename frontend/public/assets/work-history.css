@@ -23,10 +23,15 @@
 .filter-status { font-size: 11px; color: var(--muted); }
 .filter-status strong { font-family: var(--mono); font-size: 20px; color: var(--ink); font-weight: 400; margin-right: 5px; }
 .work-sort-note { font-size: 10px; color: var(--muted); }
-.works-section .timeline { padding-top: 0; }
-.work-year { margin-top: 42px; }
-.work-year + .work-year { margin-top: 64px; }
-.work-year-heading { display: flex; align-items: center; gap: 20px; padding-bottom: 15px; }
+.works-section { --work-year-heading-height: calc(clamp(42px, 5vw, 64px) + 29px); }
+.works-section .filters [data-filter-count] { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.works-section .timeline { padding-top: 42px; }
+.work-year { margin: 0; }
+/* Keep the spacing inside each year so its sticky header hands off to the next. */
+.work-year:not(:last-child) .year-projects { padding-bottom: 64px; }
+.work-year-heading { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 20px; padding-block: 14px 15px; background: var(--paper); }
+.work-year-heading::before { content: ''; position: absolute; z-index: -1; inset: 0 -20px; background: var(--paper); }
+.works-section .timeline-item { scroll-margin-top: var(--work-year-heading-height); }
 .work-year-heading h2 { font-family: var(--mono); font-weight: 400; font-size: clamp(42px, 5vw, 64px); line-height: 1; letter-spacing: -.055em; color: var(--ink); }
 .work-year-heading h2 > span { font-family: var(--sans); font-size: 12px; margin-left: 10px; letter-spacing: 0; color: var(--muted); }
 .work-year-count { font-family: var(--mono); font-size: 11px; color: var(--accent); white-space: nowrap; }
@@ -89,8 +94,9 @@
   .popular-tags-label { flex: auto; }
   .work-tag { padding: 9px 10px; }
   .work-results-bar { padding-top: 21px; }
-  .work-year { margin-top: 32px; }
-  .work-year + .work-year { margin-top: 44px; }
+  .works-section { --work-year-heading-height: 67px; }
+  .works-section .timeline { padding-top: 32px; }
+  .work-year:not(:last-child) .year-projects { padding-bottom: 44px; }
   .work-year-heading { gap: 14px; padding-bottom: 7px; }
   .work-year-heading h2 { font-size: 46px; }
   .work-year-heading h2 > span { font-size: 10px; margin-left: 7px; }

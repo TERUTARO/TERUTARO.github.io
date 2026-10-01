@@ -1,0 +1,96 @@
+/* A quiet mark at the left stays separate from the readable skill tags. */
+#skills .skill-panel {
+  grid-template-columns: minmax(130px, 27%) minmax(0, 1fr);
+  gap: 42px;
+}
+
+#skills .skill-intro {
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+  min-width: 0;
+}
+
+#skills .skill-symbol {
+  position: relative;
+  width: min(100%, 200px);
+  height: auto;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 0;
+  pointer-events: none;
+  color: var(--green);
+}
+
+#skills .skill-symbol > .skill-icon,
+#skills .skill-brand-mark {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 180ms ease;
+}
+
+#skills .skill-symbol > .skill-icon {
+  opacity: .12;
+  stroke-width: .85;
+}
+
+#skills .skill-brand-mark {
+  opacity: 0;
+  filter: grayscale(1);
+  mix-blend-mode: multiply;
+}
+
+#skills .skill-symbol.has-product-logo > .skill-icon { opacity: 0; }
+#skills .skill-symbol.has-product-logo .skill-brand-mark { opacity: .14; }
+#skills .skill-details { min-width: 0; }
+
+#skills .tags > .skill-tag {
+  max-width: 100%;
+  min-height: 29px;
+  padding: 5px 9px;
+  border: 1px solid #cbd2c2;
+  border-radius: 2px;
+  color: inherit;
+  background: transparent;
+  font-size: 10px;
+  line-height: 1.5;
+  text-align: left;
+  overflow-wrap: anywhere;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+#skills .skill-tag:is(:hover, :focus-visible, [aria-pressed='true']) {
+  border-color: #80927a;
+  background: #dce2d4;
+}
+
+@media (max-width: 1000px) {
+  #skills .skill-panel { grid-template-columns: minmax(96px, 22%) minmax(0, 1fr); gap: 24px; }
+  #skills .skill-row { grid-template-columns: 1fr; gap: 10px; }
+}
+
+@media (max-width: 760px) {
+  #skills .skill-panel { grid-template-columns: 72px minmax(0, 1fr); gap: 22px; }
+  #skills .skill-intro {
+    position: sticky;
+    top: 90px;
+    align-self: start;
+    padding-top: 15px;
+  }
+  #skills .tags > .skill-tag { min-height: 40px; padding: 8px; }
+}
+
+@media (max-width: 480px) {
+  #skills .skill-panel { grid-template-columns: 48px minmax(0, 1fr); gap: 16px; padding: 25px 17px; }
+  #skills .skill-intro { top: 80px; }
+  #skills .tags > .skill-tag { font-size: 9px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #skills .skill-symbol > .skill-icon,
+  #skills .skill-brand-mark,
+  #skills .tags > .skill-tag { transition: none; }
+}

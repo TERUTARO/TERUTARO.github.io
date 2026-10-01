@@ -125,6 +125,8 @@ def generate_art():
 
 SKILL_DATA = json.loads((ROOT / 'content' / 'skills.json').read_text())
 PARTNER_DATA = json.loads((ROOT / 'content' / 'partners.json').read_text())
+# Temporarily comment out these entries on the partner detail page.
+HIDDEN_PARTNER_IDS = {'harahachi'}
 
 
 SITE_INFO = {
@@ -156,7 +158,7 @@ def skills():
     panels = ''
     for i, row in enumerate(rows):
         groups = ''.join(f'<div class="skill-row"><h4>{e(group["name"])}</h4>{tags(group["items"])}</div>' for group in row['groups'])
-        panels += f'<div class="skill-panel" id="panel-{e(row["id"])}" role="tabpanel" aria-labelledby="tab-{e(row["id"])}" tabindex="0" {"hidden" if i else ""}><div class="skill-intro"><span class="skill-symbol">{skill_icon(row["icon"])}</span><h3>{e(row["heading"])}</h3></div><div class="skill-details">{groups}</div></div>'
+        panels += f'<div class="skill-panel" id="panel-{e(row["id"])}" role="tabpanel" aria-labelledby="tab-{e(row["id"])}" tabindex="0" {"hidden" if i else ""}><div class="skill-intro"><span class="skill-symbol">{skill_icon(row["icon"])}</span></div><div class="skill-details">{groups}</div></div>'
     return f'<section class="skills-section wrap" id="skills"><div class="section-title"><h2>スキル</h2></div><div class="skill-tabs" role="tablist" aria-label="スキルの分類">{tabs}</div>{panels}</section>'
 
 
@@ -219,18 +221,25 @@ def works(data):
     return page_head('01', 'Works', '実績', '') + render_work_history(data) + f'''<!--
 <section class="career-section wrap">{section_label('02', 'The journey')}<div class="career-grid"><div><h2>経歴</h2></div><div class="career-list">{career}</div></div></section>
 -->
-<section class="personal-section wrap">
-  <div class="section-title"><h2>個人活動</h2></div>
-  <div class="personal-grid">
-    <article class="personal-project">
-      {site_preview('tidal-waive', False)}
-      <div class="personal-project-copy"><span class="mono">COMMUNITY</span><h3>TIDAL WAIVE</h3><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', 'コミュニティサイト')}</div>
-    </article>
-    <article class="personal-project">
-      {site_preview('prompton', False)}
-      <div class="personal-project-copy"><span class="mono">PERSONAL PROJECT</span><h3>prompton</h3>{link('https://prompton.site/', 'サイトを見る')}</div>
-    </article>
-    <article class="personal-project-paused"><h3>tideline</h3><span class="paused">現在保守停止中</span></article>
+<section class="personal-section wrap" aria-label="コミュニティ活動と個人開発">
+  <div class="activity-groups">
+    <section class="activity-group" aria-labelledby="community-activity-heading">
+      <div class="section-title"><h2 id="community-activity-heading">コミュニティ活動</h2></div>
+      <div class="personal-grid"><article class="personal-project">
+        {site_preview('tidal-waive', False)}
+        <div class="personal-project-copy"><h3>TIDAL WAIVE</h3><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', 'コミュニティサイト')}</div>
+      </article></div>
+    </section>
+    <section class="activity-group" aria-labelledby="personal-development-heading">
+      <div class="section-title"><h2 id="personal-development-heading">個人開発</h2></div>
+      <div class="personal-grid">
+        <article class="personal-project">
+          {site_preview('prompton', False)}
+          <div class="personal-project-copy"><h3>prompton <span class="project-beta">（現在β版）</span></h3>{link('https://prompton.site/', 'サイトを見る')}</div>
+        </article>
+        <article class="personal-project-paused"><h3>tideline</h3><span class="paused">現在保守停止中</span></article>
+      </div>
+    </section>
   </div>
 </section>'''
 
@@ -240,8 +249,10 @@ def partners():
         if not row.get('published', True):
             continue
         gallery = ''.join(partner_preview(site) for site in row['sites'])
-        body += f'<article class="partner-row"><div class="partner-gallery">{gallery}</div><div class="partner-description"><h2>{e(row["name"])}</h2><p>{e(row["summary"])}</p>{tags(row["tags"])}</div></article>'
-    return page_head('02', 'Partners', '長期でお世話になっている企業様', '') + f'<section class="partners-list wrap">{body}</section>'
+        article = f'<article class="partner-row"><div class="partner-gallery">{gallery}</div><div class="partner-description"><h2>{e(row["name"])}</h2><p>{e(row["summary"])}</p>{tags(row["tags"])}</div></article>'
+        body += f'<!-- Temporarily hidden partner: {e(row["id"])}\n{article}\n-->' if row['id'] in HIDDEN_PARTNER_IDS else article
+    hidden = e(json.dumps(sorted(HIDDEN_PARTNER_IDS)))
+    return page_head('02', 'Partners', '長期でお世話になっている企業様', '') + f'<section class="partners-list wrap" data-hidden-partners="{hidden}">{body}</section>'
 
 
 def events():
@@ -281,7 +292,7 @@ def main():
         if filename != 'contact.html':
             scripts.append(asset_url('assets/contact-corner.js'))
         if filename == 'index.html':
-            scripts.append(asset_url('assets/water.js'))
+            scripts.extend([asset_url('assets/water.js'), asset_url('assets/skill-logos.js')])
         if filename == 'works.html':
             scripts.append(asset_url('assets/work-history.js'))
         generated[filename.removesuffix('.html')] = {

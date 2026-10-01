@@ -43,7 +43,18 @@ def project_details(item):
 
 def render_work_history(data):
     projects = data['projects']
-    current_count = sum(item.get('current') is True for item in projects)
+    filter_counts = Counter(category for item in projects for category in project_categories(item))
+    filter_counts['all'] = len(projects)
+    filter_counts['current'] = sum(item.get('current') is True for item in projects)
+    filter_labels = [('all', 'All'), ('current', '現在進行中'), ('infrastructure', 'Infrastructure'), ('development', 'Development'), ('network', 'Network')]
+    filter_buttons = []
+    for key, label in filter_labels:
+        selected = key == 'all'
+        class_attribute = ' class="active"' if selected else ''
+        accessible_label = f'{label}、{filter_counts[key]}件' if selected else label
+        hidden = '' if selected else ' hidden'
+        filter_buttons.append(f'<button{class_attribute} type="button" data-filter="{key}" data-filter-label="{label}" aria-pressed="{str(selected).lower()}" aria-label="{accessible_label}">{label} <span data-filter-count aria-hidden="true"{hidden}>{filter_counts[key]:02d}</span></button>')
+    filters = ''.join(filter_buttons)
     grouped = defaultdict(list)
     tag_counts = Counter(tag for item in projects for tag in set(item['tags']))
     popular_tags = sorted(tag_counts, key=lambda tag: (-tag_counts[tag], tag.casefold()))[:8]
@@ -70,7 +81,7 @@ def render_work_history(data):
         years.append(f'''<section class="work-year" data-work-year="{e(year)}" aria-labelledby="year-{e(year)}"><header class="work-year-heading"><h2 id="year-{e(year)}">{e(year)}<span>年</span></h2><span class="work-year-count"><span data-year-count>{len(articles)}</span>件</span><span class="work-year-line" aria-hidden="true"></span></header><div class="year-projects">{''.join(articles)}</div></section>''')
 
     return f'''<section class="works-section wrap" data-work-history aria-label="実績一覧">
-<div class="works-toolbar" data-work-controls hidden><div class="work-filter-top"><div class="filters" role="group" aria-label="実績の絞り込み"><button class="active" type="button" data-filter="all" aria-pressed="true">All <span>{len(projects):02d}</span></button><button type="button" data-filter="current" aria-pressed="false">現在進行中 <span>{current_count:02d}</span></button><button type="button" data-filter="infrastructure" aria-pressed="false">Infrastructure</button><button type="button" data-filter="development" aria-pressed="false">Development</button><button type="button" data-filter="network" aria-pressed="false">Network</button></div><button class="work-clear" type="button" data-work-reset disabled>条件をクリア <span aria-hidden="true">↺</span></button></div>
+<div class="works-toolbar" data-work-controls hidden><div class="work-filter-top"><div class="filters" role="group" aria-label="実績の絞り込み">{filters}</div><button class="work-clear" type="button" data-work-reset disabled>条件をクリア <span aria-hidden="true">↺</span></button></div>
 <div class="work-search-row"><label for="work-tag-search">タグ検索</label><div class="work-search-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="work-tag-search" type="search" placeholder="AWS、Terraform、VPN…" aria-describedby="work-search-hint" autocomplete="off" spellcheck="false" maxlength="100"></div></div><p id="work-search-hint" class="work-search-hint">技術名・担当フェーズの一部で検索できます。タグを押すと検索欄に入ります。</p><div class="popular-tags"><span class="popular-tags-label">よく使うタグ</span><div class="work-tag-list" role="group" aria-label="よく使うタグ">{popular}</div></div></div>
 <div class="work-results-bar"><p class="filter-status" role="status" aria-live="polite" aria-atomic="true"><strong>{len(projects)}</strong> / {len(projects)} 件の実績</p><span class="work-sort-note">開始年の新しい順</span></div>
 <div class="timeline">{''.join(years)}</div><div class="work-empty" data-work-empty hidden><p>該当する実績がありません。</p><span>タグ名・カテゴリ・進行中の条件を変えてお試しください。</span><button type="button" class="work-empty-reset" data-work-reset>すべての実績を表示 <span aria-hidden="true">↗</span></button></div>

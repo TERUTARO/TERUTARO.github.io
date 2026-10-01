@@ -26,7 +26,7 @@
     const target = document.getElementById('skills');
     if (!target) return;
     const tabs = rows.map((r,i) => `<button id="tab-${esc(r.id)}" role="tab" aria-selected="${i===0}" aria-controls="panel-${esc(r.id)}" tabindex="${i===0?0:-1}">${icons[r.icon] || icons.cloud}<span>${esc(r.label)}</span></button>`).join('');
-    const panels = rows.map((r,i) => `<div class="skill-panel" id="panel-${esc(r.id)}" role="tabpanel" aria-labelledby="tab-${esc(r.id)}" tabindex="0" ${i?'hidden':''}><div class="skill-intro"><span class="skill-symbol">${icons[r.icon] || icons.cloud}</span><h3>${esc(r.heading)}</h3></div><div class="skill-details">${arr(r.groups).map(g => `<div class="skill-row"><h4>${esc(g.name)}</h4>${tags(g.items)}</div>`).join('')}</div></div>`).join('');
+    const panels = rows.map((r,i) => `<div class="skill-panel" id="panel-${esc(r.id)}" role="tabpanel" aria-labelledby="tab-${esc(r.id)}" tabindex="0" ${i?'hidden':''}><div class="skill-intro"><span class="skill-symbol">${icons[r.icon] || icons.cloud}</span></div><div class="skill-details">${arr(r.groups).map(g => `<div class="skill-row"><h4>${esc(g.name)}</h4>${tags(g.items)}</div>`).join('')}</div></div>`).join('');
     target.innerHTML = `<div class="section-title"><h2>スキル</h2></div>${rows.length ? `<div class="skill-tabs" role="tablist" aria-label="スキルの分類">${tabs}</div>${panels}` : '<p>現在掲載しているスキルはありません。</p>'}`;
   }
   function projectCategories(p) {
@@ -47,7 +47,11 @@
     const years = [...grouped.keys()].sort((a,b)=>Number(b)-Number(a)).map(year=>`<section class="work-year" data-work-year="${esc(year)}" aria-labelledby="year-${esc(year)}"><header class="work-year-heading"><h2 id="year-${esc(year)}">${esc(year)}<span>年</span></h2><span class="work-year-count"><span data-year-count>${grouped.get(year).length}</span>件</span><span class="work-year-line" aria-hidden="true"></span></header><div class="year-projects">${grouped.get(year).map(projectArticle).join('')}</div></section>`).join('');
     const counts = new Map();rows.forEach(p=>uniq(arr(p.tags)).forEach(t=>counts.set(t,(counts.get(t)||0)+1)));
     const popular=[...counts.keys()].sort((a,b)=>counts.get(b)-counts.get(a)||a.localeCompare(b)).slice(0,8).map(tagButton).join('');
-    const filters=[['all',`All <span>${rows.length}</span>`],['current',`現在進行中 <span>${rows.filter(p=>p.current).length}</span>`],['infrastructure','Infrastructure'],['development','Development'],['network','Network']].map(([id,label])=>`<button type="button" data-filter="${id}" aria-pressed="${id==='all'}" ${id==='all'?'class="active"':''}>${label}</button>`).join('');
+    const filters=[['all','All'],['current','現在進行中'],['infrastructure','Infrastructure'],['development','Development'],['network','Network']].map(([id,label])=>{
+      const count=rows.filter(p=>id==='all'||(id==='current'?p.current===true:projectCategories(p).includes(id))).length;
+      const active=id==='all';
+      return `<button type="button" data-filter="${id}" data-filter-label="${label}" aria-pressed="${active}" aria-label="${label}${active?`、${count}件`:''}" ${active?'class="active"':''}>${label} <span data-filter-count aria-hidden="true" ${active?'':'hidden'}>${String(count).padStart(2,'0')}</span></button>`;
+    }).join('');
     target.outerHTML=`<section class="works-section wrap" data-work-history aria-label="実績一覧"><div class="works-toolbar" data-work-controls hidden><div class="work-filter-top"><div class="filters" role="group" aria-label="実績の絞り込み">${filters}</div><button class="work-clear" type="button" data-work-reset disabled>条件をクリア <span aria-hidden="true">↺</span></button></div><div class="work-search-row"><label for="work-tag-search">タグ検索</label><div class="work-search-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="work-tag-search" type="search" placeholder="AWS、Terraform、VPN…" aria-describedby="work-search-hint" autocomplete="off" spellcheck="false" maxlength="100"></div></div><p id="work-search-hint" class="work-search-hint">技術名・担当フェーズの一部で検索できます。タグを押すと検索欄に入ります。</p><div class="popular-tags"><span class="popular-tags-label">よく使うタグ</span><div class="work-tag-list" role="group" aria-label="よく使うタグ">${popular}</div></div></div><div class="work-results-bar"><p class="filter-status" role="status" aria-live="polite" aria-atomic="true"><strong>${rows.length}</strong> / ${rows.length} 件の実績</p><span class="work-sort-note">開始年の新しい順</span></div><div class="timeline">${years}</div><div class="work-empty" data-work-empty hidden><p>該当する実績がありません。</p><span>タグ名・カテゴリ・進行中の条件を変えてお試しください。</span><button type="button" class="work-empty-reset" data-work-reset>すべての実績を表示 <span aria-hidden="true">↗</span></button></div></section>`;
   }
   let featuredController;
@@ -99,7 +103,10 @@
   }
   function renderPartners(rows) {
     const target=document.querySelector('.partners-list');
-    if(target)target.innerHTML=rows.map(p=>`<article class="partner-row"><div class="partner-gallery">${arr(p.sites).map(preview).join('')}</div><div class="partner-description"><h2>${esc(p.name)}</h2><p>${esc(p.summary)}</p>${tags(p.tags)}</div></article>`).join('') || '<p>現在掲載しているパートナーはありません。</p>';
+    if(target){
+      const hidden=new Set(JSON.parse(target.dataset.hiddenPartners||'[]'));
+      target.innerHTML=rows.filter(p=>!hidden.has(p.id)).map(p=>`<article class="partner-row"><div class="partner-gallery">${arr(p.sites).map(preview).join('')}</div><div class="partner-description"><h2>${esc(p.name)}</h2><p>${esc(p.summary)}</p>${tags(p.tags)}</div></article>`).join('') || '<p>現在掲載しているパートナーはありません。</p>';
+    }
     const home=document.querySelector('.company-previews');if(home)home.innerHTML=rows.flatMap(p=>arr(p.sites).slice(0,1)).map(preview).join('');
   }
   function price(item,hourly=false) {

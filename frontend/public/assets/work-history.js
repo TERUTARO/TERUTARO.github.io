@@ -23,12 +23,17 @@
 
   function update() {
     const query = normalize(input.value);
+    const filterCounts = Object.fromEntries(filters.map(button => [button.dataset.filter, 0]));
     let count = 0;
     projects.forEach(project => {
-      const matchesFilter = category === 'all' || (category === 'current'
-        ? project.dataset.current === 'true'
-        : projectCategories.get(project).includes(category));
       const matchesTag = !query || projectTags.get(project).some(tag => tag.includes(query));
+      const matchesCategory = filter => filter === 'all' || (filter === 'current'
+        ? project.dataset.current === 'true'
+        : projectCategories.get(project).includes(filter));
+      const matchesFilter = matchesCategory(category);
+      if (matchesTag) filters.forEach(button => {
+        if (matchesCategory(button.dataset.filter)) filterCounts[button.dataset.filter]++;
+      });
       project.hidden = !(matchesFilter && matchesTag);
       if (!project.hidden) count++;
     });
@@ -39,8 +44,13 @@
     });
     filters.forEach(button => {
       const active = button.dataset.filter === category;
+      const count = filterCounts[button.dataset.filter];
+      const number = button.querySelector('[data-filter-count]');
+      number.textContent = String(count).padStart(2, '0');
+      number.hidden = !active;
       button.classList.toggle('active', active);
       button.setAttribute('aria-pressed', String(active));
+      button.setAttribute('aria-label', `${button.dataset.filterLabel}${active ? `、${count}件` : ''}`);
     });
     tagButtons.forEach(button => button.setAttribute('aria-pressed', String(Boolean(query) && normalize(button.dataset.workTag) === query)));
     resetButtons.forEach(button => { button.disabled = category === 'all' && !input.value; });

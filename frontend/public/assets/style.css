@@ -7,6 +7,7 @@
   --line: #d4d7cc;
   --accent: #486da3;
   --green: #35483b;
+  --panel: #e9ebe2;
   --serif: Georgia, 'Times New Roman', serif;
   --sans: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
   --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
@@ -101,8 +102,7 @@ h1, h2, h3, h4, p { margin: 0; }
 .skill-tabs > button[aria-selected='true'] { background: var(--green); color: var(--paper); }
 
 .skill-tabs > button:not([aria-selected='true']):hover { background: #e6e9de; }
-.tab-arrow { margin-left: auto; }
-.skill-panel { padding: 38px 30px; background: #e9ebe2; display: grid; grid-template-columns: 32% 1fr; gap: 55px; min-height: 335px; }
+.skill-panel { padding: 38px 30px; background: var(--panel); display: grid; grid-template-columns: 32% 1fr; gap: 55px; min-height: 335px; }
 
 .skill-intro h3 { margin-top: 22px; font-size: 18px; font-weight: 500; letter-spacing: -.025em; }
 .skill-intro > p { margin-top: 15px; max-width: 255px; font-size: 11px; line-height: 2; color: var(--muted); }
@@ -451,7 +451,7 @@ body.menu-open { overflow: hidden; }
 
 /* Skill symbols replace the numbered indexes. */
 .skill-icon { width: 21px; height: 21px; flex: 0 0 auto; }
-.skill-tabs > button > span:not(.tab-arrow) { line-height: 1.6; }
+.skill-tabs > button > span { line-height: 1.6; }
 .skill-symbol { width: 64px; height: 64px; display: grid; place-items: center; color: var(--green); border: 1px solid #c9d2c3; border-radius: 16px; }
 .skill-symbol .skill-icon { width: 32px; height: 32px; }
 .contact-action { width: 112px; height: 112px; flex: 0 0 auto; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--paper); background: var(--accent); font-size: 14px; letter-spacing: .08em; transition: background .2s, transform .2s; }
@@ -466,7 +466,6 @@ body.menu-open { overflow: hidden; }
 @media (max-width: 580px) {
   .skill-tabs > button { font-size: 10px; gap: 9px; padding: 16px 10px; }
   .skill-tabs .skill-icon { width: 18px; height: 18px; }
-  .skill-tabs .tab-arrow { display: none; }
   .skill-intro { grid-template-columns: 46px 1fr; gap: 15px; }
   .skill-symbol { width: 46px; height: 46px; border-radius: 12px; }
   .skill-symbol .skill-icon { width: 26px; height: 26px; }
@@ -540,83 +539,3 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 #contact-send-error { color: #95493e; }
 .submit-button:disabled { cursor: wait; opacity: .6; }
 .skill-tabs { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
-
-/* The contact link unfolds from the lower right corner of the page. */
-.contact-corner {
-  --corner-size: 232px;
-  --corner-fold: 116px;
-  position: fixed;
-  z-index: 25;
-  right: 0;
-  bottom: 0;
-  width: var(--corner-size);
-  height: var(--corner-size);
-  pointer-events: none;
-  filter: drop-shadow(-4px -3px 8px rgb(44 52 46 / .12));
-}
-.contact-corner-surface {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  pointer-events: auto;
-  background: #dce6d9;
-  color: var(--green);
-  clip-path: polygon(100% calc(100% - var(--corner-fold)), 100% 100%, calc(100% - var(--corner-fold)) 100%, calc(100% - var(--corner-fold)) 100%);
-  transition: clip-path .48s cubic-bezier(.22, 1, .36, 1);
-}
-.contact-corner-surface::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: var(--corner-fold);
-  height: var(--corner-fold);
-  pointer-events: none;
-  background: linear-gradient(135deg, transparent calc(50% - 1px), var(--paper) calc(50% - 1px), var(--paper) calc(50% + 1px), transparent calc(50% + 1px));
-  transition: opacity .2s;
-}
-.contact-corner.is-open .contact-corner-surface { clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 0); }
-.contact-corner.is-open .contact-corner-surface::after { opacity: 0; }
-.contact-corner-toggle, .contact-corner-fallback {
-  position: absolute;
-  z-index: 2;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  width: 100%;
-  height: 100%;
-  padding: 0 max(20px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) 0;
-  border: 0;
-  background: none;
-  color: inherit;
-  outline-offset: -5px;
-}
-.contact-corner-icon { width: 36px; height: 36px; fill: currentColor; stroke: var(--paper); stroke-width: 1.5; }
-.contact-corner.is-open .contact-corner-toggle { width: 64px; height: 64px; }
-.contact-corner.is-open .contact-corner-icon { display: none; }
-.contact-corner-close { position: relative; display: none; width: 24px; height: 24px; }
-.contact-corner-close::before, .contact-corner-close::after { content: ''; position: absolute; top: 11px; left: 2px; width: 20px; height: 1px; background: currentColor; transform: rotate(45deg); }
-.contact-corner-close::after { transform: rotate(-45deg); }
-.contact-corner.is-open .contact-corner-close { display: block; }
-.contact-corner-panel { position: absolute; inset: 0; padding: 30px 26px 78px; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; opacity: 0; visibility: hidden; transform: translate(15px, 15px); transition: opacity .2s, transform .35s, visibility .2s; }
-.contact-corner-panel > .mono { font-size: 10px; letter-spacing: .15em; }
-.contact-corner.is-open .contact-corner-panel { opacity: 1; visibility: visible; transform: none; transition-delay: .12s; }
-.contact-corner-link { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 15px; border-bottom: 1px solid rgb(53 72 59 / .35); font-size: 18px; white-space: nowrap; }
-.contact-corner-link .arrow { width: 20px; height: 20px; transition: transform .2s; }
-.contact-corner-link:hover .arrow { transform: translateX(3px); }
-.contact-corner:focus-within { filter: drop-shadow(-3px -3px 5px rgb(72 109 163 / .35)); }
-.menu-open .contact-corner { visibility: hidden; }
-.site-footer:has(+ .contact-corner) { padding-bottom: 90px; }
-@media (max-width: 580px) {
-  .contact-corner { --corner-size: 208px; --corner-fold: 92px; }
-  .contact-corner-icon { width: 30px; height: 30px; }
-  .contact-corner-toggle, .contact-corner-fallback { padding-right: max(15px, env(safe-area-inset-right)); padding-bottom: max(15px, env(safe-area-inset-bottom)); }
-  .contact-corner-panel { padding: 24px 22px 68px; }
-  .contact-corner-link { font-size: 16px; }
-  .site-footer:has(+ .contact-corner) { padding-bottom: 75px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .contact-corner-surface, .contact-corner-panel, .contact-corner-surface::after, .contact-corner-link .arrow { transition: none; }
-}

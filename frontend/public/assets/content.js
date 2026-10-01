@@ -25,7 +25,7 @@
   function renderSkills(rows) {
     const target = document.getElementById('skills');
     if (!target) return;
-    const tabs = rows.map((r,i) => `<button id="tab-${esc(r.id)}" role="tab" aria-selected="${i===0}" aria-controls="panel-${esc(r.id)}" tabindex="${i===0?0:-1}">${icons[r.icon] || icons.cloud}<span>${esc(r.label)}</span><span class="tab-arrow">↗</span></button>`).join('');
+    const tabs = rows.map((r,i) => `<button id="tab-${esc(r.id)}" role="tab" aria-selected="${i===0}" aria-controls="panel-${esc(r.id)}" tabindex="${i===0?0:-1}">${icons[r.icon] || icons.cloud}<span>${esc(r.label)}</span></button>`).join('');
     const panels = rows.map((r,i) => `<div class="skill-panel" id="panel-${esc(r.id)}" role="tabpanel" aria-labelledby="tab-${esc(r.id)}" tabindex="0" ${i?'hidden':''}><div class="skill-intro"><span class="skill-symbol">${icons[r.icon] || icons.cloud}</span><h3>${esc(r.heading)}</h3></div><div class="skill-details">${arr(r.groups).map(g => `<div class="skill-row"><h4>${esc(g.name)}</h4>${tags(g.items)}</div>`).join('')}</div></div>`).join('');
     target.innerHTML = `<div class="section-title"><h2>スキル</h2></div>${rows.length ? `<div class="skill-tabs" role="tablist" aria-label="スキルの分類">${tabs}</div>${panels}` : '<p>現在掲載しているスキルはありません。</p>'}`;
   }
@@ -50,10 +50,52 @@
     const filters=[['all',`All <span>${rows.length}</span>`],['current',`現在進行中 <span>${rows.filter(p=>p.current).length}</span>`],['infrastructure','Infrastructure'],['development','Development'],['network','Network']].map(([id,label])=>`<button type="button" data-filter="${id}" aria-pressed="${id==='all'}" ${id==='all'?'class="active"':''}>${label}</button>`).join('');
     target.outerHTML=`<section class="works-section wrap" data-work-history aria-label="実績一覧"><div class="works-toolbar" data-work-controls hidden><div class="work-filter-top"><div class="filters" role="group" aria-label="実績の絞り込み">${filters}</div><button class="work-clear" type="button" data-work-reset disabled>条件をクリア <span aria-hidden="true">↺</span></button></div><div class="work-search-row"><label for="work-tag-search">タグ検索</label><div class="work-search-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="work-tag-search" type="search" placeholder="AWS、Terraform、VPN…" aria-describedby="work-search-hint" autocomplete="off" spellcheck="false" maxlength="100"></div></div><p id="work-search-hint" class="work-search-hint">技術名・担当フェーズの一部で検索できます。タグを押すと検索欄に入ります。</p><div class="popular-tags"><span class="popular-tags-label">よく使うタグ</span><div class="work-tag-list" role="group" aria-label="よく使うタグ">${popular}</div></div></div><div class="work-results-bar"><p class="filter-status" role="status" aria-live="polite" aria-atomic="true"><strong>${rows.length}</strong> / ${rows.length} 件の実績</p><span class="work-sort-note">開始年の新しい順</span></div><div class="timeline">${years}</div><div class="work-empty" data-work-empty hidden><p>該当する実績がありません。</p><span>タグ名・カテゴリ・進行中の条件を変えてお試しください。</span><button type="button" class="work-empty-reset" data-work-reset>すべての実績を表示 <span aria-hidden="true">↗</span></button></div></section>`;
   }
+  let featuredController;
+  function initFeatured() {
+    featuredController?.abort();
+    const section=document.querySelector('[data-featured-works]');if(!section)return;
+    const track=section.querySelector('.featured-track'),controls=section.querySelector('[data-featured-controls]');
+    if(!track || !controls)return;
+    const cards=[...track.querySelectorAll('.featured-case')],prev=controls.querySelector('[data-featured-prev]'),next=controls.querySelector('[data-featured-next]');
+    featuredController=new AbortController();
+    const {signal}=featuredController;
+    let active=0,frame=0;
+    controls.hidden=cards.length<2;
+    track.tabIndex=cards.length>1?0:-1;
+    track.scrollLeft=0;
+    controls.querySelector('[data-featured-total]').textContent=String(cards.length).padStart(2,'0');
+    const position=index=>Math.min(cards[index].offsetLeft-cards[0].offsetLeft,Math.max(0,track.scrollWidth-track.clientWidth));
+    const update=()=>{
+      frame=0;if(!cards.length)return;
+      active=cards.reduce((best,_,i)=>Math.abs(track.scrollLeft-position(i))<Math.abs(track.scrollLeft-position(best))?i:best,0);
+      prev.disabled=active===0;next.disabled=active===cards.length-1;
+      const count=String(active+1).padStart(2,'0'),label=controls.querySelector('[data-featured-current]');
+      if(label.textContent!==count)label.textContent=count;
+      cards.forEach((card,i)=>card.classList.toggle('is-selected',i===active));
+    };
+    const schedule=()=>{if(!frame)frame=requestAnimationFrame(update);};
+    const move=index=>{
+      if(!cards.length)return;
+      track.scrollTo({left:position(Math.max(0,Math.min(index,cards.length-1))),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+    };
+    prev.addEventListener('click',()=>move(active-1),{signal});
+    next.addEventListener('click',()=>move(active+1),{signal});
+    track.addEventListener('scroll',schedule,{passive:true,signal});
+    track.addEventListener('keydown',event=>{
+      if(event.target!==track || !['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+      event.preventDefault();
+      move(event.key==='Home'?0:event.key==='End'?cards.length-1:active+(event.key==='ArrowRight'?1:-1));
+    },{signal});
+    const resize=new ResizeObserver(schedule);resize.observe(track);
+    signal.addEventListener('abort',()=>{resize.disconnect();cancelAnimationFrame(frame);},{once:true});
+    update();
+  }
   function renderFeatured(rows) {
     const target=document.querySelector('.selected-grid');if(!target)return;
-    let selected=rows.filter(p=>p.current);if(!selected.length)selected=rows;selected=selected.slice(0,2);
-    target.innerHTML=selected.map((p,i)=>`<a class="project-feature" href="works.html#project-${esc(p.id)}"><div class="project-card-top"><span class="project-number">${String(i+1).padStart(2,'0')}</span><span class="project-category">${esc(p.category.toUpperCase())}</span>${p.current?'<span class="project-active"><i></i>進行中</span>':''}</div><div class="project-card-body"><p class="project-client">${esc(p.partner||p.client)}</p><h3>${esc(p.title)}</h3></div><div class="project-card-bottom"><span class="mono">${esc(p.period)}</span><span class="project-card-action">実績を見る ${rightArrow}</span></div></a>`).join('') || '<p>現在掲載している実績はありません。</p>';
+    const published=rows.filter(p=>p.published!==false);
+    let selected=published.filter(p=>p.current);if(!selected.length)selected=published;selected=selected.slice(0,2);
+    target.innerHTML=selected.map((p,i)=>`<a class="project-feature featured-case${i===0?' is-selected':''}" href="works.html#project-${esc(p.id)}"><div class="featured-case-meta"><span class="mono">${esc(p.period)}</span>${p.current?'<span class="project-active"><i></i>進行中</span>':''}</div><div class="featured-case-body"><p class="project-client">${esc(p.partner||p.client)}</p><h3>${esc(p.title)}</h3><p class="featured-case-summary">${esc(p.summary)}</p></div><div class="featured-case-bottom"><span class="project-category">${esc(String(p.category??'').toUpperCase())}</span><span class="featured-case-action"><span>詳細を見る</span>${rightArrow}</span></div></a>`).join('') || '<p class="featured-empty">現在掲載している実績はありません。</p>';
+    initFeatured();
   }
   function renderPartners(rows) {
     const target=document.querySelector('.partners-list');
@@ -109,5 +151,6 @@
       document.documentElement.dataset.contentSource='snapshot';
     }
   }
+  initFeatured();
   window.portfolioContentReady=loadContent();
 })();

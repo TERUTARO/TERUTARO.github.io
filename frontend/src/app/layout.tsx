@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "../../public/assets/style.css";
+import "../../public/assets/contact-corner.css";
+import "../../public/assets/sidebar-rail.css";
+import "../../public/assets/featured-works.css";
 import "../../public/assets/water.css";
 import "../../public/assets/work-history.css";
 import "../../public/assets/menu.css";

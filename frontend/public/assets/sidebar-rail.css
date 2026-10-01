@@ -1,0 +1,54 @@
+/* The current page bends the desktop rail's edge into a shallow half-circle. */
+@media (min-width: 1001px) {
+  .rail-nav {
+    /* Reserve space inside the scrollport for the curve, including short screens. */
+    width: 115px;
+    padding-right: 30px;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    pointer-events: none;
+  }
+
+  .rail-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rail-nav > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 85px;
+    padding: 8px 16px;
+    isolation: isolate;
+    pointer-events: auto;
+  }
+
+  .rail-nav > a[aria-current] {
+    font-weight: 500;
+  }
+
+  .rail-nav > a[aria-current]::after {
+    content: '';
+    z-index: -1;
+    top: -12px;
+    right: auto;
+    bottom: -12px;
+    left: 84px;
+    width: 22px;
+    height: auto;
+    border: 1px solid var(--line);
+    border-left: 0;
+    border-radius: 0 100% 100% 0 / 0 50% 50% 0;
+    background: var(--paper);
+    pointer-events: none;
+  }
+}
+
+@media (min-width: 1001px) and (max-height: 650px) {
+  .rail-nav {
+    /* Keep the top and bottom of the selected curve within the scrollable area. */
+    padding-top: 12px;
+    padding-bottom: 12px;
+    scroll-padding-block: 12px;
+  }
+}

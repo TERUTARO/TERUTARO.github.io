@@ -8,6 +8,7 @@ import math
 import hashlib
 from work_history import render_work_history
 from pricing import contact_tabs, render_pricing
+from featured_works import render_featured_works
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / 'public'
@@ -73,12 +74,13 @@ def shell(filename, body):
 <dialog id="site-menu" class="menu-panel" aria-label="メニュー"><div class="menu-panel-top"><a class="brand" href="index.html">terutaro</a><button class="menu-close" type="button" aria-label="メニューを閉じる" autofocus><span aria-hidden="true"></span></button></div><div class="menu-panel-body"><div class="menu-profile"><span class="profile-avatar"><img src="assets/portrait.png" alt="{e(PROFILE["name"])}のプロフィール写真" width="1254" height="1254" decoding="async"></span><p>{e(PROFILE["name"])}<span>terutaro</span></p>{social_links()}</div><nav id="main-nav" class="menu-links" aria-label="ページ一覧">{nav}</nav></div></dialog>
 <noscript><nav class="fallback-nav wrap" aria-label="ページ一覧">{rail}</nav></noscript>
 <main id="main">{body}</main>
-<footer class="site-footer wrap"><div class="footer-top"><a class="brand" href="index.html"><span>terutaro</span></a>{social_links()}<a class="back-top" href="#" aria-label="ページの先頭へ">Back to top <span>↑</span></a></div><div class="footer-bottom"><span>© <span data-year>2026</span> terutaro</span><span>Independent engineer · Okinawa / Kanto, Japan</span></div></footer>{contact_corner() if filename != "contact.html" else ""}'''
+<footer class="site-footer wrap"><div class="footer-top"><a class="brand" href="index.html"><span>terutaro</span></a><a class="back-top" href="#" aria-label="ページの先頭へ">Back to top <span>↑</span></a></div><div class="footer-bottom"><span>© <span data-year>2026</span> terutaro</span><span>Independent engineer · Okinawa / Kanto, Japan</span></div></footer>{contact_corner() if filename != "contact.html" else ""}'''
 
 def contact_corner():
-    icon = '<svg class="contact-corner-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M39 9C31 1 15 8 9 18S5 36 14 37c4 0 6-1 8-2l4 8 2-12C39 25 45 15 39 9Z"/></svg>'
+    icon = '<svg class="contact-corner-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="m3.5 6 8.5 7 8.5-7"/></svg>'
     return f'''<aside class="contact-corner" aria-label="お問い合わせ">
   <div class="contact-corner-surface">
+    <span class="contact-corner-paper" aria-hidden="true"><span class="contact-corner-base"></span><span class="contact-corner-flap"></span></span>
     <a class="contact-corner-fallback" href="contact.html#contact-form" aria-label="お問い合わせフォームへ">{icon}</a>
     <button class="contact-corner-toggle" type="button" aria-label="お問い合わせを開く" aria-expanded="false" aria-controls="contact-corner-panel" hidden>{icon}<span class="contact-corner-close" aria-hidden="true"></span></button>
     <div class="contact-corner-panel" id="contact-corner-panel" inert aria-hidden="true">
@@ -150,7 +152,7 @@ def site_preview(key, show_title=True):
 
 def skills():
     rows = sorted((r for r in SKILL_DATA if r.get('published', True)), key=lambda r: r.get('order', 0))
-    tabs = ''.join(f'<button id="tab-{e(row["id"])}" role="tab" aria-selected="{str(i == 0).lower()}" aria-controls="panel-{e(row["id"])}" tabindex="{0 if i == 0 else -1}">{skill_icon(row["icon"])}<span>{e(row["label"])}</span><span class="tab-arrow">↗</span></button>' for i, row in enumerate(rows))
+    tabs = ''.join(f'<button id="tab-{e(row["id"])}" role="tab" aria-selected="{str(i == 0).lower()}" aria-controls="panel-{e(row["id"])}" tabindex="{0 if i == 0 else -1}">{skill_icon(row["icon"])}<span>{e(row["label"])}</span></button>' for i, row in enumerate(rows))
     panels = ''
     for i, row in enumerate(rows):
         groups = ''.join(f'<div class="skill-row"><h4>{e(group["name"])}</h4>{tags(group["items"])}</div>' for group in row['groups'])
@@ -200,17 +202,14 @@ def home(data):
 <section class="hero wrap water-surface" data-water-surface><div data-water-content>
   <div class="hero-topline"><span class="eyebrow">FREELANCE ENGINEER</span><span class="location"><span class="small-dot"></span> OKINAWA / KANTO, JAPAN <span class="mono" data-clock></span></span></div>
   <div class="hero-grid">
-    <div class="hero-copy"><h1>terutaro</h1><div class="hero-name"><span class="portrait-note"><button type="button" class="portrait-trigger" aria-label="{e(PROFILE["name"])}のプロフィール写真" aria-describedby="portrait-tooltip"><span class="profile-avatar"><img src="assets/portrait.png" alt="" width="1254" height="1254" fetchpriority="high"></span></button><span class="portrait-tooltip" id="portrait-tooltip" role="tooltip">今はアフロだよ</span></span><span>{e(PROFILE["name"])}</span></div><p>沖縄・関東を拠点に活動するフリーランスエンジニア。<br>インフラ構築・運用保守、Web開発、AI基盤などできます</p><p class="hero-strength">インフラが得意</p><a class="pill-link" href="works.html">実績を見る {arrow('right')}</a></div>
+    <div class="hero-copy"><h1>terutaro</h1><div class="hero-name"><span class="portrait-note"><button type="button" class="portrait-trigger" aria-label="{e(PROFILE["name"])}のプロフィール写真" aria-describedby="portrait-tooltip"><span class="profile-avatar"><img src="assets/portrait.png" alt="" width="1254" height="1254" fetchpriority="high"></span></button><span class="portrait-tooltip" id="portrait-tooltip" role="tooltip">今はアフロだよ</span></span><span>{e(PROFILE["name"])}</span></div><p>沖縄・関東を拠点に活動するフリーランスエンジニア。<br>インフラ構築・運用保守、Web開発、AI基盤などできます</p><p class="hero-strength">インフラが得意</p></div>
     <div class="hero-art" aria-hidden="true"><span class="art-corner top-left">+</span><span class="art-corner top-right">+</span><div class="art-orbit"></div><img src="assets/continuity.svg" alt="" width="600" height="570" fetchpriority="high"><span class="art-corner bottom-left">+</span><span class="art-corner bottom-right">+</span></div>
   </div>
   <div class="hero-bottom"><a href="#about">プロフィール <span>↓</span></a></div>
 </div></section>
 <section class="about-section wrap" id="about"><div class="about-grid"><div class="about-title"><h2>プロフィール</h2><div class="profile-name">{e(PROFILE["name"])} <span>terutaro</span></div>{social_links()}</div>{profile_resource()}</div></section>
 {skills()}
-<section class="selected-section wrap"><div class="section-title"><h2>実績</h2><a class="text-link" href="works.html">すべての実績 {arrow()}</a></div><div class="selected-grid">
-<a class="project-feature" href="works.html#project-affiliate-platform-operations"><div class="project-card-top"><span class="project-number">01</span><span class="project-category">INFRASTRUCTURE</span><span class="project-active"><i></i>進行中</span></div><div class="project-card-body"><p class="project-client">B社 D</p><h3>大手アフィリエイトサイト<br>基盤運用保守</h3></div><div class="project-card-bottom"><span class="mono">2025.09 — 現在</span><span class="project-card-action">実績を見る {arrow('right')}</span></div></a>
-<a class="project-feature" href="works.html#project-internal-ai-platform-operations"><div class="project-card-top"><span class="project-number">02</span><span class="project-category">AI PLATFORM</span><span class="project-active"><i></i>進行中</span></div><div class="project-card-body"><p class="project-client">E社 K</p><h3>大手商品価格比較サイト<br>社内AI基盤運用保守</h3></div><div class="project-card-bottom"><span class="mono">2025.09 — 現在</span><span class="project-card-action">実績を見る {arrow('right')}</span></div></a>
-</div></section>
+{render_featured_works(data['projects'])}
 <section class="partner-showcase wrap"><div class="section-title"><h2>長期でお世話になっている企業様</h2><a class="text-link" href="partners.html">お取引について {arrow()}</a></div><div class="company-previews">{company_previews}</div></section>
 <section class="community-showcase wrap"><div class="section-title"><h2>イベント</h2><a class="text-link" href="events.html">イベント一覧 {arrow()}</a></div><div class="community-preview-grid">{site_preview('tidal-waive', False)}<div class="community-details"><h3>TIDAL WAIVE</h3><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', '公式サイト')}</div></div></section>
 '''

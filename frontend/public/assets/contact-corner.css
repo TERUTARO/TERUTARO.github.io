@@ -52,7 +52,7 @@
 .contact-corner-close::after { transform: rotate(-45deg); }
 .contact-corner.is-open .contact-corner-close { display: block; }
 .contact-corner-panel { position: absolute; z-index: 1; inset: 0; padding: 18px 12px 52px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; opacity: 0; visibility: hidden; transition: opacity .15s; }
-.contact-corner-panel > .mono { font-size: 9px; letter-spacing: .15em; }
+.contact-corner-panel > .mono { font-size: 10px; letter-spacing: .15em; }
 .contact-corner.is-open .contact-corner-panel { opacity: 1; visibility: visible; transition-delay: .4s; }
 .contact-corner.is-open:has(:focus-visible) .contact-corner-panel { transition-delay: 0s; }
 .contact-corner-link { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; padding-block: 10px; border-bottom: 1px solid var(--line); font-size: 13px; white-space: nowrap; }

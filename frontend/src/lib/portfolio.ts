@@ -2,6 +2,10 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Metadata } from "next";
 
+export const SITE_URL = "https://terutaro.github.io";
+export const SITE_NAME = "terutaro";
+export const OG_IMAGE = { url: "/assets/og-image.png", width: 1200, height: 630, alt: "terutaro" };
+
 export const portfolioPageNames = [
   "index",
   "works",
@@ -51,8 +55,27 @@ export function getPortfolioPage(name: PortfolioPageName): PortfolioPageContent 
 
 export function getPortfolioMetadata(name: PortfolioPageName): Metadata {
   const page = getPortfolioPage(name);
+  const title = `${page.title} — ${SITE_NAME}`;
+  const path = name === "index" ? "/" : `/${name}.html`;
+  // openGraph / twitter are not deep-merged with the layout, so each page sets the full object.
   return {
-    title: { absolute: `${page.title} — terutaro` },
+    title: { absolute: title },
     description: page.description,
+    alternates: { canonical: path },
+    openGraph: {
+      type: "website",
+      siteName: SITE_NAME,
+      locale: "ja_JP",
+      url: path,
+      title,
+      description: page.description,
+      images: [OG_IMAGE],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: page.description,
+      images: [OG_IMAGE.url],
+    },
   };
 }

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/portfolio";
 import "../../public/assets/style.css";
 import "../../public/assets/contact-corner.css";
 import "../../public/assets/sidebar-rail.css";
@@ -12,12 +13,23 @@ import "../../public/assets/pricing.css";
 import "../../public/assets/admin.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "terutaro",
-    template: "%s — terutaro",
+    default: SITE_NAME,
+    template: `%s — ${SITE_NAME}`,
   },
   robots: { index: false, follow: false },
-  icons: { icon: "data:," },
+  icons: {
+    icon: [{ url: "/assets/icon.png", type: "image/png", sizes: "64x64" }],
+    apple: [{ url: "/assets/apple-touch-icon.png", sizes: "180x180" }],
+  },
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    locale: "ja_JP",
+    images: [OG_IMAGE],
+  },
+  twitter: { card: "summary_large_image", images: [OG_IMAGE.url] },
 };
 
 export const viewport: Viewport = {

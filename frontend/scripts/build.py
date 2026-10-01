@@ -73,10 +73,20 @@ def shell(filename, body):
 <dialog id="site-menu" class="menu-panel" aria-label="メニュー"><div class="menu-panel-top"><a class="brand" href="index.html">terutaro</a><button class="menu-close" type="button" aria-label="メニューを閉じる" autofocus><span aria-hidden="true"></span></button></div><div class="menu-panel-body"><div class="menu-profile"><span class="profile-avatar"><img src="assets/portrait.png" alt="{e(PROFILE["name"])}のプロフィール写真" width="1254" height="1254" decoding="async"></span><p>{e(PROFILE["name"])}<span>terutaro</span></p>{social_links()}</div><nav id="main-nav" class="menu-links" aria-label="ページ一覧">{nav}</nav></div></dialog>
 <noscript><nav class="fallback-nav wrap" aria-label="ページ一覧">{rail}</nav></noscript>
 <main id="main">{body}</main>
-<footer class="site-footer wrap"><div class="footer-top"><a class="brand" href="index.html"><span>terutaro</span></a>{social_links()}<a class="back-top" href="#" aria-label="ページの先頭へ">Back to top <span>↑</span></a></div><div class="footer-bottom"><span>© <span data-year>2026</span> terutaro</span><span>Independent engineer · Okinawa / Kanto, Japan</span></div></footer>'''
+<footer class="site-footer wrap"><div class="footer-top"><a class="brand" href="index.html"><span>terutaro</span></a>{social_links()}<a class="back-top" href="#" aria-label="ページの先頭へ">Back to top <span>↑</span></a></div><div class="footer-bottom"><span>© <span data-year>2026</span> terutaro</span><span>Independent engineer · Okinawa / Kanto, Japan</span></div></footer>{contact_corner() if filename != "contact.html" else ""}'''
 
-def contact_banner():
-    return f'''<section class="contact-banner wrap"><h2>お問い合わせ</h2><a href="contact.html#contact-form" class="contact-action" aria-label="相談：お問い合わせフォームへ">{chat_icon()}<span>相談</span></a></section>'''
+def contact_corner():
+    icon = '<svg class="contact-corner-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M39 9C31 1 15 8 9 18S5 36 14 37c4 0 6-1 8-2l4 8 2-12C39 25 45 15 39 9Z"/></svg>'
+    return f'''<aside class="contact-corner" aria-label="お問い合わせ">
+  <div class="contact-corner-surface">
+    <a class="contact-corner-fallback" href="contact.html#contact-form" aria-label="お問い合わせフォームへ">{icon}</a>
+    <button class="contact-corner-toggle" type="button" aria-label="お問い合わせを開く" aria-expanded="false" aria-controls="contact-corner-panel" hidden>{icon}<span class="contact-corner-close" aria-hidden="true"></span></button>
+    <div class="contact-corner-panel" id="contact-corner-panel" inert aria-hidden="true">
+      <span class="mono">CONTACT</span>
+      <a class="contact-corner-link" href="contact.html#contact-form"><span>お問い合わせ</span>{arrow('right')}</a>
+    </div>
+  </div>
+</aside>'''
 
 def current_attr(filename, url):
     if filename == 'pricing.html' and url == 'contact.html':
@@ -130,7 +140,7 @@ def site_image(key, title):
     item = PREVIEWS.get(key, {})
     path = item.get('image', '')
     if item.get('available') and path and (PUBLIC / path).is_file():
-        return f'<img src="{e(path)}" alt="{e(title)}のWebサイト" width="960" height="600" loading="lazy" decoding="async">'
+        return f'<img src="{e(asset_url(path))}" alt="{e(title)}のWebサイト" width="960" height="600" loading="lazy" decoding="async">'
     return f'<span class="site-preview-fallback"><span>{e(title)}</span><span>Webサイトを開く {arrow()}</span></span>'
 
 def site_preview(key, show_title=True):
@@ -203,7 +213,7 @@ def home(data):
 </div></section>
 <section class="partner-showcase wrap"><div class="section-title"><h2>長期でお世話になっている企業様</h2><a class="text-link" href="partners.html">お取引について {arrow()}</a></div><div class="company-previews">{company_previews}</div></section>
 <section class="community-showcase wrap"><div class="section-title"><h2>イベント</h2><a class="text-link" href="events.html">イベント一覧 {arrow()}</a></div><div class="community-preview-grid">{site_preview('tidal-waive', False)}<div class="community-details"><h3>TIDAL WAIVE</h3><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', '公式サイト')}</div></div></section>
-{contact_banner()}'''
+'''
 
 def works(data):
     career = ''.join(f'<div class="career-item"><span class="mono">{e(item["year"])}</span><div><h3>{e(item["title"])}</h3><p>{e(item["description"])}</p></div></div>' for item in data['career'])
@@ -223,7 +233,7 @@ def works(data):
     </article>
     <article class="personal-project-paused"><h3>tideline</h3><span class="paused">現在保守停止中</span></article>
   </div>
-</section>{contact_banner()}'''
+</section>'''
 
 def partners():
     body = ''
@@ -232,7 +242,7 @@ def partners():
             continue
         gallery = ''.join(partner_preview(site) for site in row['sites'])
         body += f'<article class="partner-row"><div class="partner-gallery">{gallery}</div><div class="partner-description"><h2>{e(row["name"])}</h2><p>{e(row["summary"])}</p>{tags(row["tags"])}</div></article>'
-    return page_head('02', 'Partners', '長期でお世話になっている企業様', '') + f'<section class="partners-list wrap">{body}</section>{contact_banner()}'
+    return page_head('02', 'Partners', '長期でお世話になっている企業様', '') + f'<section class="partners-list wrap">{body}</section>'
 
 
 def events():
@@ -244,7 +254,7 @@ def events():
         title = item.get('title', f'イベント #{eid}').removesuffix(' - connpass')
         preview_class = 'has-preview' if image_html else ''
         event_rows += f'<a class="event-row {preview_class}" href="https://connpass.com/event/{eid}/" target="_blank" rel="noopener noreferrer">{image_html}<span class="mono event-index">{i+1:02d}</span><div><span class="event-id">connpass / #{eid}</span><h3>{e(title)}</h3></div><span class="event-action">イベントを見る {arrow()}</span></a>'
-    return page_head('03', 'Events', 'イベント', '') + f'''<section class="event-feature wrap">{site_preview('tidal-waive', False)}<div class="event-feature-copy"><h2>TIDAL WAIVE</h2><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', '公式サイト', 'pill-link')}</div></section><section class="event-archive wrap"><div class="section-title"><h2>Conpass</h2></div>{event_rows}</section>{contact_banner()}'''
+    return page_head('03', 'Events', 'イベント', '') + f'''<section class="event-feature wrap">{site_preview('tidal-waive', False)}<div class="event-feature-copy"><h2>TIDAL WAIVE</h2><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', '公式サイト', 'pill-link')}</div></section><section class="event-archive wrap"><div class="section-title"><h2>Conpass</h2></div>{event_rows}</section>'''
 
 def contact():
     return page_head('04', 'Contact', 'お問い合わせ', '') + contact_tabs('contact') + '''<section class="contact-layout wrap"><div class="contact-aside"><h2>相談</h2><div class="contact-services"><span>01 / インフラ構築・運用保守</span><span>02 / Webシステム開発</span><span>03 / AI基盤・開発支援</span><span>04 / その他のご相談</span></div><div class="preview-note"><span class="small-dot"></span><div><strong>お仕事のご相談を受け付けています。</strong><p>担当内容やご希望の時期などをお知らせください。</p></div></div></div><div class="contact-form-area"><form id="contact-form"><div class="contact-honeypot" aria-hidden="true"><label for="website">この欄は入力しないでください</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div><div class="form-row"><label for="name">お名前 <span>必須</span></label><input id="name" name="name" autocomplete="name" required maxlength="100" placeholder="山田 太郎"></div><div class="form-row"><label for="company">会社名 / 屋号 <span class="optional">任意</span></label><input id="company" name="company" autocomplete="organization" maxlength="150" placeholder="株式会社〇〇"></div><div class="form-row"><label for="email">メールアドレス <span>必須</span></label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="hello@example.com"></div><div class="form-row"><label for="type">ご相談の種類 <span>必須</span></label><select id="type" name="type" required><option value="">選択してください</option><option>インフラ構築・運用保守</option><option>Webシステム開発</option><option>AI基盤・開発支援</option><option>その他のご相談</option></select></div><div class="form-row"><label for="message">ご相談内容 <span>必須</span></label><textarea id="message" name="message" required minlength="10" maxlength="3000" rows="6" placeholder="ご相談の背景や実現したいこと、ご希望の時期などをお聞かせください。（10文字以上）"></textarea><div class="field-counter"><span>10〜3,000文字</span><span><span id="message-count">0</span> / 3,000</span></div></div><p class="form-note">入力内容はお問い合わせへの対応のために使用します。</p><noscript><p class="form-note">確認画面を表示するにはJavaScriptを有効にしてください。入力内容は送信されません。</p></noscript><button class="submit-button" id="review-contact" type="button">入力内容を確認する <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button></form><section class="contact-confirmation" id="contact-confirmation" hidden aria-labelledby="confirmation-title"><h2 id="confirmation-title" tabindex="-1">ご相談内容の確認</h2><p>内容をご確認のうえ、送信ボタンを押してください。</p><dl id="confirmation-values"></dl><button class="submit-button" type="button" id="edit-form">入力内容を修正する <span>←</span></button><p id="contact-send-error" class="form-note" role="alert" hidden></p><button class="submit-button" id="send-contact" type="button">この内容で送信する <span>↗</span></button></section><section id="contact-success" class="contact-confirmation" hidden><h2 id="contact-success-title" tabindex="-1">お問い合わせを受け付けました</h2><p>内容を確認のうえ、ご連絡します。</p><p class="form-note">受付番号：<span id="contact-receipt"></span></p></section></div></section>'''
@@ -269,6 +279,8 @@ def main():
     generated = {}
     for filename, title, description, body in pages:
         scripts = [asset_url('assets/main.js'), asset_url('assets/content.js')]
+        if filename != 'contact.html':
+            scripts.append(asset_url('assets/contact-corner.js'))
         if filename == 'index.html':
             scripts.append(asset_url('assets/water.js'))
         if filename == 'works.html':

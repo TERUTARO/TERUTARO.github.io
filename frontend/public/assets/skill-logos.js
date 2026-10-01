@@ -2,36 +2,15 @@
   const assets = 'assets/brands/';
   const imageCache = new Map();
   const normalize = (value) => value.toLowerCase().replace(/[\s._\-/]+/g, '');
+  // Only marks with published terms supporting this use are displayed.
+  // Other product names retain the original category mark. See brands/credits.html.
   const products = new Map(Object.entries({
-    aws: 'amazonwebservices', amazonwebservices: 'amazonwebservices',
-    gcp: 'googlecloud', googlecloud: 'googlecloud',
-    gce: 'googlecloud', gae: 'googlecloud', gke: 'googlecloud',
-    bigquery: 'googlecloud', cloudsql: 'googlecloud', cloudrun: 'googlecloud',
-    cloudfunctions: 'googlecloud', vertexai: 'vertexai',
-    bedrock: 'bedrock', amazonbedrock: 'bedrock', azureopenai: 'azure',
-    ruby: 'ruby', typescript: 'typescript', javascript: 'javascript', php: 'php',
-    googleappsscript: 'googleappsscript', rubyonrails: 'rails',
-    rails: 'rails', react: 'react', nextjs: 'nextjs', vuejs: 'vuejs',
-    nuxtjs: 'nuxtjs', yii: 'yii', codeigniter: 'codeigniter',
-    wordpress: 'wordpress', mysql: 'mysql', jwt: 'jsonwebtokens',
-    codex: 'openai', openai: 'openai', claude: 'claude', claudecode: 'claude',
-    cursor: 'cursor', dify: 'dify', terraform: 'terraform', ansible: 'ansible',
-    docker: 'docker', dockercompose: 'docker', github: 'github',
-    githubactions: 'githubactions', gitlab: 'gitlab', gitlabcicd: 'gitlab',
-    datadog: 'datadog', jira: 'jira', confluence: 'confluence',
-    redmine: 'redmine', sphinx: 'sphinx', slack: 'slack', teams: 'microsoft',
-    microsoftteams: 'microsoft', hyperv: 'microsoft', vmwarevsphere: 'vmware',
-    vmware: 'vmware', fortigate: 'fortinet', fortinet: 'fortinet',
+    ruby: 'ruby', php: 'php', typescript: 'typescript',
+    rubyonrails: 'rails', rails: 'rails', vuejs: 'vuejs', wordpress: 'wordpress',
   }).map(([key, value]) => [normalize(key), value]));
 
   function findLogo(button) {
     const name = normalize(button.textContent);
-    const group = normalize(button.closest('.skill-row').querySelector('h4')?.textContent || '');
-    if (group === 'aws' || name.startsWith('aws')) return 'amazonwebservices';
-    if (group === 'googlecloud' || group === 'gcp' || name.startsWith('gcp')) return 'googlecloud';
-    if (name.startsWith('cisco')) return 'cisco';
-    if (name.startsWith('yamaha')) return 'yamahacorporation';
-    if (name.startsWith('github')) return products.get(name) || 'github';
     return products.get(name) || null;
   }
 
@@ -109,7 +88,7 @@
         button.type = 'button';
         button.className = 'skill-tag';
         button.textContent = tag.textContent;
-        button.setAttribute('aria-label', `${tag.textContent}のロゴを表示`);
+        button.setAttribute('aria-label', `${tag.textContent}のスキルマークを表示`);
         button.setAttribute('aria-pressed', 'false');
         if (button !== tag) tag.replaceWith(button);
         on(button, 'pointerenter', (event) => {

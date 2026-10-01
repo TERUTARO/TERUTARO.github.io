@@ -27,7 +27,7 @@
     if (!target) return;
     const tabs = rows.map((r,i) => `<button id="tab-${esc(r.id)}" role="tab" aria-selected="${i===0}" aria-controls="panel-${esc(r.id)}" tabindex="${i===0?0:-1}">${icons[r.icon] || icons.cloud}<span>${esc(r.label)}</span></button>`).join('');
     const panels = rows.map((r,i) => `<div class="skill-panel" id="panel-${esc(r.id)}" role="tabpanel" aria-labelledby="tab-${esc(r.id)}" tabindex="0" ${i?'hidden':''}><div class="skill-intro"><span class="skill-symbol">${icons[r.icon] || icons.cloud}</span></div><div class="skill-details">${arr(r.groups).map(g => `<div class="skill-row"><h4>${esc(g.name)}</h4>${tags(g.items)}</div>`).join('')}</div></div>`).join('');
-    target.innerHTML = `<div class="section-title"><h2>スキル</h2></div>${rows.length ? `<div class="skill-tabs" role="tablist" aria-label="スキルの分類">${tabs}</div>${panels}` : '<p>現在掲載しているスキルはありません。</p>'}`;
+    target.innerHTML = `<div class="section-title"><h2>スキル</h2></div>${rows.length ? `<div class="skill-tabs" role="tablist" aria-label="スキルの分類">${tabs}</div>${panels}<p class="skill-credits">公開条件を確認したロゴ・オリジナルマークを使用しています。<a href="assets/brands/credits.html">出典・利用条件</a></p>` : '<p>現在掲載しているスキルはありません。</p>'}`;
   }
   function projectCategories(p) {
     return uniq([p.category,...arr(p.categories),...((p.role || '').includes('ネットワークエンジニア') ? ['network'] : [])]);

@@ -13,7 +13,7 @@
 
 #skills .skill-symbol {
   position: relative;
-  width: min(100%, 200px);
+  width: min(80%, 160px);
   height: auto;
   aspect-ratio: 1;
   border: 0;
@@ -46,6 +46,9 @@
 #skills .skill-symbol.has-product-logo > .skill-icon { opacity: 0; }
 #skills .skill-symbol.has-product-logo .skill-brand-mark { opacity: .14; }
 #skills .skill-details { min-width: 0; }
+#skills .skill-credits { margin-top: 12px; font-size: 10px; line-height: 1.8; color: var(--muted); }
+#skills .skill-credits a { display: inline-block; margin-left: .6em; text-decoration: underline; text-underline-offset: 3px; }
+#skills .skill-credits a:hover { color: var(--ink); }
 
 #skills .tags > .skill-tag {
   max-width: 100%;

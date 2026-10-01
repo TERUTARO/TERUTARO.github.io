@@ -159,7 +159,8 @@ def skills():
     for i, row in enumerate(rows):
         groups = ''.join(f'<div class="skill-row"><h4>{e(group["name"])}</h4>{tags(group["items"])}</div>' for group in row['groups'])
         panels += f'<div class="skill-panel" id="panel-{e(row["id"])}" role="tabpanel" aria-labelledby="tab-{e(row["id"])}" tabindex="0" {"hidden" if i else ""}><div class="skill-intro"><span class="skill-symbol">{skill_icon(row["icon"])}</span></div><div class="skill-details">{groups}</div></div>'
-    return f'<section class="skills-section wrap" id="skills"><div class="section-title"><h2>スキル</h2></div><div class="skill-tabs" role="tablist" aria-label="スキルの分類">{tabs}</div>{panels}</section>'
+    credit = '<p class="skill-credits">公開条件を確認したロゴ・オリジナルマークを使用しています。<a href="assets/brands/credits.html">出典・利用条件</a></p>'
+    return f'<section class="skills-section wrap" id="skills"><div class="section-title"><h2>スキル</h2></div><div class="skill-tabs" role="tablist" aria-label="スキルの分類">{tabs}</div>{panels}{credit}</section>'
 
 
 def partner_preview(site):
@@ -183,9 +184,10 @@ def profile_resource():
         field('strength', string('インフラ')),
         '',
         '  <span class="hcl-key">skills</span> = [',
-        f'    {string("インフラ構築・運用保守")},',
-        f'    {string("Web開発")},',
-        f'    {string("AI基盤")},',
+        f'    {string("オンプレミスインフラ")},',
+        f'    {string("クラウドインフラ")},',
+        f'    {string("Web システム開発")},',
+        f'    {string("AI 開発")},',
         '  ]',
         '',
         '  <span class="hcl-keyword">community</span> {',

@@ -12,6 +12,7 @@ import "../../public/assets/menu.css";
 import "../../public/assets/pricing.css";
 import "../../public/assets/columns.css";
 import "../../public/assets/admin.css";
+import "../../public/assets/i18n.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -41,7 +42,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
       <body>{children}</body>
     </html>
   );

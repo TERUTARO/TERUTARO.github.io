@@ -1,6 +1,7 @@
 'use strict';
 
 (() => {
+  const t = source => window.portfolioI18n?.t(source) ?? source;
   const corner = document.querySelector('.contact-corner');
   if (!corner) return;
 
@@ -12,7 +13,7 @@
   const setOpen = (open) => {
     corner.classList.toggle('is-open', open);
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'お問い合わせを閉じる' : 'お問い合わせを開く');
+    toggle.setAttribute('aria-label', t(open ? 'お問い合わせを閉じる' : 'お問い合わせを開く'));
     panel.inert = !open;
     panel.setAttribute('aria-hidden', String(!open));
   };

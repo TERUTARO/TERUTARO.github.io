@@ -1,5 +1,6 @@
 /* Work archive: one category/status filter plus case/width-insensitive tags. */
 (() => {
+  const t = source => window.portfolioI18n?.t(source) ?? source;
   let activeArchive;
   function initialize() {
   const archive = document.querySelector('[data-work-history]');
@@ -15,8 +16,10 @@
   const years = [...archive.querySelectorAll('[data-work-year]')];
   const status = archive.querySelector('.filter-status');
   const empty = archive.querySelector('[data-work-empty]');
-  const normalize = value => value.normalize('NFKC').toLocaleLowerCase('ja').trim().replace(/\s+/g, ' ');
-  const projectTags = new Map(projects.map(project => [project, JSON.parse(project.dataset.tags).map(normalize)]));
+  const locale = { ja: 'ja', en: 'en', zh: 'zh-CN' }[window.portfolioI18n?.locale] || 'ja';
+  const normalize = value => value.normalize('NFKC').toLocaleLowerCase(locale).trim().replace(/\s+/g, ' ');
+  const tagQueries = tag => [normalize(tag), normalize(t(tag))];
+  const projectTags = new Map(projects.map(project => [project, JSON.parse(project.dataset.tags).flatMap(tagQueries)]));
   const projectCategories = new Map(projects.map(project => [project, JSON.parse(project.dataset.categories)]));
   let category = 'all';
   let composing = false;
@@ -50,18 +53,24 @@
       number.hidden = !active;
       button.classList.toggle('active', active);
       button.setAttribute('aria-pressed', String(active));
-      button.setAttribute('aria-label', `${button.dataset.filterLabel}${active ? `、${count}件` : ''}`);
+      button.setAttribute('aria-label', active
+        ? t(`${button.dataset.filterLabel}、${count}件`)
+        : t(button.dataset.filterLabel));
     });
-    tagButtons.forEach(button => button.setAttribute('aria-pressed', String(Boolean(query) && normalize(button.dataset.workTag) === query)));
+    tagButtons.forEach(button => button.setAttribute('aria-pressed', String(Boolean(query) && tagQueries(button.dataset.workTag).includes(query))));
     resetButtons.forEach(button => { button.disabled = category === 'all' && !input.value; });
     status.replaceChildren();
     const number = document.createElement('strong');
     number.textContent = count;
-    status.append(number, ` / ${projects.length} 件の実績`);
+    status.append(number, t(` / ${projects.length} 件の実績`));
     if (query || category !== 'all') {
       const conditions = document.createElement('span');
       conditions.className = 'sr-only';
-      conditions.textContent = `。${category === 'current' ? '現在進行中のみ。' : category !== 'all' ? `カテゴリ ${category}。` : ''}${query ? `タグ「${input.value.trim()}」で検索。` : ''}`;
+      const label = filters.find(button => button.dataset.filter === category)?.dataset.filterLabel || category;
+      conditions.textContent = ' ' + [
+        category === 'current' ? t('現在進行中のみ。') : category !== 'all' ? t(`カテゴリ ${label}。`) : '',
+        query ? t(`タグ「${input.value.trim()}」で検索。`) : '',
+      ].filter(Boolean).join(' ');
       status.append(conditions);
     }
     empty.hidden = count !== 0;
@@ -86,7 +95,7 @@
   tagButtons.forEach(button => {
     button.disabled = false;
     button.addEventListener('click', () => {
-      input.value = normalize(input.value) === normalize(button.dataset.workTag) ? '' : button.dataset.workTag;
+      input.value = tagQueries(button.dataset.workTag).includes(normalize(input.value)) ? '' : t(button.dataset.workTag);
       update();
     });
   });

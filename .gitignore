@@ -28,3 +28,4 @@ frontend/public/admin-config.json
 .build/
 
 .pages/
+frontend/public/assets/i18n/

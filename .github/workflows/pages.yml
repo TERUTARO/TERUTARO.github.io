@@ -35,6 +35,8 @@ jobs:
         run: npm run build
       - name: Check TypeScript
         run: npm run typecheck
+      - name: Check translated pages
+        run: npm run test:i18n
       - name: Check admin authentication and API client
         run: node --test tests/admin-api.test.cjs
       - name: Check Lambda validation and authorization

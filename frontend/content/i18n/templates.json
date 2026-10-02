@@ -1,0 +1,13 @@
+{
+  "：{name}様": {"en": ": {name}", "zh": "：{name}"},
+  "：{name}": {"en": ": {name}", "zh": "：{name}"},
+  "{category}のサービス単価・税抜": {"en": "{category} service rates, excluding tax", "zh": "{category}服务价格（不含税）"},
+  "{category}の時間単価・税抜": {"en": "{category} hourly rates, excluding tax", "zh": "{category}小时费率（不含税）"},
+  "{amount}円（税抜）": {"en": "JPY {amount} (excluding tax)", "zh": "{amount}日元（不含税）"},
+  "請求書記載単位：{unit}": {"en": "Billing unit: {unit}", "zh": "账单单位：{unit}"},
+  "単位：{unit}": {"en": "Unit: {unit}", "zh": "单位：{unit}"},
+  "{count} 項目": {"en": "{count} items", "zh": "{count}项"},
+  "{period} — 現在": {"en": "{period} — Present", "zh": "{period} — 至今"},
+  "{period}（1週間）": {"en": "{period} (1 week)", "zh": "{period}（1周）"},
+  "{period}（2025.06時点）": {"en": "{period} (as of June 2025)", "zh": "{period}（截至2025年6月）"}
+}

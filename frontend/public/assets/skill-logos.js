@@ -1,5 +1,6 @@
 (() => {
-  const assets = 'assets/brands/';
+  const t = source => window.portfolioI18n?.t(source) ?? source;
+  const assets = '/assets/brands/';
   const imageCache = new Map();
   const normalize = (value) => value.toLowerCase().replace(/[\s._\-/]+/g, '');
   // Only marks with published terms supporting this use are displayed.
@@ -10,7 +11,7 @@
   }).map(([key, value]) => [normalize(key), value]));
 
   function findLogo(button) {
-    const name = normalize(button.textContent);
+    const name = normalize(button.dataset.skillTag || button.textContent);
     return products.get(name) || null;
   }
 
@@ -87,8 +88,10 @@
         const button = tag.tagName === 'BUTTON' ? tag : document.createElement('button');
         button.type = 'button';
         button.className = 'skill-tag';
-        button.textContent = tag.textContent;
-        button.setAttribute('aria-label', `${tag.textContent}のスキルマークを表示`);
+        const name = tag.dataset.skillTag || tag.textContent;
+        button.dataset.skillTag = name;
+        button.textContent = t(name);
+        button.setAttribute('aria-label', t(`${name}のスキルマークを表示`));
         button.setAttribute('aria-pressed', 'false');
         if (button !== tag) tag.replaceWith(button);
         on(button, 'pointerenter', (event) => {

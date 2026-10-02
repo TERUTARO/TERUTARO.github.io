@@ -11,8 +11,9 @@
     "dev": "next dev",
     "prebuild": "npm run prepare:content",
     "build": "next build",
-    "postbuild": "node scripts/copy-archive.mjs",
+    "postbuild": "node scripts/localize-export.mjs && node scripts/copy-archive.mjs",
     "typecheck": "next typegen && tsc --noEmit",
+    "test:i18n": "python3 -m unittest discover -s scripts -p test_localization.py",
     "preview": "python3 -m http.server 4173 --bind 127.0.0.1 --directory out",
     "prepare:pages": "node scripts/prepare-pages.mjs"
   },

@@ -11,6 +11,7 @@ from pricing import contact_tabs, render_pricing
 from featured_works import render_featured_works
 from content_visibility import HIDDEN_PARTNER_IDS, partner_group, public_company_name
 from columns import render_columns
+from localization import LOCALES, Translator, language_switcher, read_catalogs, translate_html, write_browser_catalogs
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / 'public'
@@ -74,12 +75,13 @@ def page_head(index, title, ja, desc):
 
 NAV = [('index.html', 'About', 'トップ'), ('works.html', 'Works', '実績'), ('partners.html', 'Partners', 'パートナー'), ('events.html', 'Events', 'イベント'), ('columns.html', 'Columns', 'コラム'), ('contact.html', 'Contact', 'お問い合わせ')]
 
-def shell(filename, body):
+def shell(filename, body, locale='ja'):
     nav = ''.join(f'<a href="{url}" {current_attr(filename, url)}><span class="menu-link-en">{name}</span><span class="menu-link-ja">{ja}</span>{arrow("right")}</a>' for url, name, ja in NAV)
     rail = ''.join(f'<a href="{url}" {current_attr(filename, url)}>{ja}</a>' for url, name, ja in NAV)
+    switcher = language_switcher(filename.removesuffix('.html'), locale)
     return f'''<a class="skip-link" href="#main">本文へスキップ</a>
-<header class="site-header wrap"><a class="brand" href="index.html" aria-label="terutaro トップページ">{portrait_img(cls="header-portrait")}<span>terutaro</span></a><button class="menu-trigger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-menu" hidden><span class="menu-lines" aria-hidden="true"></span><span class="menu-trigger-text">Menu</span></button><nav class="rail-nav" aria-label="メインナビゲーション">{rail}</nav></header>
-<dialog id="site-menu" class="menu-panel" aria-label="メニュー"><div class="menu-panel-top"><a class="brand" href="index.html">terutaro</a><button class="menu-close" type="button" aria-label="メニューを閉じる" autofocus><span aria-hidden="true"></span></button></div><div class="menu-panel-body"><div class="menu-profile"><span class="profile-avatar">{portrait_img(alt=e(PROFILE["name"]) + "のプロフィール写真")}</span><p>{e(PROFILE["name"])}<span>terutaro</span></p>{social_links()}</div><nav id="main-nav" class="menu-links" aria-label="ページ一覧">{nav}</nav></div></dialog>
+<header class="site-header wrap"><a class="brand" href="index.html" aria-label="terutaro トップページ">{portrait_img(cls="header-portrait")}<span>terutaro</span></a>{switcher}<button class="menu-trigger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-menu" hidden><span class="menu-lines" aria-hidden="true"></span><span class="menu-trigger-text">Menu</span></button><nav class="rail-nav" aria-label="メインナビゲーション">{rail}</nav></header>
+<dialog id="site-menu" class="menu-panel" aria-label="メニュー"><div class="menu-panel-top"><a class="brand" href="index.html">terutaro</a>{switcher}<button class="menu-close" type="button" aria-label="メニューを閉じる" autofocus><span aria-hidden="true"></span></button></div><div class="menu-panel-body"><div class="menu-profile"><span class="profile-avatar">{portrait_img(alt=e(PROFILE["name"]) + "のプロフィール写真")}</span><p>{e(PROFILE["name"])}<span>terutaro</span></p>{social_links()}</div><nav id="main-nav" class="menu-links" aria-label="ページ一覧">{nav}</nav></div></dialog>
 <noscript><nav class="fallback-nav wrap" aria-label="ページ一覧">{rail}</nav></noscript>
 <main id="main">{body}</main>
 <footer class="site-footer wrap"><div class="footer-top"><a class="brand" href="index.html"><span>terutaro</span></a><a class="back-top" href="#" aria-label="ページの先頭へ">Back to top <span>↑</span></a></div><div class="footer-bottom"><span>© <span data-year>2026</span> terutaro</span><span>Independent engineer · Okinawa / Kanto, Japan</span></div></footer>{contact_corner() if filename != "contact.html" else ""}'''
@@ -293,7 +295,7 @@ def events():
     return page_head('03', 'Events', 'イベント', '') + f'''<section class="event-feature wrap">{site_preview('tidal-waive', False)}<div class="event-feature-copy"><h2>TIDAL WAIVE</h2><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', '公式サイト', 'pill-link')}</div></section><section class="event-archive wrap"><div class="section-title"><h2>connpass</h2></div>{event_rows}</section>'''
 
 def contact():
-    return page_head('04', 'Contact', 'お問い合わせ', '') + contact_tabs('contact') + '''<section class="contact-layout wrap"><div class="contact-aside"><h2>相談</h2><div class="contact-services"><span>01 / インフラ構築・運用保守</span><span>02 / Webシステム開発</span><span>03 / AI基盤・開発支援</span><span>04 / その他のご相談</span></div><div class="preview-note"><span class="small-dot"></span><div><strong>お仕事のご相談を受け付けています。</strong><p>担当内容やご希望の時期などをお知らせください。</p></div></div></div><div class="contact-form-area"><form id="contact-form"><div class="contact-honeypot" aria-hidden="true"><label for="website">この欄は入力しないでください</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div><div class="form-row"><label for="name">お名前 <span>必須</span></label><input id="name" name="name" autocomplete="name" required maxlength="100" placeholder="山田 太郎"></div><div class="form-row"><label for="company">会社名 / 屋号 <span class="optional">任意</span></label><input id="company" name="company" autocomplete="organization" maxlength="150" placeholder="株式会社〇〇"></div><div class="form-row"><label for="email">メールアドレス <span>必須</span></label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="hello@example.com"></div><div class="form-row"><label for="type">ご相談の種類 <span>必須</span></label><select id="type" name="type" required><option value="">選択してください</option><option>インフラ構築・運用保守</option><option>Webシステム開発</option><option>AI基盤・開発支援</option><option>その他のご相談</option></select></div><div class="form-row"><label for="message">ご相談内容 <span>必須</span></label><textarea id="message" name="message" required minlength="10" maxlength="3000" rows="6" placeholder="ご相談の背景や実現したいこと、ご希望の時期などをお聞かせください。（10文字以上）"></textarea><div class="field-counter"><span>10〜3,000文字</span><span><span id="message-count">0</span> / 3,000</span></div></div><p class="form-note">入力内容はお問い合わせへの対応のために使用します。</p><noscript><p class="form-note">確認画面を表示するにはJavaScriptを有効にしてください。入力内容は送信されません。</p></noscript><button class="submit-button" id="review-contact" type="button">入力内容を確認する <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button></form><section class="contact-confirmation" id="contact-confirmation" hidden aria-labelledby="confirmation-title"><h2 id="confirmation-title" tabindex="-1">ご相談内容の確認</h2><p>内容をご確認のうえ、送信ボタンを押してください。</p><dl id="confirmation-values"></dl><button class="submit-button" type="button" id="edit-form">入力内容を修正する <span>←</span></button><p id="contact-send-error" class="form-note" role="alert" hidden></p><button class="submit-button" id="send-contact" type="button">この内容で送信する <span>↗</span></button></section><section id="contact-success" class="contact-confirmation" hidden><h2 id="contact-success-title" tabindex="-1">お問い合わせを受け付けました</h2><p>内容を確認のうえ、ご連絡します。</p><p class="form-note">受付番号：<span id="contact-receipt"></span></p></section></div></section>'''
+    return page_head('04', 'Contact', 'お問い合わせ', '') + contact_tabs('contact') + '''<section class="contact-layout wrap"><div class="contact-aside"><h2>相談</h2><div class="contact-services"><span>01 / インフラ構築・運用保守</span><span>02 / Webシステム開発</span><span>03 / AI基盤・開発支援</span><span>04 / その他のご相談</span></div><div class="preview-note"><span class="small-dot"></span><div><strong>お仕事のご相談を受け付けています。</strong><p>担当内容やご希望の時期などをお知らせください。</p></div></div></div><div class="contact-form-area"><form id="contact-form"><div class="contact-honeypot" aria-hidden="true"><label for="website">この欄は入力しないでください</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div><div class="form-row"><label for="name">お名前 <span>必須</span></label><input id="name" name="name" autocomplete="name" required maxlength="100" placeholder="山田 太郎"></div><div class="form-row"><label for="company">会社名 / 屋号 <span class="optional">任意</span></label><input id="company" name="company" autocomplete="organization" maxlength="150" placeholder="株式会社〇〇"></div><div class="form-row"><label for="email">メールアドレス <span>必須</span></label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="hello@example.com"></div><div class="form-row"><label for="type">ご相談の種類 <span>必須</span></label><select id="type" name="type" required><option value="">選択してください</option><option value="インフラ構築・運用保守">インフラ構築・運用保守</option><option value="Webシステム開発">Webシステム開発</option><option value="AI基盤・開発支援">AI基盤・開発支援</option><option value="その他のご相談">その他のご相談</option></select></div><div class="form-row"><label for="message">ご相談内容 <span>必須</span></label><textarea id="message" name="message" required minlength="10" maxlength="3000" rows="6" placeholder="ご相談の背景や実現したいこと、ご希望の時期などをお聞かせください。（10文字以上）"></textarea><div class="field-counter"><span>10〜3,000文字</span><span><span id="message-count">0</span> / 3,000</span></div></div><p class="form-note">入力内容はお問い合わせへの対応のために使用します。</p><noscript><p class="form-note">確認画面を表示するにはJavaScriptを有効にしてください。入力内容は送信されません。</p></noscript><button class="submit-button" id="review-contact" type="button">入力内容を確認する <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button></form><section class="contact-confirmation" id="contact-confirmation" hidden aria-labelledby="confirmation-title"><h2 id="confirmation-title" tabindex="-1">ご相談内容の確認</h2><p>内容をご確認のうえ、送信ボタンを押してください。</p><dl id="confirmation-values"></dl><button class="submit-button" type="button" id="edit-form">入力内容を修正する <span>←</span></button><p id="contact-send-error" class="form-note" role="alert" hidden></p><button class="submit-button" id="send-contact" type="button">この内容で送信する <span>↗</span></button></section><section id="contact-success" class="contact-confirmation" hidden><h2 id="contact-success-title" tabindex="-1">お問い合わせを受け付けました</h2><p>内容を確認のうえ、ご連絡します。</p><p class="form-note">受付番号：<span id="contact-receipt" data-no-translate></span></p></section></div></section>'''
 
 def pricing():
     data = json.loads((ROOT / 'content' / 'pricing.json').read_text())
@@ -304,6 +306,8 @@ def main():
     data_path = ROOT / 'content' / 'career.json'
     data = json.loads(data_path.read_text())
     generate_art()
+    catalog = read_catalogs()
+    write_browser_catalogs(catalog)
     pages = [
         ('index.html', f'{PROFILE["name"]} | 沖縄・関東のフリーランスエンジニア', f'沖縄・関東を拠点に活動する{PROFILE["name"]}のポートフォリオ。インフラ・Web開発・AI基盤の構築から運用保守まで。', home(data)),
         ('works.html', '実績', f'インフラ構築、Web開発、ネットワーク、AI基盤。{PROFILE["name"]}の実績をご紹介します。', works(data)),
@@ -322,12 +326,18 @@ def main():
             scripts.extend([asset_url('assets/water.js'), asset_url('assets/skill-logos.js')])
         if filename == 'works.html':
             scripts.append(asset_url('assets/work-history.js'))
-        generated[filename.removesuffix('.html')] = {
-            'title': title,
-            'description': description,
-            'body': shell(filename, body),
-            'scripts': scripts,
-        }
+        for locale in LOCALES:
+            translator = Translator(catalog, locale)
+            name = filename.removesuffix('.html')
+            key = name if locale == 'ja' else f'{locale}/{name}'
+            localized_scripts = [] if locale == 'ja' else [asset_url(f'assets/i18n/{locale}.js')]
+            localized_scripts.append(asset_url('assets/i18n.js'))
+            generated[key] = {
+                'title': translator.text(title),
+                'description': translator.text(description),
+                'body': translate_html(shell(filename, body, locale), translator),
+                'scripts': localized_scripts + scripts,
+            }
     OUTPUT.mkdir(exist_ok=True)
     (OUTPUT / 'pages.json').write_text(json.dumps(generated, ensure_ascii=False, indent=2) + '\n')
     print(f'Prepared {len(generated)} pages for Next.js')

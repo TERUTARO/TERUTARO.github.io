@@ -16,10 +16,11 @@ export default function nextConfig(phase: string): NextConfig {
           async rewrites() {
             return [
               { source: "/index.html", destination: "/" },
-              ...["works", "partners", "events", "contact", "pricing", "admin"].map((page) => ({
+              ...["works", "partners", "events", "columns", "contact", "pricing", "admin"].map((page) => ({
                 source: `/${page}.html`,
                 destination: `/${page}`,
               })),
+              { source: '/:locale(en|zh)/:page(index|works|partners|events|columns|contact|pricing).html', destination: '/:locale/:page' },
             ];
           },
         }

@@ -1,6 +1,8 @@
 import {
   getPortfolioPage,
   type PortfolioPageName,
+  type PortfolioLocale,
+  localeLanguages,
 } from "@/lib/portfolio";
 
 /**
@@ -12,14 +14,16 @@ import {
  * soon as the static HTML has been parsed, instead of waiting for the React
  * bundle to download and hydrate (next/script "afterInteractive").
  */
-export function PortfolioPage({ name }: { name: PortfolioPageName }) {
-  const page = getPortfolioPage(name);
+export function PortfolioPage({ name, locale = 'ja' }: { name: PortfolioPageName; locale?: PortfolioLocale }) {
+  const page = getPortfolioPage(name, locale);
 
   return (
     <>
       <div
         className={`page-${name}`}
         data-portfolio-page={name}
+        data-locale={locale}
+        lang={localeLanguages[locale]}
         dangerouslySetInnerHTML={{ __html: page.body }}
       />
       {page.scripts.map((src) => (

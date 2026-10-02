@@ -24,6 +24,8 @@ Next.js App Router / TypeScript の公開サイトと管理画面です。どち
 | 管理画面・編集フォーム・問い合わせ一覧 | `src/app/admin/` / `src/components/admin-*.tsx` |
 | 管理API・認証・編集データ定義 | `src/lib/admin-api.ts` / `admin-auth.ts` / `admin-content.ts` |
 | 公開用の配信成果物生成 | `scripts/prepare-pages.mjs` |
+| 英語・簡体字中国語の翻訳 | `content/i18n/*.json` |
+| 言語別HTML・URL・表示切り替え | `scripts/localization.py` / `public/assets/i18n.js` / `i18n.css` |
 
 管理画面では実績、スキル、取引先、サービス単価、エンジニア時間単価、顧問単価を作成・編集・削除し、公開状態と順序を指定できます。保存先はDynamoDBです。上記のローカルJSONは初期投入とスナップショット用で、管理画面の変更は自動で書き戻されません。プロフィール・SNS・イベント・画像の変更は引き続きリポジトリで行います。
 
@@ -41,10 +43,11 @@ Node.js 24 LTS / npm と Python 3.9以上を使用します。開発サーバー
 ```sh
 npm run build
 npm run typecheck
+npm run test:i18n
 npm run preview
 ```
 
-Next.jsの `output: "export"` で公開ページと管理画面を `out/` に書き出します。`postbuild` は `archive/technical-notes/` の内容を既存URLと同じ階層へコピーします。ファイルが衝突した場合はビルドを失敗させます。`npm run preview` は http://localhost:4173 で `out/` を配信します。
+Next.jsの `output: "export"` で公開ページと管理画面を `out/` に書き出します。`postbuild` は翻訳ページの文書言語を設定し、`archive/technical-notes/` の内容を既存URLと同じ階層へコピーします。ファイルが衝突した場合はビルドを失敗させます。`npm run preview` は http://localhost:4173 で `out/` を配信します。
 
 GitHub Pages向けにはビルド後に `npm run prepare:pages` を実行します。`admin.html`・管理画面のページデータ・`admin-config.json` を除いた `.pages/` が公開用成果物です。管理画面の配布には `out/` から管理用のHTML・Next.js静的アセット・設定を使用します。生成物はGitに含めません。配置手順は [インフラのREADME](../infrastructure/README.md) を参照してください。
 
@@ -55,6 +58,14 @@ GitHub Pages向けにはビルド後に `npm run prepare:pages` を実行しま�
 API未設定時やJavaScript無効時はビルド時のスナップショットを表示します。接続先を読み込んだ後でAPIの取得に失敗した場合は、保存済みの内容を表示している旨を案内します。公開設定には接続先だけを含み、問い合わせや認証情報は含めません。
 
 実績は年ごとに並べ、現在進行中・カテゴリとタグを組み合わせて検索できます。担当フェーズ・技術スタックは案件ごとの詳細にまとめています。料金はカテゴリ単位の折りたたみ表示で、サービス単価・時間単価・顧問単価を掲載します。`priceYen: null` は都度見積もり、顧問は「要相談」として表示します。
+
+## 公開ページの言語
+
+公開7ページは日本語（既存URL）、英語（`/en/index.html` 等）、簡体字中国語（`/zh/index.html` 等）を静的に生成します。ヘッダーの `JP / EN / 中文` は同じページへ移動し、ハッシュも引き継ぎます。選択はブラウザに保存され、トップへの再訪時に復元します。保存できない環境でも言語別URLと通常のリンクで利用できます。管理画面と過去の技術資料は元の言語のままです。
+
+翻訳は `content/i18n/*.json` の原文キーに `en` / `zh` を登録します。`{count}` 等のテンプレートは静的HTMLとAPI更新後の表示で共有し、翻訳値はHTMLとして解釈しません。管理画面で新しい文言を追加・変更した場合は、辞書にも訳を追加して再公開してください。未登録文言は原文へフォールバックします。生成された `public/assets/i18n/` は直接編集せず、Gitにも含めません。
+
+実績の分類・非表示判定・フォームの選択値は原文を保持します。検索は原文・翻訳の両方に対応し、お問い合わせに入力した名前・相談内容は翻訳しません。料金は言語によらず同じ日本円の金額・税区分です。`npm run test:i18n` で翻訳・リンク・入力値保持を検証できます。
 
 ## お問い合わせと管理画面
 

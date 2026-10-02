@@ -1,0 +1,722 @@
+{
+  "H社": {
+    "en": "Company H",
+    "zh": "H公司"
+  },
+  "WordPressサイト侵害の復旧・調査・対策": {
+    "en": "WordPress breach recovery, investigation and remediation",
+    "zh": "WordPress网站入侵事件的恢复、调查与整改"
+  },
+  "WordPressサイトへの侵害に対し、復旧・調査・対策を担当。": {
+    "en": "Handled recovery, investigation and remediation following a WordPress website breach.",
+    "zh": "负责WordPress网站遭受入侵后的恢复、调查与整改。"
+  },
+  "復旧・調査・対策": {
+    "en": "Recovery / Investigation / Remediation",
+    "zh": "恢复／调查／整改"
+  },
+  "復旧": {
+    "en": "Recovery",
+    "zh": "恢复"
+  },
+  "調査": {
+    "en": "Investigation",
+    "zh": "调查"
+  },
+  "対策": {
+    "en": "Remediation",
+    "zh": "整改"
+  },
+  "2025.09 — 現在": {
+    "en": "2025.09 — Present",
+    "zh": "2025.09 — 至今"
+  },
+  "B社 D": {
+    "en": "Company B · D",
+    "zh": "B公司 · D"
+  },
+  "大手アフィリエイトサイトの基盤運用保守": {
+    "en": "Infrastructure operations for a major affiliate website",
+    "zh": "大型联盟营销网站的基础设施运维"
+  },
+  "大手アフィリエイトサイトを支える基盤の運用保守を担当。": {
+    "en": "Operate and maintain the infrastructure supporting a major affiliate website.",
+    "zh": "负责支撑大型联盟营销网站的基础设施运维。"
+  },
+  "インフラ運用保守": {
+    "en": "Infrastructure Operations & Maintenance",
+    "zh": "基础设施运维"
+  },
+  "基盤運用": {
+    "en": "Infrastructure Operations",
+    "zh": "基础设施运营"
+  },
+  "保守": {
+    "en": "Maintenance",
+    "zh": "维护"
+  },
+  "E社 K": {
+    "en": "Company E · K",
+    "zh": "E公司 · K"
+  },
+  "大手商品価格比較サイトの社内AI基盤運用保守": {
+    "en": "Internal AI platform operations for a major price comparison website",
+    "zh": "大型商品比价网站的内部AI平台运维"
+  },
+  "大手商品価格比較サイトの社内AI基盤の運用保守を担当。": {
+    "en": "Operate and maintain the internal AI platform of a major product price comparison website.",
+    "zh": "负责大型商品比价网站内部AI平台的运维。"
+  },
+  "AI基盤運用保守": {
+    "en": "AI Platform Operations & Maintenance",
+    "zh": "AI平台运维"
+  },
+  "AI基盤": {
+    "en": "AI Platform",
+    "zh": "AI平台"
+  },
+  "2025.04 —（2025.06時点）": {
+    "en": "2025.04 — (as of 2025.06)",
+    "zh": "2025.04 —（截至2025.06）"
+  },
+  "日乃出工業株式会社": {
+    "en": "Hinode Kogyo Co., Ltd.",
+    "zh": "日乃出工业株式会社"
+  },
+  "セキュリティアプライアンス導入支援": {
+    "en": "Security appliance deployment support",
+    "zh": "安全设备部署支持"
+  },
+  "日乃出工業株式会社のパートナーとして参画。既存ネットワークへの導入に向け、実機検証、要件定義、WBS・課題管理、基本設計を担当。": {
+    "en": "Participated as a partner of Hinode Kogyo Co., Ltd. Handled hardware validation, requirements definition, WBS and issue tracking, and high-level design for deployment into an existing network.",
+    "zh": "作为日乃出工业株式会社的合作伙伴参与项目。为在现有网络中部署设备，负责实机验证、需求定义、WBS与问题管理以及概要设计。"
+  },
+  "PM / ネットワークエンジニア": {
+    "en": "PM / Network Engineer",
+    "zh": "项目经理／网络工程师"
+  },
+  "要件定義": {
+    "en": "Requirements Definition",
+    "zh": "需求定义"
+  },
+  "基本設計": {
+    "en": "High-Level Design",
+    "zh": "概要设计"
+  },
+  "実機検証": {
+    "en": "Hardware Validation",
+    "zh": "实机验证"
+  },
+  "課題管理": {
+    "en": "Issue Tracking",
+    "zh": "问题管理"
+  },
+  "2025.03 — 現在": {
+    "en": "2025.03 — Present",
+    "zh": "2025.03 — 至今"
+  },
+  "リアムス株式会社": {
+    "en": "Riams Co., Ltd.",
+    "zh": "Riams株式会社"
+  },
+  "機器・ソフトウェア管理システムの改修・引き継ぎ": {
+    "en": "Hardware and software management system improvements and handover",
+    "zh": "设备与软件管理系统的改进及交接"
+  },
+  "既存システムの改修と開発引き継ぎを推進。進行管理からフロント・バックエンド、AI連携・インベントリAPI連携、AWS基盤構築まで担当。": {
+    "en": "Drive improvements to an existing system and the development handover. Responsibilities span project coordination, frontend and backend development, AI and inventory API integration, and AWS infrastructure.",
+    "zh": "推进现有系统改进及开发交接，负责进度管理、前后端开发、AI与资产清单API集成，以及AWS基础设施搭建。"
+  },
+  "PM / フロントエンド / バックエンド / インフラ": {
+    "en": "PM / Frontend / Backend / Infrastructure",
+    "zh": "项目经理／前端／后端／基础设施"
+  },
+  "改修": {
+    "en": "Improvements",
+    "zh": "改进"
+  },
+  "引き継ぎ": {
+    "en": "Handover",
+    "zh": "交接"
+  },
+  "進行管理": {
+    "en": "Project Coordination",
+    "zh": "进度管理"
+  },
+  "開発": {
+    "en": "Development",
+    "zh": "开发"
+  },
+  "基盤構築": {
+    "en": "Infrastructure Setup",
+    "zh": "基础设施搭建"
+  },
+  "2025.03（1週間）": {
+    "en": "2025.03 (1 week)",
+    "zh": "2025.03（1周）"
+  },
+  "C社": {
+    "en": "Company C",
+    "zh": "C公司"
+  },
+  "VPN接続障害の緊急対応": {
+    "en": "Emergency VPN troubleshooting",
+    "zh": "VPN连接故障紧急处理"
+  },
+  "機器更改後に発生したVPN接続障害について、設定確認、切り分け、サポートへの問い合わせを実施。": {
+    "en": "Investigated a VPN connection failure following a hardware replacement through configuration checks, fault isolation and support inquiries.",
+    "zh": "针对设备更换后发生的VPN连接故障，进行了配置检查、故障定位及技术支持咨询。"
+  },
+  "ネットワークエンジニア": {
+    "en": "Network Engineer",
+    "zh": "网络工程师"
+  },
+  "障害対応": {
+    "en": "Incident Response",
+    "zh": "故障处理"
+  },
+  "設定確認": {
+    "en": "Configuration Review",
+    "zh": "配置检查"
+  },
+  "障害切り分け": {
+    "en": "Fault Isolation",
+    "zh": "故障定位"
+  },
+  "合同会社ハラハチ": {
+    "en": "Harahachi LLC",
+    "zh": "Harahachi合同会社"
+  },
+  "WordPress環境整備": {
+    "en": "WordPress environment improvements",
+    "zh": "WordPress环境优化"
+  },
+  "各社のWordPress環境に対し、AWS設定、Apache設定、セキュリティ設定、証明書更新を実施。": {
+    "en": "Configured AWS, Apache and security settings, and renewed certificates for several companies’ WordPress environments.",
+    "zh": "为多家公司的WordPress环境配置AWS、Apache及安全设置，并更新证书。"
+  },
+  "インフラエンジニア": {
+    "en": "Infrastructure Engineer",
+    "zh": "基础设施工程师"
+  },
+  "環境整備": {
+    "en": "Environment Setup",
+    "zh": "环境配置"
+  },
+  "セキュリティ設定": {
+    "en": "Security Configuration",
+    "zh": "安全配置"
+  },
+  "証明書更新": {
+    "en": "Certificate Renewal",
+    "zh": "证书更新"
+  },
+  "N社": {
+    "en": "Company N",
+    "zh": "N公司"
+  },
+  "FortiGate機器更改": {
+    "en": "FortiGate hardware replacement",
+    "zh": "FortiGate设备更换"
+  },
+  "日乃出工業株式会社のパートナーとしてN社へ提供。ハードウェアのサポート終了に伴う機器更改を担当。既存設定から新機種・新OS向けの設計を行い、構築・単体・結合テストまで実施。": {
+    "en": "Delivered to Company N as a partner of Hinode Kogyo Co., Ltd. Replaced hardware reaching the end of support, adapting the existing configuration for new models and OS versions, then implementing and running unit and integration tests.",
+    "zh": "作为日乃出工业株式会社的合作伙伴为N公司提供服务。负责更换支持即将结束的设备，根据现有配置完成适配新型号与新OS的设计、部署、单体测试及集成测试。"
+  },
+  "ファイアウォール": {
+    "en": "Firewall",
+    "zh": "防火墙"
+  },
+  "設計": {
+    "en": "Design",
+    "zh": "设计"
+  },
+  "構築": {
+    "en": "Implementation",
+    "zh": "搭建"
+  },
+  "単体テスト": {
+    "en": "Unit Testing",
+    "zh": "单体测试"
+  },
+  "結合テスト": {
+    "en": "Integration Testing",
+    "zh": "集成测试"
+  },
+  "R社": {
+    "en": "Company R",
+    "zh": "R公司"
+  },
+  "システムローンチ前のインフラ整備": {
+    "en": "Infrastructure preparation for system launch",
+    "zh": "系统上线前的基础设施准备"
+  },
+  "社内システムと規約AI精査システムのローンチに向け、AWS基盤、VPN、Azure OpenAIの設定、監視環境を整備。": {
+    "en": "Prepared AWS infrastructure, VPN and Azure OpenAI configurations, and monitoring for the launch of an internal system and an AI-powered terms review system.",
+    "zh": "为内部系统及AI条款审查系统上线，准备AWS基础设施、VPN与Azure OpenAI配置，以及监控环境。"
+  },
+  "基盤整備": {
+    "en": "Infrastructure Preparation",
+    "zh": "基础设施准备"
+  },
+  "VPN設定": {
+    "en": "VPN Configuration",
+    "zh": "VPN配置"
+  },
+  "監視環境整備": {
+    "en": "Monitoring Setup",
+    "zh": "监控环境搭建"
+  },
+  "機器・ソフトウェア管理システム開発": {
+    "en": "Hardware and software management system development",
+    "zh": "设备与软件管理系统开发"
+  },
+  "マスターデータ、申請、台帳管理、認証機能を開発。ローカル開発環境とAWSのステージング基盤も構築。": {
+    "en": "Developed master data, request, asset register and authentication features. Also built a local development environment and an AWS staging environment.",
+    "zh": "开发主数据、申请、台账管理及身份认证功能，并搭建本地开发环境与AWS预发布环境。"
+  },
+  "バックエンド / インフラエンジニア": {
+    "en": "Backend / Infrastructure Engineer",
+    "zh": "后端／基础设施工程师"
+  },
+  "開発環境構築": {
+    "en": "Development Environment Setup",
+    "zh": "开发环境搭建"
+  },
+  "F社": {
+    "en": "Company F",
+    "zh": "F公司"
+  },
+  "金融取引システムのインフラ支援": {
+    "en": "Infrastructure support for a financial trading system",
+    "zh": "金融交易系统的基础设施支持"
+  },
+  "新規AWS基盤の設計・構築と既存オンプレミス環境の運用保守を支援。海外拠点との調整、要件定義、進行管理も担当。": {
+    "en": "Supported the design and implementation of new AWS infrastructure and the operation and maintenance of an existing on-premises environment. Also handled coordination with overseas offices, requirements definition and project coordination.",
+    "zh": "支持新AWS基础设施的设计与搭建，以及现有本地环境的运维，同时负责海外分支协调、需求定义及进度管理。"
+  },
+  "PM / インフラエンジニア": {
+    "en": "PM / Infrastructure Engineer",
+    "zh": "项目经理／基础设施工程师"
+  },
+  "オフショア連携": {
+    "en": "Offshore Coordination",
+    "zh": "海外团队协作"
+  },
+  "運用": {
+    "en": "Operations",
+    "zh": "运营"
+  },
+  "経験データベースサービス開発": {
+    "en": "Personal experience database service development",
+    "zh": "个人经历数据库服务开发"
+  },
+  "個人の経験をデータとして蓄積・点数化するアプリのβ版を開発。画面、認証・CRUD、AWSステージング環境まで構築。": {
+    "en": "Developed a beta application for recording and scoring personal experiences, covering screens, authentication, CRUD functionality and an AWS staging environment.",
+    "zh": "开发记录个人经历并对其评分的应用测试版，涵盖界面、身份认证、CRUD功能及AWS预发布环境。"
+  },
+  "インフルエンサーマッチングサービスの基盤開発": {
+    "en": "Infrastructure for an influencer matching service",
+    "zh": "网红匹配服务的基础设施开发"
+  },
+  "AWS基盤をコードで構築し、本番・ステージングのデプロイとインフラ更新を行うCI/CDを整備。": {
+    "en": "Built AWS infrastructure as code and established CI/CD for production and staging deployments and infrastructure updates.",
+    "zh": "以代码方式搭建AWS基础设施，并构建用于生产及预发布部署、基础设施更新的CI/CD流程。"
+  },
+  "CI/CD整備": {
+    "en": "CI/CD Setup",
+    "zh": "CI/CD搭建"
+  },
+  "自治体施策マッチングサービス開発": {
+    "en": "Municipal initiative matching service development",
+    "zh": "地方政府项目匹配服务开发"
+  },
+  "自治体施策と登録企業をつなぐサービスを開発。管理画面、API、AWS基盤に加え、半年間PMを兼任し事業側との調整と進行管理を担当。": {
+    "en": "Developed a service connecting municipal initiatives with registered businesses. Built the admin interface, APIs and AWS infrastructure, and also served as PM for six months, coordinating with the business team and managing progress.",
+    "zh": "开发连接地方政府项目与注册企业的服务。负责管理界面、API及AWS基础设施，并兼任项目经理六个月，开展业务部门协调与进度管理。"
+  },
+  "事業側調整": {
+    "en": "Business Team Coordination",
+    "zh": "业务部门协调"
+  },
+  "拠点間VPN構築": {
+    "en": "Site-to-site VPN implementation",
+    "zh": "站点间VPN搭建"
+  },
+  "日乃出工業株式会社のパートナーとしてN社へ提供。東京本社と神奈川・大阪・福岡拠点を相互接続するVPN環境を構築。要件定義から設計、現地構築、テストまで担当。": {
+    "en": "Delivered to Company N as a partner of Hinode Kogyo Co., Ltd. Built a VPN connecting the Tokyo headquarters with sites in Kanagawa, Osaka and Fukuoka, covering requirements definition, design, on-site implementation and testing.",
+    "zh": "作为日乃出工业株式会社的合作伙伴为N公司提供服务，搭建连接东京总部与神奈川、大阪、福冈各据点的VPN环境，负责需求定义、设计、现场部署及测试。"
+  },
+  "ルーティング": {
+    "en": "Routing",
+    "zh": "路由"
+  },
+  "テスト": {
+    "en": "Testing",
+    "zh": "测试"
+  },
+  "L社": {
+    "en": "Company L",
+    "zh": "L公司"
+  },
+  "介護補助アプリ開発": {
+    "en": "Care support application development",
+    "zh": "护理辅助应用开发"
+  },
+  "質問・回答データから機能訓練計画書や運動プログラムを生成する介護補助アプリを開発。ユーザー登録機能とAWS基盤も担当。": {
+    "en": "Developed a care support application that generates functional training plans and exercise programs from question-and-answer data. Also handled user registration and AWS infrastructure.",
+    "zh": "开发根据问答数据生成功能训练计划及运动方案的护理辅助应用，并负责用户注册功能与AWS基础设施。"
+  },
+  "W社": {
+    "en": "Company W",
+    "zh": "W公司"
+  },
+  "介護施設掲載サイトの基盤開発・保守": {
+    "en": "Infrastructure development and maintenance for a care facility listing website",
+    "zh": "护理机构信息网站的基础设施开发与维护"
+  },
+  "WordPressを稼働させるAWS ECS基盤を構築。進行・課題管理、デザイナー調整、開発環境・本番環境・監視の整備を担当。": {
+    "en": "Built AWS ECS infrastructure to run WordPress. Handled progress and issue tracking, designer coordination, and development, production and monitoring environments.",
+    "zh": "搭建运行WordPress的AWS ECS基础设施，负责进度与问题管理、设计师协调，以及开发、生产和监控环境的配置。"
+  },
+  "開発環境整備": {
+    "en": "Development Environment Preparation",
+    "zh": "开发环境配置"
+  },
+  "GKEデプロイ基盤の構築支援": {
+    "en": "GKE deployment infrastructure support",
+    "zh": "GKE部署基础设施搭建支持"
+  },
+  "GitLab CI/CDを用いたGKEデプロイ基盤を検証・構築。クラスタセットアップの自動化、パイプラインの構成検討、手順書作成を担当。": {
+    "en": "Validated and built GKE deployment infrastructure using GitLab CI/CD. Automated cluster setup, evaluated pipeline configurations and documented procedures.",
+    "zh": "使用GitLab CI/CD验证并搭建GKE部署基础设施，负责集群初始化自动化、流水线配置方案评估及操作文档编写。"
+  },
+  "検証": {
+    "en": "Validation",
+    "zh": "验证"
+  },
+  "自動化": {
+    "en": "Automation",
+    "zh": "自动化"
+  },
+  "構成検討": {
+    "en": "Configuration Planning",
+    "zh": "配置方案评估"
+  },
+  "手順書作成": {
+    "en": "Procedure Documentation",
+    "zh": "操作文档编写"
+  },
+  "D社": {
+    "en": "Company D",
+    "zh": "D公司"
+  },
+  "在庫管理・発注システム開発": {
+    "en": "Inventory and ordering system development",
+    "zh": "库存与订货系统开发"
+  },
+  "在庫入出庫、発行書類一覧、FAQ管理、売上一覧などの機能を開発。ローカル開発環境とGoogle Cloud基盤を整備。": {
+    "en": "Developed inventory movement, issued document listing, FAQ management and sales listing features. Prepared the local development environment and Google Cloud infrastructure.",
+    "zh": "开发出入库、已签发文档列表、FAQ管理及销售列表等功能，并配置本地开发环境与Google Cloud基础设施。"
+  },
+  "M社": {
+    "en": "Company M",
+    "zh": "M公司"
+  },
+  "発注システム開発": {
+    "en": "Ordering system development",
+    "zh": "订货系统开发"
+  },
+  "PHP / CodeIgniterを用いて、発注、製品登録、在庫入出庫の各機能を開発。": {
+    "en": "Developed ordering, product registration and inventory movement features using PHP and CodeIgniter.",
+    "zh": "使用PHP与CodeIgniter开发订货、产品注册及出入库功能。"
+  },
+  "フロントエンド / バックエンド / インフラ": {
+    "en": "Frontend / Backend / Infrastructure",
+    "zh": "前端／后端／基础设施"
+  },
+  "インフラ構築・運用保守": {
+    "en": "Infrastructure implementation, operations and maintenance",
+    "zh": "基础设施搭建与运维"
+  },
+  "新規システム向けの基盤構築、リモートワーク移行に伴うネットワーク整備、既存インフラの保守を担当。": {
+    "en": "Built infrastructure for new systems, prepared networks for a transition to remote work, and maintained existing infrastructure.",
+    "zh": "负责新系统的基础设施搭建、远程办公转型所需的网络配置，以及现有基础设施维护。"
+  },
+  "ネットワーク整備": {
+    "en": "Network Setup",
+    "zh": "网络配置"
+  },
+  "Y社": {
+    "en": "Company Y",
+    "zh": "Y公司"
+  },
+  "人材管理ツール開発": {
+    "en": "Personnel management tool development",
+    "zh": "人员管理工具开发"
+  },
+  "Googleスプレッドシートをデータベースとして使い、Google Apps ScriptによるWeb形式の管理ツールを開発。": {
+    "en": "Developed a web-based management tool with Google Apps Script, using Google Sheets as the database.",
+    "zh": "使用Google表格作为数据库，通过Google Apps Script开发Web管理工具。"
+  },
+  "バックエンドエンジニア": {
+    "en": "Backend Engineer",
+    "zh": "后端工程师"
+  },
+  "T大学 T研究室": {
+    "en": "Laboratory T, University T",
+    "zh": "T大学 T研究室"
+  },
+  "研究室のサーバー・ストレージ・ネットワーク保守": {
+    "en": "Laboratory server, storage and network maintenance",
+    "zh": "研究室服务器、存储及网络维护"
+  },
+  "研究室所有のサーバー、ストレージ、ネットワークの保守を担当。既存障害への対応や、移転に伴うシステム再構成の設計・構築を実施。": {
+    "en": "Maintained laboratory servers, storage and networks. Resolved existing faults and designed and implemented system reconfiguration for a relocation.",
+    "zh": "负责研究室服务器、存储及网络维护，处理现有故障，并针对搬迁进行系统重构的设计与搭建。"
+  },
+  "GPUサーバー": {
+    "en": "GPU Server",
+    "zh": "GPU服务器"
+  },
+  "P社": {
+    "en": "Company P",
+    "zh": "P公司"
+  },
+  "コーポレート・サービスサイトのAWS基盤改善": {
+    "en": "AWS infrastructure improvements for corporate and service websites",
+    "zh": "企业官网与服务网站的AWS基础设施优化"
+  },
+  "Webサーバー障害に対するリソース使用量の調査から、対応策の提案・実施、改善後のレポートまで担当。": {
+    "en": "Investigated resource usage during web server failures, proposed and implemented remedies, and prepared reports on the improvements.",
+    "zh": "针对Web服务器故障调查资源使用情况，提出并实施解决方案，并编写改善后的报告。"
+  },
+  "改善提案": {
+    "en": "Improvement Proposals",
+    "zh": "改善方案"
+  },
+  "改善実施": {
+    "en": "Improvement Implementation",
+    "zh": "改善实施"
+  },
+  "レポート作成": {
+    "en": "Reporting",
+    "zh": "报告编写"
+  },
+  "新拠点の社内ネットワーク構築": {
+    "en": "Internal network implementation for a new office",
+    "zh": "新办公地点的内部网络搭建"
+  },
+  "日乃出工業株式会社のパートナーとしてN社へ提供。新拠点のネットワークについて、要件ヒアリング、機器選定・見積、設計、構築、単体・結合テストを一貫して担当。": {
+    "en": "Delivered to Company N as a partner of Hinode Kogyo Co., Ltd. Managed the new office network from requirements interviews and equipment selection and estimates through design, implementation, unit testing and integration testing.",
+    "zh": "作为日乃出工业株式会社的合作伙伴为N公司提供服务，负责新办公地点网络的需求访谈、设备选型与报价、设计、搭建、单体测试及集成测试。"
+  },
+  "ネットワーク設計": {
+    "en": "Network Design",
+    "zh": "网络设计"
+  },
+  "要件ヒアリング": {
+    "en": "Requirements Interviews",
+    "zh": "需求访谈"
+  },
+  "機器選定": {
+    "en": "Equipment Selection",
+    "zh": "设备选型"
+  },
+  "見積": {
+    "en": "Estimation",
+    "zh": "报价"
+  },
+  "ネットワーク回線冗長化": {
+    "en": "Network link redundancy",
+    "zh": "网络链路冗余"
+  },
+  "日乃出工業株式会社のパートナーとしてN社へ提供。既存ネットワークの回線冗長化を実施。要件定義、設計、物理結線、ルーター設定、単体・結合テストを担当。": {
+    "en": "Delivered to Company N as a partner of Hinode Kogyo Co., Ltd. Added link redundancy to an existing network, covering requirements definition, design, physical cabling, router configuration, unit testing and integration testing.",
+    "zh": "作为日乃出工业株式会社的合作伙伴为N公司提供服务，为现有网络配置链路冗余，负责需求定义、设计、物理布线、路由器配置、单体测试及集成测试。"
+  },
+  "回線冗長化": {
+    "en": "Link Redundancy",
+    "zh": "链路冗余"
+  },
+  "物理結線": {
+    "en": "Physical Cabling",
+    "zh": "物理布线"
+  },
+  "ルーター設定": {
+    "en": "Router Configuration",
+    "zh": "路由器配置"
+  },
+  "Active Directoryリプレース": {
+    "en": "Active Directory migration",
+    "zh": "Active Directory迁移"
+  },
+  "日乃出工業株式会社のパートナーとしてN社へ提供。SAMBA ADからActive Directoryへの移行を支援。詳細設計書、構築手順書、構築スクリプトを作成。": {
+    "en": "Delivered to Company N as a partner of Hinode Kogyo Co., Ltd. Supported migration from SAMBA AD to Active Directory, preparing detailed designs, implementation procedures and setup scripts.",
+    "zh": "作为日乃出工业株式会社的合作伙伴为N公司提供服务，支持从SAMBA AD迁移至Active Directory，并编写详细设计、实施步骤及搭建脚本。"
+  },
+  "富士通 PRIMERGY": {
+    "en": "Fujitsu PRIMERGY",
+    "zh": "Fujitsu PRIMERGY"
+  },
+  "詳細設計": {
+    "en": "Detailed Design",
+    "zh": "详细设计"
+  },
+  "構築スクリプト作成": {
+    "en": "Setup Script Development",
+    "zh": "搭建脚本编写"
+  },
+  "移行支援": {
+    "en": "Migration Support",
+    "zh": "迁移支持"
+  },
+  "Check Point UTM・NAS導入": {
+    "en": "Check Point UTM and NAS deployment",
+    "zh": "Check Point UTM与NAS部署"
+  },
+  "日乃出工業株式会社のパートナーとしてN社へ提供。UTM導入に伴うネットワーク構成の設計・変更とNAS導入を担当。物理結線、機器設定、単体・結合テストを実施。": {
+    "en": "Delivered to Company N as a partner of Hinode Kogyo Co., Ltd. Designed and modified the network for UTM deployment and introduced a NAS, covering physical cabling, device configuration, unit testing and integration testing.",
+    "zh": "作为日乃出工业株式会社的合作伙伴为N公司提供服务，负责UTM部署所需的网络设计与变更以及NAS部署，并进行物理布线、设备配置、单体测试及集成测试。"
+  },
+  "導入": {
+    "en": "Deployment",
+    "zh": "部署"
+  },
+  "機器設定": {
+    "en": "Device Configuration",
+    "zh": "设备配置"
+  },
+  "公共分野": {
+    "en": "Public Sector",
+    "zh": "公共部门"
+  },
+  "公共分野の業務システム基盤更改": {
+    "en": "Infrastructure renewal for a public-sector business system",
+    "zh": "公共部门业务系统的基础设施更新"
+  },
+  "要件定義、仮想化基盤の性能検証、ミドルウェア・ネットワーク設計、構築・テスト・障害対応まで参画。構築手順書の作成も担当。": {
+    "en": "Participated in requirements definition, virtualized infrastructure performance validation, middleware and network design, implementation, testing and incident response. Also documented implementation procedures.",
+    "zh": "参与需求定义、虚拟化基础设施性能验证、中间件与网络设计、搭建、测试及故障处理，并编写实施文档。"
+  },
+  "性能検証": {
+    "en": "Performance Validation",
+    "zh": "性能验证"
+  },
+  "W大学": {
+    "en": "University W",
+    "zh": "W大学"
+  },
+  "大学インフラの運用支援": {
+    "en": "University infrastructure operations support",
+    "zh": "大学基础设施运维支持"
+  },
+  "プライベートクラウドとAWSの運用保守、仮想マシン構築、ファイアウォール・VPN設定を担当。BIG-IPのOS更新に伴う調整・手順作成・検証も実施。": {
+    "en": "Handled private cloud and AWS operations and maintenance, virtual machine provisioning, and firewall and VPN configuration. Also coordinated, documented and validated a BIG-IP OS upgrade.",
+    "zh": "负责私有云与AWS运维、虚拟机搭建、防火墙及VPN配置，并进行BIG-IP操作系统升级的协调、步骤编写及验证。"
+  },
+  "ファイアウォール設定": {
+    "en": "Firewall Configuration",
+    "zh": "防火墙配置"
+  },
+  "OS更新": {
+    "en": "OS Upgrade",
+    "zh": "操作系统升级"
+  },
+  "静岡県 N町役場": {
+    "en": "Town N Office, Shizuoka Prefecture",
+    "zh": "静冈县 N町政府"
+  },
+  "自治体の二要素認証システム構築": {
+    "en": "Two-factor authentication system for a local government",
+    "zh": "地方政府双因素认证系统搭建"
+  },
+  "顔認証とID認証を組み合わせるシステムを構築。Windows Server、Hyper-V、SmartOn IDの設計・設定・テストを担当。": {
+    "en": "Built a system combining facial recognition and ID authentication. Handled Windows Server, Hyper-V and SmartOn ID design, configuration and testing.",
+    "zh": "搭建结合人脸识别与ID认证的系统，负责Windows Server、Hyper-V及SmartOn ID的设计、配置与测试。"
+  },
+  "設定": {
+    "en": "Configuration",
+    "zh": "配置"
+  },
+  "A市役所 / C市役所 / F市役所 / S区役所": {
+    "en": "City A / City C / City F / Ward S Offices",
+    "zh": "A市政府／C市政府／F市政府／S区政府"
+  },
+  "自治体向け中間サーバーコネクタ構築": {
+    "en": "Intermediary server connectors for local governments",
+    "zh": "地方政府中间服务器连接器搭建"
+  },
+  "マイナンバー導入に伴い、4自治体の中間サーバーコネクタを構築。詳細設計、手順・試験項目作成、導入、リリース適用、自治体別カスタマイズを担当。": {
+    "en": "Built intermediary server connectors for four local governments as part of Japan’s My Number rollout. Handled detailed design, procedure and test case documentation, deployment, release updates and local customization.",
+    "zh": "配合日本个人编号制度的实施，为四个地方政府搭建中间服务器连接器，负责详细设计、操作步骤与测试用例编写、部署、版本更新及各地区定制。"
+  },
+  "リリース適用": {
+    "en": "Release Updates",
+    "zh": "版本更新"
+  },
+  "カスタマイズ": {
+    "en": "Customization",
+    "zh": "定制"
+  },
+  "手順・試験項目作成": {
+    "en": "Procedure & Test Case Documentation",
+    "zh": "操作步骤与测试用例编写"
+  },
+  "クラウド・インフラ": {
+    "en": "Cloud & Infrastructure",
+    "zh": "云与基础设施"
+  },
+  "Web開発": {
+    "en": "Web Development",
+    "zh": "Web开发"
+  },
+  "AI連携機能の開発": {
+    "en": "AI integration development",
+    "zh": "AI集成功能开发"
+  },
+  "社内AI基盤の運用保守": {
+    "en": "Internal AI platform operations and maintenance",
+    "zh": "内部AI平台运维"
+  },
+  "DevOps・ネットワーク": {
+    "en": "DevOps & Network",
+    "zh": "DevOps与网络"
+  },
+  "IT資産管理システム「Asset Compass」の構築に、業務委託として携わっています。": {
+    "en": "I contribute to the development of the Asset Compass IT asset management system as a contracted engineer.",
+    "zh": "我以外包工程师的身份参与IT资产管理系统“Asset Compass”的开发。"
+  },
+  "IT資産管理システム構築": {
+    "en": "IT Asset Management System Development",
+    "zh": "IT资产管理系统开发"
+  },
+  "業務委託": {
+    "en": "Contract Development",
+    "zh": "委托开发"
+  },
+  "各種WordPressサイトの運用保守と、新たなインフラ基盤の構築を担当しています。": {
+    "en": "I operate and maintain WordPress websites and build new infrastructure.",
+    "zh": "我负责各类WordPress网站的运维及新基础设施搭建。"
+  },
+  "運用保守": {
+    "en": "Operations & Maintenance",
+    "zh": "运维"
+  },
+  "インフラ新規構築": {
+    "en": "New Infrastructure Setup",
+    "zh": "新基础设施搭建"
+  },
+  "パートナーとして、拠点間VPNの構築やネットワーク機器の更改、セキュリティアプライアンスの導入支援に携わってきました。": {
+    "en": "As a partner, I have contributed to site-to-site VPN implementation, network equipment replacement and security appliance deployment support.",
+    "zh": "作为合作伙伴，我参与过站点间VPN搭建、网络设备更换及安全设备部署支持。"
+  },
+  "ネットワーク設計・構築": {
+    "en": "Network Design & Implementation",
+    "zh": "网络设计与搭建"
+  },
+  "セキュリティ": {
+    "en": "Security",
+    "zh": "安全"
+  }
+}

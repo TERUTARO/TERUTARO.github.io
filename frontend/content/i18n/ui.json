@@ -1,0 +1,742 @@
+{
+  "トップ": {
+    "en": "Home",
+    "zh": "首页"
+  },
+  "実績": {
+    "en": "Works",
+    "zh": "项目案例"
+  },
+  "パートナー": {
+    "en": "Partners",
+    "zh": "合作伙伴"
+  },
+  "イベント": {
+    "en": "Events",
+    "zh": "活动"
+  },
+  "コラム": {
+    "en": "Columns",
+    "zh": "专栏"
+  },
+  "お問い合わせ": {
+    "en": "Contact",
+    "zh": "联系我"
+  },
+  "本文へスキップ": {
+    "en": "Skip to content",
+    "zh": "跳转到正文"
+  },
+  "terutaro トップページ": {
+    "en": "terutaro home",
+    "zh": "terutaro 首页"
+  },
+  "メニューを開く": {
+    "en": "Open menu",
+    "zh": "打开菜单"
+  },
+  "メニューを閉じる": {
+    "en": "Close menu",
+    "zh": "关闭菜单"
+  },
+  "メニュー": {
+    "en": "Menu",
+    "zh": "菜单"
+  },
+  "メインナビゲーション": {
+    "en": "Main navigation",
+    "zh": "主导航"
+  },
+  "ページ一覧": {
+    "en": "Pages",
+    "zh": "页面导航"
+  },
+  "ページの先頭へ": {
+    "en": "Back to top",
+    "zh": "返回顶部"
+  },
+  "お問い合わせフォームへ": {
+    "en": "Go to contact form",
+    "zh": "前往联系表单"
+  },
+  "お問い合わせを開く": {
+    "en": "Open contact panel",
+    "zh": "打开联系面板"
+  },
+  "お問い合わせを閉じる": {
+    "en": "Close contact panel",
+    "zh": "关闭联系面板"
+  },
+  "Webサイトを開く": {
+    "en": "Visit website",
+    "zh": "访问网站"
+  },
+  "スキル": {
+    "en": "Skills",
+    "zh": "技能"
+  },
+  "スキルの分類": {
+    "en": "Skill categories",
+    "zh": "技能分类"
+  },
+  "公開条件を確認したロゴ・オリジナルマークを使用しています。": {
+    "en": "Logos with reviewed usage terms and original marks are used.",
+    "zh": "所用标识包括已核查使用条款的徽标和原创图形。"
+  },
+  "出典・利用条件": {
+    "en": "Sources & usage terms",
+    "zh": "来源与使用条款"
+  },
+  "現在掲載しているスキルはありません。": {
+    "en": "No skills are currently listed.",
+    "zh": "暂无已发布的技能。"
+  },
+  "照屋 朝太郎": {
+    "en": "Asataro Teruya",
+    "zh": "照屋 朝太郎"
+  },
+  "沖縄": {
+    "en": "Okinawa",
+    "zh": "冲绳"
+  },
+  "関東": {
+    "en": "Kanto",
+    "zh": "关东"
+  },
+  "フリーランス": {
+    "en": "Freelance",
+    "zh": "自由职业"
+  },
+  "インフラ": {
+    "en": "Infrastructure",
+    "zh": "基础设施"
+  },
+  "オンプレミスインフラ": {
+    "en": "On-premises infrastructure",
+    "zh": "本地基础设施"
+  },
+  "クラウドインフラ": {
+    "en": "Cloud infrastructure",
+    "zh": "云基础设施"
+  },
+  "Web システム開発": {
+    "en": "Web application development",
+    "zh": "Web 系统开发"
+  },
+  "AI 開発": {
+    "en": "AI development",
+    "zh": "AI 开发"
+  },
+  "主催": {
+    "en": "Organizer",
+    "zh": "主办人"
+  },
+  "Terraformリソース風のプロフィール": {
+    "en": "Profile in Terraform resource syntax",
+    "zh": "以 Terraform 资源语法展示的个人简介"
+  },
+  "長期でお世話になっている企業様": {
+    "en": "Long-term partners",
+    "zh": "长期合作伙伴"
+  },
+  "共同開発している企業様": {
+    "en": "Development partners",
+    "zh": "联合开发伙伴"
+  },
+  "詳しく見る": {
+    "en": "Learn more",
+    "zh": "了解详情"
+  },
+  "今はアフロだよ": {
+    "en": "I have an afro now!",
+    "zh": "我现在是爆炸头啦"
+  },
+  "沖縄・関東を拠点に活動するフリーランスエンジニア。": {
+    "en": "Freelance engineer based in Okinawa and Kanto, Japan.",
+    "zh": "以日本冲绳及关东地区为据点的自由职业工程师。"
+  },
+  "インフラ構築・運用保守、Web開発、AI基盤などできます": {
+    "en": "Infrastructure, operations, web development, and AI platforms.",
+    "zh": "提供基础设施搭建与运维、Web 开发及 AI 平台等服务。"
+  },
+  "インフラが得意": {
+    "en": "Infrastructure is my specialty.",
+    "zh": "擅长基础设施。"
+  },
+  "プロフィール": {
+    "en": "Profile",
+    "zh": "个人简介"
+  },
+  "イベント一覧": {
+    "en": "All events",
+    "zh": "全部活动"
+  },
+  "照屋 朝太郎が主催するコミュニティ。": {
+    "en": "A community organized by Asataro Teruya.",
+    "zh": "由照屋 朝太郎主办的社区。"
+  },
+  "公式サイト": {
+    "en": "Official website",
+    "zh": "官方网站"
+  },
+  "経歴": {
+    "en": "Career",
+    "zh": "职业经历"
+  },
+  "コミュニティ活動": {
+    "en": "Community activities",
+    "zh": "社区活动"
+  },
+  "コミュニティサイト": {
+    "en": "Community website",
+    "zh": "社区网站"
+  },
+  "個人開発": {
+    "en": "Personal projects",
+    "zh": "个人开发"
+  },
+  "（現在β版）": {
+    "en": "(Beta)",
+    "zh": "（目前为 Beta 版）"
+  },
+  "サイトを見る": {
+    "en": "Visit website",
+    "zh": "访问网站"
+  },
+  "リリース予定": {
+    "en": "Coming soon",
+    "zh": "即将发布"
+  },
+  "現在保守停止中": {
+    "en": "Maintenance paused",
+    "zh": "目前暂停维护"
+  },
+  "イベントを見る": {
+    "en": "View event",
+    "zh": "查看活动"
+  },
+  "相談": {
+    "en": "Let’s talk",
+    "zh": "咨询"
+  },
+  "01 / インフラ構築・運用保守": {
+    "en": "01 / Infrastructure & operations",
+    "zh": "01 / 基础设施搭建与运维"
+  },
+  "02 / Webシステム開発": {
+    "en": "02 / Web application development",
+    "zh": "02 / Web 系统开发"
+  },
+  "03 / AI基盤・開発支援": {
+    "en": "03 / AI platforms & development support",
+    "zh": "03 / AI 平台与开发支持"
+  },
+  "04 / その他のご相談": {
+    "en": "04 / Other inquiries",
+    "zh": "04 / 其他咨询"
+  },
+  "お仕事のご相談を受け付けています。": {
+    "en": "Open to project inquiries.",
+    "zh": "欢迎咨询项目合作。"
+  },
+  "担当内容やご希望の時期などをお知らせください。": {
+    "en": "Tell me about the work and your preferred timeline.",
+    "zh": "请告知工作内容及期望时间等信息。"
+  },
+  "この欄は入力しないでください": {
+    "en": "Leave this field empty",
+    "zh": "请将此栏留空"
+  },
+  "お名前": {
+    "en": "Name",
+    "zh": "姓名"
+  },
+  "必須": {
+    "en": "Required",
+    "zh": "必填"
+  },
+  "山田 太郎": {
+    "en": "Your name",
+    "zh": "您的姓名"
+  },
+  "会社名 / 屋号": {
+    "en": "Company / business name",
+    "zh": "公司 / 商号"
+  },
+  "任意": {
+    "en": "Optional",
+    "zh": "选填"
+  },
+  "株式会社〇〇": {
+    "en": "Your company",
+    "zh": "您的公司名称"
+  },
+  "メールアドレス": {
+    "en": "Email address",
+    "zh": "电子邮箱"
+  },
+  "ご相談の種類": {
+    "en": "Inquiry type",
+    "zh": "咨询类型"
+  },
+  "選択してください": {
+    "en": "Please select",
+    "zh": "请选择"
+  },
+  "インフラ構築・運用保守": {
+    "en": "Infrastructure implementation, operations and maintenance",
+    "zh": "基础设施搭建与运维"
+  },
+  "Webシステム開発": {
+    "en": "Web application development",
+    "zh": "Web 系统开发"
+  },
+  "AI基盤・開発支援": {
+    "en": "AI platforms & development support",
+    "zh": "AI 平台与开发支持"
+  },
+  "その他のご相談": {
+    "en": "Other inquiries",
+    "zh": "其他咨询"
+  },
+  "ご相談内容": {
+    "en": "Message",
+    "zh": "咨询内容"
+  },
+  "ご相談の背景や実現したいこと、ご希望の時期などをお聞かせください。（10文字以上）": {
+    "en": "Tell me about your project, goals, and preferred timeline. (At least 10 characters)",
+    "zh": "请介绍咨询背景、希望实现的目标及期望时间等信息。（至少 10 个字符）"
+  },
+  "10〜3,000文字": {
+    "en": "10–3,000 characters",
+    "zh": "10～3,000 个字符"
+  },
+  "入力内容はお問い合わせへの対応のために使用します。": {
+    "en": "The information you provide will be used to respond to your inquiry.",
+    "zh": "您提供的信息将用于回复此次咨询。"
+  },
+  "確認画面を表示するにはJavaScriptを有効にしてください。入力内容は送信されません。": {
+    "en": "Enable JavaScript to review your message. Your information has not been sent.",
+    "zh": "请启用 JavaScript 以显示确认页面。您的信息尚未发送。"
+  },
+  "入力内容を確認する": {
+    "en": "Review message",
+    "zh": "确认填写内容"
+  },
+  "ご相談内容の確認": {
+    "en": "Review your inquiry",
+    "zh": "确认咨询内容"
+  },
+  "内容をご確認のうえ、送信ボタンを押してください。": {
+    "en": "Check your message, then select Send.",
+    "zh": "请确认内容后点击发送。"
+  },
+  "入力内容を修正する": {
+    "en": "Edit message",
+    "zh": "修改内容"
+  },
+  "この内容で送信する": {
+    "en": "Send message",
+    "zh": "确认发送"
+  },
+  "この内容で送信する ↗": {
+    "en": "Send message ↗",
+    "zh": "确认发送 ↗"
+  },
+  "お問い合わせを受け付けました": {
+    "en": "Your inquiry has been received",
+    "zh": "已收到您的咨询"
+  },
+  "内容を確認のうえ、ご連絡します。": {
+    "en": "I’ll review your message and get back to you.",
+    "zh": "查看内容后，我会与您联系。"
+  },
+  "受付番号：": {
+    "en": "Reference number: ",
+    "zh": "受理编号："
+  },
+  "お名前を入力してください。": {
+    "en": "Please enter your name.",
+    "zh": "请输入姓名。"
+  },
+  "ご相談内容を10文字以上で入力してください。": {
+    "en": "Please enter a message of at least 10 characters.",
+    "zh": "咨询内容请至少填写 10 个字符。"
+  },
+  "未入力": {
+    "en": "Not provided",
+    "zh": "未填写"
+  },
+  "送信しています…": {
+    "en": "Sending…",
+    "zh": "正在发送…"
+  },
+  "送信先を取得できませんでした。時間をおいて再度お試しください。": {
+    "en": "Could not load the contact service. Please try again later.",
+    "zh": "无法加载联系服务，请稍后重试。"
+  },
+  "現在、送信機能を準備しています。時間をおいて再度お試しください。": {
+    "en": "The contact service is being prepared. Please try again later.",
+    "zh": "发送功能正在准备中，请稍后重试。"
+  },
+  "送信先を確認できませんでした。": {
+    "en": "Could not verify the contact service.",
+    "zh": "无法确认联系服务地址。"
+  },
+  "送信できませんでした。時間をおいて再度お試しください。": {
+    "en": "Your message could not be sent. Please try again later.",
+    "zh": "发送失败，请稍后重试。"
+  },
+  "受付済み": {
+    "en": "Received",
+    "zh": "已受理"
+  },
+  "通信を確認できませんでした。もう一度送信できます。同じ内容が二重に登録されることはありません。": {
+    "en": "The connection could not be confirmed. You can send again; the same message will not be registered twice.",
+    "zh": "无法确认通信状态，您可以重新发送。相同内容不会重复登记。"
+  },
+  "この操作には対応していません。": {
+    "en": "This action is not supported.",
+    "zh": "不支持此操作。"
+  },
+  "入力内容を確認してください。": {
+    "en": "Please check the information you entered.",
+    "zh": "请检查填写的内容。"
+  },
+  "内容が更新されています。再取得してからお試しください。": {
+    "en": "The content has changed. Refresh and try again.",
+    "zh": "内容已更新，请刷新后重试。"
+  },
+  "処理できませんでした。時間をおいてお試しください。": {
+    "en": "The request could not be processed. Please try again later.",
+    "zh": "处理失败，请稍后重试。"
+  },
+  "送信回数の上限に達しました。しばらくしてからお試しください。": {
+    "en": "You’ve reached the sending limit. Please try again later.",
+    "zh": "已达到发送次数上限，请稍后重试。"
+  },
+  "担当フェーズ": {
+    "en": "Project phases",
+    "zh": "参与阶段"
+  },
+  "担当フェーズのタグ": {
+    "en": "Project phase tags",
+    "zh": "参与阶段标签"
+  },
+  "技術スタック": {
+    "en": "Tech stack",
+    "zh": "技术栈"
+  },
+  "担当・技術を見る": {
+    "en": "View role & technology",
+    "zh": "查看职责与技术"
+  },
+  "現在進行中": {
+    "en": "Ongoing",
+    "zh": "进行中"
+  },
+  "進行中": {
+    "en": "Ongoing",
+    "zh": "进行中"
+  },
+  "共同開発パートナー": {
+    "en": "Development partner",
+    "zh": "联合开发伙伴"
+  },
+  "長期パートナー": {
+    "en": "Long-term partner",
+    "zh": "长期合作伙伴"
+  },
+  "年": {
+    "en": "",
+    "zh": "年"
+  },
+  "件": {
+    "en": " projects",
+    "zh": " 项"
+  },
+  "件の実績": {
+    "en": "projects",
+    "zh": "个项目"
+  },
+  "実績一覧": {
+    "en": "Project list",
+    "zh": "项目列表"
+  },
+  "実績の絞り込み": {
+    "en": "Filter projects",
+    "zh": "筛选项目"
+  },
+  "条件をクリア": {
+    "en": "Clear filters",
+    "zh": "清除筛选"
+  },
+  "タグ検索": {
+    "en": "Search tags",
+    "zh": "搜索标签"
+  },
+  "AWS、Terraform、VPN…": {
+    "en": "AWS, Terraform, VPN…",
+    "zh": "AWS、Terraform、VPN…"
+  },
+  "技術名・担当フェーズの一部で検索できます。タグを押すと検索欄に入ります。": {
+    "en": "Search by technology or project phase. Select a tag to add it to the search.",
+    "zh": "可按技术名称或参与阶段的部分文字搜索，点击标签可将其填入搜索栏。"
+  },
+  "よく使うタグ": {
+    "en": "Popular tags",
+    "zh": "常用标签"
+  },
+  "開始年の新しい順": {
+    "en": "Newest start year first",
+    "zh": "按开始年份降序排列"
+  },
+  "該当する実績がありません。": {
+    "en": "No matching projects.",
+    "zh": "没有符合条件的项目。"
+  },
+  "タグ名・カテゴリ・進行中の条件を変えてお試しください。": {
+    "en": "Try changing the tag, category, or ongoing filter.",
+    "zh": "请尝试调整标签、类别或进行中筛选条件。"
+  },
+  "すべての実績を表示": {
+    "en": "Show all projects",
+    "zh": "显示全部项目"
+  },
+  "2025年6月版の職務経歴書をもとに、2025年9月開始の案件・2026年の実績と追加情報を反映しています。過去資料の「現在」表記は2025年6月時点です。": {
+    "en": "Based on the June 2025 résumé, with projects starting in September 2025, work from 2026, and additional updates. “Present” in earlier records refers to June 2025.",
+    "zh": "以 2025 年 6 月版履历为基础，补充了 2025 年 9 月开始的项目、2026 年的案例及其他信息。历史资料中的“至今”指截至 2025 年 6 月。"
+  },
+  "現在掲載している実績はありません。": {
+    "en": "No projects are currently listed.",
+    "zh": "暂无已发布的项目。"
+  },
+  "詳細を見る": {
+    "en": "View details",
+    "zh": "查看详情"
+  },
+  "すべての実績": {
+    "en": "All projects",
+    "zh": "全部项目"
+  },
+  "直近2年の実績": {
+    "en": "Projects from the latest two years",
+    "zh": "最近两年的项目"
+  },
+  "前の実績": {
+    "en": "Previous project",
+    "zh": "上一个项目"
+  },
+  "次の実績": {
+    "en": "Next project",
+    "zh": "下一个项目"
+  },
+  "最新情報を取得できませんでした。保存済みの内容を表示しています。": {
+    "en": "The latest information could not be loaded. Showing saved content.",
+    "zh": "无法获取最新信息，正在显示已保存的内容。"
+  },
+  "コラム一覧": {
+    "en": "Column list",
+    "zh": "专栏列表"
+  },
+  "コラムは準備中です。": {
+    "en": "Columns are coming soon.",
+    "zh": "专栏正在准备中。"
+  },
+  "イベント・コミュニティ": {
+    "en": "Events & community",
+    "zh": "活动与社区"
+  },
+  "照屋 朝太郎 | 沖縄・関東のフリーランスエンジニア": {
+    "en": "Asataro Teruya | Freelance engineer in Okinawa & Kanto",
+    "zh": "照屋 朝太郎 | 活跃于冲绳及关东的自由职业工程师"
+  },
+  "沖縄・関東を拠点に活動する照屋 朝太郎のポートフォリオ。インフラ・Web開発・AI基盤の構築から運用保守まで。": {
+    "en": "Portfolio of Asataro Teruya, a freelance engineer based in Okinawa and Kanto, Japan. Infrastructure, web development, and AI platforms, from setup to operations.",
+    "zh": "以冲绳及关东地区为据点的自由职业工程师照屋 朝太郎的作品集。提供基础设施、Web 开发及 AI 平台从搭建到运维的服务。"
+  },
+  "インフラ構築、Web開発、ネットワーク、AI基盤。照屋 朝太郎の実績をご紹介します。": {
+    "en": "Explore Asataro Teruya’s work in infrastructure, web development, networking, and AI platforms.",
+    "zh": "介绍照屋 朝太郎在基础设施搭建、Web 开发、网络及 AI 平台方面的项目案例。"
+  },
+  "日乃出工業株式会社との継続のお取引と、リアムス株式会社との共同開発。": {
+    "en": "Long-term work with Hinode Kogyo Co., Ltd. and joint development with Riams Co., Ltd.",
+    "zh": "与日乃出工业株式会社的长期合作，以及与 RIAMS 的联合开发。"
+  },
+  "照屋 朝太郎主催のTIDAL WAIVEと、これまでのconnpassイベント。": {
+    "en": "TIDAL WAIVE, organized by Asataro Teruya, and past connpass events.",
+    "zh": "照屋 朝太郎主办的 TIDAL WAIVE 及历届 connpass 活动。"
+  },
+  "照屋 朝太郎のコラム。": {
+    "en": "Columns by Asataro Teruya.",
+    "zh": "照屋 朝太郎的专栏。"
+  },
+  "インフラ、Web開発、AI基盤に関するお仕事のご相談。": {
+    "en": "Get in touch about infrastructure, web development, and AI platform projects.",
+    "zh": "咨询基础设施、Web 开发及 AI 平台相关的项目合作。"
+  },
+  "【テルスタ】AnsibleでNginx／MySQL／PHP／Laravel環境をざっくりつくる": {
+    "en": "[Terusta] Getting started with Nginx, MySQL, PHP & Laravel using Ansible",
+    "zh": "【Terusta】使用 Ansible 快速搭建 Nginx／MySQL／PHP／Laravel 环境"
+  },
+  "【テルスタ】Webサーバをつくろう　其の参　ざっくりLAMP環境": {
+    "en": "[Terusta] Build a web server, Part 3: Getting started with LAMP",
+    "zh": "【Terusta】搭建 Web 服务器 第三篇：快速上手 LAMP 环境"
+  },
+  "【テルスタ】Webサーバをつくろう　其の弐　レッツロードバランシング": {
+    "en": "[Terusta] Build a web server, Part 2: Load balancing",
+    "zh": "【Terusta】搭建 Web 服务器 第二篇：负载均衡"
+  },
+  "【テルスタ】Webサーバをつくろう　其の壱": {
+    "en": "[Terusta] Build a web server, Part 1",
+    "zh": "【Terusta】搭建 Web 服务器 第一篇"
+  },
+  "【オフィス引っ越しなら】HINODE CORPORATION(日乃出工業株式会社)": {
+    "en": "Office relocation | HINODE CORPORATION",
+    "zh": "办公室搬迁 | HINODE CORPORATION（日乃出工业株式会社）"
+  },
+  "Tidal wAIve Ryukyu — AIと地域の潮流が、ゆるやかに交わる場所。": {
+    "en": "Tidal wAIve Ryukyu — Where AI and local currents gently meet.",
+    "zh": "Tidal wAIve Ryukyu — AI 与地方潮流轻柔交汇之处。"
+  },
+  "prompton — 伝わる指示を、もっと、かんたんに。": {
+    "en": "prompton — Clear instructions, made easier.",
+    "zh": "prompton — 让指令表达更清晰、更简单。"
+  },
+  "IT資産管理（ITAM）コンサルティング | RIAMS -": {
+    "en": "IT Asset Management (ITAM) Consulting | RIAMS",
+    "zh": "IT 资产管理（ITAM）咨询 | RIAMS"
+  },
+  "{name}のプロフィール写真": {
+    "en": "Profile photo of {name}",
+    "zh": "{name}的个人照片"
+  },
+  "{name}が主催するコミュニティ。": {
+    "en": "A community organized by {name}.",
+    "zh": "由{name}主办的社区。"
+  },
+  "{title}のWebサイト": {
+    "en": "{title} website",
+    "zh": "{title}网站"
+  },
+  "{title}のWebサイトを開く（新しいタブ）": {
+    "en": "Open {title} website (new tab)",
+    "zh": "打开{title}网站（新标签页）"
+  },
+  "{label} {handle}（新しいタブ）": {
+    "en": "{label} {handle} (new tab)",
+    "zh": "{label} {handle}（新标签页）"
+  },
+  "{tag}のスキルマークを表示": {
+    "en": "Show the skill mark for {tag}",
+    "zh": "显示{tag}的技能标识"
+  },
+  "{tag}でタグ検索": {
+    "en": "Search by tag: {tag}",
+    "zh": "搜索标签：{tag}"
+  },
+  "{group}のタグ": {
+    "en": "{group} tags",
+    "zh": "{group}标签"
+  },
+  "{label}、{count}件": {
+    "en": "{label}, {count} projects",
+    "zh": "{label}，{count} 个项目"
+  },
+  " / {count} 件の実績": {
+    "en": " / {count} projects",
+    "zh": " / {count} 个项目"
+  },
+  "現在進行中のみ。": {
+    "en": "Ongoing projects only.",
+    "zh": "仅显示进行中的项目。"
+  },
+  "カテゴリ {category}。": {
+    "en": "Category: {category}.",
+    "zh": "类别：{category}。"
+  },
+  "タグ「{tag}」で検索。": {
+    "en": "Searching for tag “{tag}”.",
+    "zh": "按标签“{tag}”搜索。"
+  },
+  "イベント #{id}": {
+    "en": "Event #{id}",
+    "zh": "活动 #{id}"
+  },
+  "connpass イベント {id}": {
+    "en": "connpass event {id}",
+    "zh": "connpass 活动 {id}"
+  },
+  "Menu": {
+    "en": "Menu",
+    "zh": "菜单"
+  },
+  "Back to top": {
+    "en": "Back to top",
+    "zh": "返回顶部"
+  },
+  "Independent engineer · Okinawa / Kanto, Japan": {
+    "en": "Independent engineer · Okinawa / Kanto, Japan",
+    "zh": "自由职业工程师 · 日本冲绳 / 关东"
+  },
+  "SNS": {
+    "en": "Social links",
+    "zh": "社交链接"
+  },
+  "About": {
+    "en": "About",
+    "zh": "关于我"
+  },
+  "Works": {
+    "en": "Works",
+    "zh": "项目案例"
+  },
+  "Partners": {
+    "en": "Partners",
+    "zh": "合作伙伴"
+  },
+  "Events": {
+    "en": "Events",
+    "zh": "活动"
+  },
+  "Columns": {
+    "en": "Columns",
+    "zh": "专栏"
+  },
+  "Contact": {
+    "en": "Contact",
+    "zh": "联系我"
+  },
+  "All": {
+    "en": "All",
+    "zh": "全部"
+  },
+  "Infrastructure": {
+    "en": "Infrastructure",
+    "zh": "基础设施"
+  },
+  "Development": {
+    "en": "Development",
+    "zh": "开发"
+  },
+  "Network": {
+    "en": "Network",
+    "zh": "网络"
+  },
+  "ROLE": {
+    "en": "ROLE",
+    "zh": "职责"
+  },
+  "ページが見つかりません": {
+    "en": "Page not found",
+    "zh": "找不到该页面"
+  },
+  "URLをご確認いただくか、トップページへお戻りください。": {
+    "en": "Check the URL or return to the home page.",
+    "zh": "请检查网址，或返回首页。"
+  },
+  "トップページへ": {
+    "en": "Back to home",
+    "zh": "返回首页"
+  }
+}

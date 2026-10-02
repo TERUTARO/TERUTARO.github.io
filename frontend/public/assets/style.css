@@ -140,7 +140,7 @@ h1, h2, h3, h4, p { margin: 0; }
 .circle-link { width: 115px; height: 115px; border-radius: 50%; background: var(--accent); color: var(--paper); display: grid; place-items: center; flex: 0 0 auto; transition: transform .25s, background .25s; }
 .circle-link .arrow { width: 37px; height: 37px; }
 .circle-link:hover { background: var(--green); transform: rotate(-35deg); }
-.site-footer { border-top: 1px solid var(--line); padding-top: 36px; }
+.site-footer { padding-top: 36px; }
 .footer-top { display: flex; align-items: center; gap: 42px; }.footer-top > p { font-size: 11px; color: var(--muted); }.back-top { margin-left: auto; display: flex; gap: 20px; font-size: 11px; align-items: center; }.back-top > span { font-size: 19px; }
 .footer-bottom { display: flex; justify-content: space-between; gap: 20px; font-size: 10px; color: var(--muted); padding-block: 30px; }.mock-label { letter-spacing: .09em; font-size: 10px; }
 .page-heading { padding-block: 62px 52px; }
@@ -174,12 +174,12 @@ h1, h2, h3, h4, p { margin: 0; }
 .personal-grid :is(.personal-project-paused, .personal-project-upcoming) h3 { margin: 0; font-size: 20px; }
 .personal-project-paused .paused, .personal-project-upcoming .release-status { margin: 0; }
 .release-status { color: var(--green); background: #e9ebe2; }
-.activity-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 30px; }
-.activity-group { min-width: 0; }
-.activity-group .personal-grid { grid-template-columns: 1fr; }
+.activity-section .personal-grid { grid-template-columns: 1fr; }
+.activity-section .personal-project { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(30px, 5vw, 75px); align-items: center; }
+.activity-section .personal-project-copy { padding-top: 0; }
 .project-beta { display: inline-block; vertical-align: middle; font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--accent); }
 @media (max-width: 580px) {
-  .activity-groups { grid-template-columns: 1fr; gap: 48px; }
+  .activity-section .personal-project { grid-template-columns: 1fr; gap: 22px; }
 }
 .partners-list { border-top: 1px solid var(--line); }.partner-row { display: grid; grid-template-columns: 1fr 1.05fr; gap: 90px; padding-block: 64px; border-bottom: 1px solid var(--line); }.partner-identity > .mono { color: var(--muted); }.partner-wordmark { margin: 40px 0 30px; font-size: 79px; letter-spacing: -.055em; line-height: 1; display: flex; align-items: center; gap: 27px; }.partner-wordmark > span { font-size: 29px; color: var(--accent); }.wordmark-02 { font-family: var(--serif); font-style: italic; font-size: 65px; }.wordmark-03 { font-size: 65px; letter-spacing: -.065em; }.partner-identity h2 { font-size: 12px; font-weight: 400; }.partner-description > .eyebrow { color: var(--muted); }.partner-description h3 { font-size: 25px; line-height: 1.7; font-weight: 500; letter-spacing: -.035em; margin: 18px 0; }.partner-description > p { font-size: 14px; line-height: 2.2; margin-bottom: 25px; }.partner-links { margin-top: 26px; display: flex; gap: 30px; flex-wrap: wrap; }.partnership-note { text-align: center; padding-block: 80px; }.partnership-note > .asterisk { margin-inline: auto; width: 38px; height: 38px; color: var(--accent); }.partnership-note h2 { font-size: 32px; letter-spacing: -.035em; font-weight: 500; line-height: 1.8; margin: 26px 0 20px; }.partnership-note p { font-size: 12px; line-height: 2.2; }
 .event-feature { display: grid; grid-template-columns: 1fr 1fr; align-items: center; border-top: 1px solid var(--line); padding-top: 42px; gap: 70px; }.event-feature .wave-art { min-height: 420px; }.event-feature .wave-word { font-size: 75px; }.event-feature .wave-word em { font-size: 90px; }.event-feature-copy h2 { font-size: 35px; font-weight: 500; line-height: 1.6; margin: 23px 0; letter-spacing: -.04em; }.event-feature-copy p { font-size: 12px; line-height: 2.2; }.event-feature-copy .pill-link { margin-top: 26px; }.event-archive { padding-block: 80px; }.event-row { display: flex; align-items: center; gap: 45px; padding-block: 31px; border-top: 1px solid var(--line); }.event-index { color: var(--accent); }.event-row .eyebrow { font-size: 10px; color: var(--muted); }.event-row h3 { font-size: 20px; font-weight: 500; margin-top: 9px; line-height: 1.5; }.event-row h3 > span { color: var(--muted); font-size: 16px; margin-left: 10px; }.event-action { display: flex; gap: 35px; align-items: center; margin-left: auto; font-size: 11px; }.event-row:hover { color: var(--accent); }

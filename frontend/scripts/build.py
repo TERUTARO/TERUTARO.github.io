@@ -258,26 +258,22 @@ def works(data):
     return page_head('01', 'Works', '実績', '') + render_work_history(data) + f'''<!--
 <section class="career-section wrap">{section_label('02', 'The journey')}<div class="career-grid"><div><h2>経歴</h2></div><div class="career-list">{career}</div></div></section>
 -->
-<section class="personal-section wrap" aria-label="コミュニティ活動と個人開発">
-  <div class="activity-groups">
-    <section class="activity-group" aria-labelledby="community-activity-heading">
-      <div class="section-title"><h2 id="community-activity-heading">コミュニティ活動</h2></div>
-      <div class="personal-grid"><article class="personal-project">
-        {site_preview('tidal-waive', False)}
-        <div class="personal-project-copy"><h3>TIDAL WAIVE</h3><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', 'コミュニティサイト')}</div>
-      </article></div>
-    </section>
-    <section class="activity-group" aria-labelledby="personal-development-heading">
-      <div class="section-title"><h2 id="personal-development-heading">個人開発</h2></div>
-      <div class="personal-grid">
-        <article class="personal-project">
-          {site_preview('prompton', False)}
-          <div class="personal-project-copy"><h3>prompton <span class="project-beta">（現在β版）</span></h3>{link('https://prompton.site/', 'サイトを見る')}</div>
-        </article>
-        <article class="personal-project-upcoming"><h3>octakairo</h3><span class="release-status">リリース予定</span></article>
-        <article class="personal-project-paused"><h3>tideline</h3><span class="paused">現在保守停止中</span></article>
-      </div>
-    </section>
+<section class="personal-section activity-section wrap" id="community-activities" aria-labelledby="community-activity-heading">
+  <div class="section-title"><h2 id="community-activity-heading">コミュニティ活動</h2></div>
+  <div class="personal-grid"><article class="personal-project">
+    {site_preview('tidal-waive', False)}
+    <div class="personal-project-copy"><h3>TIDAL WAIVE</h3><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', 'コミュニティサイト')}</div>
+  </article></div>
+</section>
+<section class="personal-section activity-section wrap" id="personal-development" aria-labelledby="personal-development-heading">
+  <div class="section-title"><h2 id="personal-development-heading">個人開発</h2></div>
+  <div class="personal-grid">
+    <article class="personal-project">
+      {site_preview('prompton', False)}
+      <div class="personal-project-copy"><h3>prompton <span class="project-beta">（現在β版）</span></h3>{link('https://prompton.site/', 'サイトを見る')}</div>
+    </article>
+    <article class="personal-project-upcoming"><h3>octakairo</h3><span class="release-status">リリース予定</span></article>
+    <article class="personal-project-paused"><h3>tideline</h3><span class="paused">現在保守停止中</span></article>
   </div>
 </section>'''
 

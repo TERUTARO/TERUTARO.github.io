@@ -10,6 +10,7 @@ import "../../public/assets/water.css";
 import "../../public/assets/work-history.css";
 import "../../public/assets/menu.css";
 import "../../public/assets/pricing.css";
+import "../../public/assets/columns.css";
 import "../../public/assets/admin.css";
 
 export const metadata: Metadata = {

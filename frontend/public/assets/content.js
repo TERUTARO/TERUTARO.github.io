@@ -7,6 +7,7 @@
   const uniq = values => [...new Set(values)];
   // Company names can be hidden without removing their project history.
   const publicCompanyName = value => /ハラハチ|harahachi/i.test(String(value??'').normalize('NFKC').replace(/\s+/g,'')) ? '' : String(value??'');
+  const partnerGroup = row => String(row.id??'').toLowerCase()==='riams' || /リアムス|riams/i.test(String(row.name??'').normalize('NFKC').replace(/\s+/g,'')) ? 'co-development' : 'long-term';
   const arrow = '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg>';
   const rightArrow = '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg>';
   const tags = values => `<div class="tags">${arr(values).map(t => `<span>${esc(t)}</span>`).join('')}</div>`;
@@ -37,7 +38,8 @@
   function projectTags(p) { return uniq([...arr(p.tags),...arr(p.phases),...arr(p.stackGroups).flatMap(g=>arr(g.tags))]); }
   function projectArticle(p) {
     const partnerName=publicCompanyName(p.partner), clientName=publicCompanyName(p.client);
-    const partner = partnerName ? `<p class="partner-label"><span>長期パートナー</span>：${esc(partnerName)}${esc(p.partnerHonorific ?? '様')}</p>` : '';
+    const partnerType = partnerGroup({name:partnerName})==='co-development' ? '共同開発パートナー' : '長期パートナー';
+    const partner = partnerName ? `<p class="partner-label"><span>${partnerType}</span>：${esc(partnerName)}${esc(p.partnerHonorific ?? '様')}</p>` : '';
     const phase = `<section class="project-detail-section project-phases" aria-label="担当フェーズ"><h4>担当フェーズ</h4><div class="project-tags" role="group" aria-label="担当フェーズのタグ">${arr(p.phases).map(tagButton).join('')}</div></section>`;
     const stacks = `<section class="project-detail-section project-stack" aria-label="技術スタック"><h4>技術スタック</h4><dl class="stack-groups">${arr(p.stackGroups).map(g=>`<div class="stack-group"><dt>${esc(g.label)}</dt><dd><div class="project-tags" role="group" aria-label="${esc(g.label)}のタグ">${arr(g.tags).map(tagButton).join('')}</div></dd></div>`).join('')}</dl></section>`;
     return `<article class="timeline-item ${p.current?'is-current':''}" data-category="${esc(p.category)}" data-categories="${esc(JSON.stringify(projectCategories(p)))}" data-current="${p.current===true}" data-project-year="${esc(p.year)}" data-tags="${esc(JSON.stringify(projectTags(p)))}" id="project-${esc(p.id)}" tabindex="-1"><div class="timeline-date"><span class="mono">${esc(p.period)}</span>${p.current?'<span class="status"><i></i>進行中</span>':''}</div><div class="timeline-track" aria-hidden="true"><span></span></div><div class="timeline-content">${partner}<div class="project-kicker">${clientName&&clientName!==partnerName?`<span class="project-client-label">${esc(clientName)}</span>`:''}<span class="mono">${esc(projectCategories(p).join(' / ').toUpperCase())}</span></div><h3>${esc(p.title)}</h3><p>${esc(p.summary)}</p><details class="project-detail"><summary>担当・技術を見る <span aria-hidden="true">+</span></summary><div class="project-detail-body"><div class="project-role"><h4>ROLE</h4><p>${esc(p.role)}</p></div>${phase}${stacks}</div></details></div></article>`;
@@ -106,16 +108,16 @@
     initFeatured();
   }
   function renderPartners(rows) {
-    const target=document.querySelector('.partners-list');
-    if(target){
+    document.querySelectorAll('.partners-list,.company-previews').forEach(target=>{
       const hidden=new Set(JSON.parse(target.dataset.hiddenPartners||'[]'));
-      target.innerHTML=rows.filter(p=>!hidden.has(p.id)).map(p=>`<article class="partner-row"><div class="partner-gallery">${arr(p.sites).map(preview).join('')}</div><div class="partner-description"><h2>${esc(p.name)}</h2><p>${esc(p.summary)}</p>${tags(p.tags)}</div></article>`).join('') || '<p>現在掲載しているパートナーはありません。</p>';
-    }
-    const home=document.querySelector('.company-previews');
-    if(home){
-      const hidden=new Set(JSON.parse(home.dataset.hiddenPartners||'[]'));
-      home.innerHTML=rows.filter(p=>!hidden.has(p.id)).flatMap(p=>arr(p.sites).slice(0,1)).map(preview).join('');
-    }
+      const group=target.dataset.partnerGroup;
+      const visible=rows.filter(p=>p.published!==false && !hidden.has(p.id) && publicCompanyName(p.name) && (!group || partnerGroup(p)===group));
+      target.innerHTML=target.classList.contains('partners-list')
+        ? visible.map(p=>`<article class="partner-row"><div class="partner-gallery">${arr(p.sites).map(preview).join('')}</div><div class="partner-description"><h3>${esc(p.name)}</h3><p>${esc(p.summary)}</p>${tags(p.tags)}</div></article>`).join('')
+        : visible.flatMap(p=>arr(p.sites).slice(0,1)).map(preview).join('');
+      const section=target.closest('[data-partner-section]');
+      if(section)section.hidden=target.childElementCount===0;
+    });
   }
   function price(item,hourly=false) {
     return item.priceYen===null?'<span class="pricing-quote">都度お見積もり</span>':`<span class="pricing-amount">${Number(item.priceYen).toLocaleString('ja-JP')}</span>${hourly?'':'<span class="pricing-currency">円</span>'}`;

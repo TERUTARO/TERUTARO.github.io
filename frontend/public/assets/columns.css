@@ -1,0 +1,25 @@
+.columns-content {
+  display: grid;
+  place-items: center;
+  min-height: 300px;
+  margin-bottom: 80px;
+  padding: 48px 24px;
+  border-block: 1px solid var(--line);
+}
+
+.columns-content p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+@media (max-width: 580px) {
+  .columns-content {
+    min-height: 240px;
+    margin-bottom: 60px;
+  }
+
+  .columns-content p {
+    font-size: 12px;
+  }
+}

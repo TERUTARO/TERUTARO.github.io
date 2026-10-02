@@ -1,7 +1,7 @@
 /* Text-only recent projects with controls on the central card's boundaries. */
 .selected-section.featured-works {
   --featured-card: min(800px, calc(100vw - 174px));
-  padding-bottom: 80px;
+  padding-bottom: 128px;
 }
 .featured-frame { position: relative; }
 .featured-works .featured-track { position: relative; display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: var(--featured-card); gap: 0; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; padding: 0 calc((100% - var(--featured-card)) / 2); border-block: 1px solid #bdcabc; background: #e9ebe2; scrollbar-width: none; -ms-overflow-style: none; }
@@ -40,13 +40,13 @@
 .featured-buttons button:disabled { background: #bcc6b9; border-color: #bcc6b9; cursor: default; }
 .featured-empty { min-height: 180px; padding-block: 60px; }
 @media (max-width: 1000px) {
-  .selected-section.featured-works { --featured-card: min(800px, calc(100vw - 88px)); padding-bottom: 55px; }
+  .selected-section.featured-works { --featured-card: min(800px, calc(100vw - 88px)); padding-bottom: 96px; }
   .featured-works .featured-case { padding: 35px 32px 29px; min-height: 420px; }
   .featured-case-body { padding-block: 33px 29px; }
   .featured-case h3 { font-size: clamp(24px, 3.6vw, 29px); }
 }
 @media (max-width: 580px) {
-  .selected-section.featured-works { --featured-card: calc(100vw - 64px); padding-bottom: 40px; }
+  .selected-section.featured-works { --featured-card: calc(100vw - 64px); padding-bottom: 80px; }
   .featured-works .featured-case { min-height: 390px; padding: 25px 27px; }
   .featured-works .featured-case::before { left: -40px; }
   .featured-case-meta { gap: 10px; }

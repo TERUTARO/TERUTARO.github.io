@@ -9,7 +9,8 @@ import hashlib
 from work_history import render_work_history
 from pricing import contact_tabs, render_pricing
 from featured_works import render_featured_works
-from content_visibility import HIDDEN_PARTNER_IDS
+from content_visibility import HIDDEN_PARTNER_IDS, partner_group, public_company_name
+from columns import render_columns
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / 'public'
@@ -71,7 +72,7 @@ def page_head(index, title, ja, desc):
     heading_class = ' long-title' if len(ja) > 10 else ''
     return f'<section class="page-heading wrap"><h1 class="{heading_class.strip()}">{e(ja)}</h1></section>'
 
-NAV = [('index.html', 'About', 'トップ'), ('works.html', 'Works', '実績'), ('partners.html', 'Partners', '継続のお取引'), ('events.html', 'Events', 'イベント'), ('contact.html', 'Contact', 'お問い合わせ')]
+NAV = [('index.html', 'About', 'トップ'), ('works.html', 'Works', '実績'), ('partners.html', 'Partners', 'パートナー'), ('events.html', 'Events', 'イベント'), ('columns.html', 'Columns', 'コラム'), ('contact.html', 'Contact', 'お問い合わせ')]
 
 def shell(filename, body):
     nav = ''.join(f'<a href="{url}" {current_attr(filename, url)}><span class="menu-link-en">{name}</span><span class="menu-link-ja">{ja}</span>{arrow("right")}</a>' for url, name, ja in NAV)
@@ -206,14 +207,36 @@ def profile_resource():
     return f'<div class="profile-resource"><div class="profile-resource-header"><span>profile.details.at</span><span aria-hidden="true">{{ }}</span></div><pre aria-label="Terraformリソース風のプロフィール"><code>{code}</code></pre></div>'
 
 
-def home(data):
-    company_previews = ''
-    for row in PARTNER_DATA:
-        if not row.get('published', True) or not row['sites']:
-            continue
-        preview = partner_preview(row['sites'][0])
-        company_previews += f'<!-- Temporarily hidden partner: {e(row["id"])}\n{preview}\n-->' if row['id'] in HIDDEN_PARTNER_IDS else preview
+def partner_sections(homepage=False):
+    sections = []
     hidden_partners = e(json.dumps(sorted(HIDDEN_PARTNER_IDS)))
+    for group, title in [('long-term', '長期でお世話になっている企業様'), ('co-development', '共同開発している企業様')]:
+        items = []
+        visible_count = 0
+        for row in sorted(PARTNER_DATA, key=lambda r: r.get('order', 0)):
+            if not row.get('published', True) or partner_group(row) != group:
+                continue
+            if homepage:
+                if not row['sites']:
+                    continue
+                item = partner_preview(row['sites'][0])
+            else:
+                gallery = ''.join(partner_preview(site) for site in row['sites'])
+                item = f'<article class="partner-row"><div class="partner-gallery">{gallery}</div><div class="partner-description"><h3>{e(row["name"])}</h3><p>{e(row["summary"])}</p>{tags(row["tags"])}</div></article>'
+            if row['id'] in HIDDEN_PARTNER_IDS or not public_company_name(row.get('name')):
+                items.append(f'<!-- Temporarily hidden partner: {e(row["id"])}\n{item}\n-->')
+            else:
+                items.append(item)
+                visible_count += 1
+        section_class = 'partner-showcase' if homepage else 'partner-group'
+        list_class = 'company-previews' if homepage else 'partners-list'
+        more = f'<a class="text-link" href="partners.html#{group}">詳しく見る {arrow()}</a>' if homepage else ''
+        hidden = ' hidden' if not visible_count else ''
+        sections.append(f'<section class="{section_class} wrap" id="{group}" data-partner-section aria-labelledby="{group}-heading"{hidden}><div class="section-title"><h2 id="{group}-heading">{title}</h2>{more}</div><div class="{list_class}" data-partner-group="{group}" data-hidden-partners="{hidden_partners}">{"".join(items)}</div></section>')
+    return ''.join(sections)
+
+
+def home(data):
     return f'''
 <section class="hero wrap water-surface" data-water-surface><div data-water-content>
   <div class="hero-topline"><span class="eyebrow">FREELANCE ENGINEER</span><span class="location"><span class="small-dot"></span> OKINAWA / KANTO, JAPAN <span class="mono" data-clock></span></span></div>
@@ -226,7 +249,7 @@ def home(data):
 <section class="about-section wrap" id="about"><div class="about-grid"><div class="about-title"><h2>プロフィール</h2><div class="profile-name">{e(PROFILE["name"])} <span>terutaro</span></div>{social_links()}</div>{profile_resource()}</div></section>
 {skills()}
 {render_featured_works(data['projects'])}
-<section class="partner-showcase wrap"><div class="section-title"><h2>長期でお世話になっている企業様</h2><a class="text-link" href="partners.html">お取引について {arrow()}</a></div><div class="company-previews" data-hidden-partners="{hidden_partners}">{company_previews}</div></section>
+{partner_sections(homepage=True)}
 <section class="community-showcase wrap"><div class="section-title"><h2>イベント</h2><a class="text-link" href="events.html">イベント一覧 {arrow()}</a></div><div class="community-preview-grid">{site_preview('tidal-waive', False)}<div class="community-details"><h3>TIDAL WAIVE</h3><p>{e(PROFILE["name"])}が主催するコミュニティ。</p>{link('https://tidal-waive.com/', '公式サイト')}</div></div></section>
 '''
 
@@ -251,6 +274,7 @@ def works(data):
           {site_preview('prompton', False)}
           <div class="personal-project-copy"><h3>prompton <span class="project-beta">（現在β版）</span></h3>{link('https://prompton.site/', 'サイトを見る')}</div>
         </article>
+        <article class="personal-project-upcoming"><h3>octakairo</h3><span class="release-status">リリース予定</span></article>
         <article class="personal-project-paused"><h3>tideline</h3><span class="paused">現在保守停止中</span></article>
       </div>
     </section>
@@ -258,15 +282,7 @@ def works(data):
 </section>'''
 
 def partners():
-    body = ''
-    for row in sorted(PARTNER_DATA, key=lambda r: r.get('order', 0)):
-        if not row.get('published', True):
-            continue
-        gallery = ''.join(partner_preview(site) for site in row['sites'])
-        article = f'<article class="partner-row"><div class="partner-gallery">{gallery}</div><div class="partner-description"><h2>{e(row["name"])}</h2><p>{e(row["summary"])}</p>{tags(row["tags"])}</div></article>'
-        body += f'<!-- Temporarily hidden partner: {e(row["id"])}\n{article}\n-->' if row['id'] in HIDDEN_PARTNER_IDS else article
-    hidden = e(json.dumps(sorted(HIDDEN_PARTNER_IDS)))
-    return page_head('02', 'Partners', '長期でお世話になっている企業様', '') + f'<section class="partners-list wrap" data-hidden-partners="{hidden}">{body}</section>'
+    return page_head('02', 'Partners', 'パートナー', '') + partner_sections()
 
 
 def events():
@@ -295,8 +311,9 @@ def main():
     pages = [
         ('index.html', f'{PROFILE["name"]} | 沖縄・関東のフリーランスエンジニア', f'沖縄・関東を拠点に活動する{PROFILE["name"]}のポートフォリオ。インフラ・Web開発・AI基盤の構築から運用保守まで。', home(data)),
         ('works.html', '実績', f'インフラ構築、Web開発、ネットワーク、AI基盤。{PROFILE["name"]}の実績をご紹介します。', works(data)),
-        ('partners.html', '長期でお世話になっている企業様', 'リアムス株式会社、日乃出工業株式会社との取り組み。', partners()),
+        ('partners.html', 'パートナー', '日乃出工業株式会社との継続のお取引と、リアムス株式会社との共同開発。', partners()),
         ('events.html', 'イベント・コミュニティ', f'{PROFILE["name"]}主催のTIDAL WAIVEと、これまでのconnpassイベント。', events()),
+        ('columns.html', 'コラム', f'{PROFILE["name"]}のコラム。', page_head('04', 'Columns', 'コラム', '') + render_columns()),
         ('contact.html', 'お問い合わせ', 'インフラ、Web開発、AI基盤に関するお仕事のご相談。', contact()),
         ('pricing.html', '料金の目安', 'インフラ構築・設定などのサービス単価とエンジニアの時間単価。記載のない内容は都度お見積もりします。', pricing()),
     ]

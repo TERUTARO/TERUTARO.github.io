@@ -2,7 +2,7 @@
 from collections import Counter, defaultdict
 from html import escape
 import json
-from content_visibility import public_company_name
+from content_visibility import partner_group, public_company_name
 
 
 def e(value):
@@ -75,7 +75,8 @@ def render_work_history(data):
             partner = public_company_name(item.get('partner'))
             client = public_company_name(item.get('client'))
             partner_honorific = item.get('partnerHonorific', '様')
-            partner_label = f'<p class="partner-label"><span>長期パートナー</span>：{e(partner)}{e(partner_honorific)}</p>' if partner else ''
+            partner_type = '共同開発パートナー' if partner_group({'name': partner}) == 'co-development' else '長期パートナー'
+            partner_label = f'<p class="partner-label"><span>{partner_type}</span>：{e(partner)}{e(partner_honorific)}</p>' if partner else ''
             client_label = f'<span class="project-client-label">{e(client)}</span>' if client and client != partner else ''
             articles.append(f'''<article class="timeline-item {'is-current' if current else ''}" data-category="{e(item['category'])}" data-categories="{e(json.dumps(categories, ensure_ascii=False))}" data-current="{str(current).lower()}" data-project-year="{e(year)}" data-tags="{e(json.dumps(search_tags, ensure_ascii=False))}" id="project-{e(item['id'])}" tabindex="-1">
 <div class="timeline-date"><span class="mono">{e(item['period'])}</span>{status}</div><div class="timeline-track" aria-hidden="true"><span></span></div>

@@ -11,6 +11,7 @@ export const portfolioPageNames = [
   "works",
   "partners",
   "events",
+  "columns",
   "contact",
   "pricing",
 ] as const;

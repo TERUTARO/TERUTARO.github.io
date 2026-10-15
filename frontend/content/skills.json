@@ -62,7 +62,7 @@
         ]
       },
       {
-        "name": "Frameworks",
+        "name": "Stack",
         "items": [
           "Ruby on Rails",
           "React",
@@ -70,7 +70,9 @@
           "Vue.js",
           "Nuxt.js",
           "Yii",
-          "CodeIgniter"
+          "CodeIgniter",
+          "CSS",
+          "SCSS"
         ]
       },
       {

@@ -7,9 +7,10 @@ import { collectionLabels } from "@/lib/admin-content";
 import { AdminLogin, AdminPassword } from "./admin-auth-forms";
 import { AdminContacts } from "./admin-contacts";
 import { AdminContentPanel } from "./admin-content-panel";
+import { AdminSkillSheet } from "./admin-skill-sheet";
 
-type View = "contacts" | Collection | "account";
-const navIcons: Record<View, string> = { contacts: "↙", projects: "◇", skills: "⌘", partners: "↔", services: "▤", engineers: "◷", advisory: "◎", account: "⚙" };
+type View = "contacts" | "skillSheet" | Collection | "account";
+const navIcons: Record<View, string> = { contacts: "↙", skillSheet: "⇩", projects: "◇", skills: "⌘", partners: "↔", services: "▤", engineers: "◷", advisory: "◎", account: "⚙" };
 
 export function AdminConsole() {
   const [connection, setConnection] = useState<{ session: AdminSession; api: AdminApi } | null>(null);
@@ -60,7 +61,7 @@ export function AdminConsole() {
     setAuthenticated(false); setHasWorkspace(false); setExpired(false); setDirty(false); setBusy(false); setView("contacts");
     setLogoutNotice(remotelySignedOut ? "ログアウトしました。" : "この画面からログアウトしました。認証サービス側のログアウトは確認できませんでした。");
   }
-  const navItems: { id: View; label: string }[] = [{ id: "contacts", label: "お問い合わせ" },
+  const navItems: { id: View; label: string }[] = [{ id: "contacts", label: "お問い合わせ" }, { id: "skillSheet", label: "スキルシート" },
     ...collections.map(id => ({ id, label: collectionLabels[id] })), { id: "account", label: "パスワード変更" }];
 
   return <div className="admin-app">
@@ -72,6 +73,7 @@ export function AdminConsole() {
         <aside className="admin-sidebar"><p>WORKSPACE</p><nav aria-label="管理メニュー">{navItems.map(item => <button type="button" key={item.id} onClick={() => navigate(item.id)} disabled={busy || !authenticated} aria-current={view === item.id ? "page" : undefined}><span aria-hidden="true">{navIcons[item.id]}</span>{item.label}</button>)}</nav><div className="admin-sidebar-note">公開状態と表示順は<br/>各編集画面で変更できます。</div></aside>
         <main id="admin-main" className="admin-main" tabIndex={-1}>
           {view === "contacts" ? <AdminContacts api={connection.api} enabled={authenticated} onBusy={setBusyFlag}/> :
+            view === "skillSheet" ? <AdminSkillSheet api={connection.api} enabled={authenticated} onBusy={setBusyFlag}/> :
             view === "account" ? <AdminPassword session={connection.session} onDirty={setDirtyFlag} onBusy={setBusyFlag}/> :
               <AdminContentPanel key={view} collection={view} api={connection.api} enabled={authenticated} canLeave={canLeave} onDirty={setDirtyFlag} onBusy={setBusyFlag}/>}
         </main>

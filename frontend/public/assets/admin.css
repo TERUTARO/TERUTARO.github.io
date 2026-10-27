@@ -115,6 +115,17 @@ body:has(.admin-app)::before { display: none; }
 .admin-password-card { max-width: 580px; border: 1px solid var(--admin-border); padding: 30px; background: #fff; border-radius: 9px; }
 .admin-password-card .admin-field + .admin-field { margin-top: 20px; }
 .admin-password-card > .admin-button { margin-top: 27px; }
+.admin-skill-sheet-card { max-width: 760px; display: grid; grid-template-columns: 76px minmax(0,1fr); gap: 22px 25px; border: 1px solid var(--admin-border); padding: 32px; background: #fff; border-radius: 9px; }
+.admin-skill-sheet-mark { display: grid; place-items: center; width: 76px; height: 92px; border: 1px solid #b9cbbf; border-radius: 5px; background: #edf3ee; color: var(--admin-green); font-size: 11px; font-weight: 600; letter-spacing: .08em; }
+.admin-skill-sheet-card > div:nth-child(2) > p { margin-top: 7px; color: var(--admin-muted); font-size: 12px; line-height: 1.9; }
+.admin-skill-sheet-summary { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); margin: 4px 0 0; border-block: 1px solid var(--admin-border); }
+.admin-skill-sheet-summary > div { padding: 18px; border-right: 1px solid var(--admin-border); }
+.admin-skill-sheet-summary > div:last-child { border-right: 0; }
+.admin-skill-sheet-summary dt { color: var(--admin-muted); font-size: 9px; line-height: 1.8; }
+.admin-skill-sheet-summary dd { margin: 7px 0 0; font-size: 14px; line-height: 1.7; overflow-wrap: anywhere; }
+.admin-skill-sheet-card > .admin-alert, .admin-skill-sheet-actions { grid-column: 1 / -1; }
+.admin-skill-sheet-actions { display: flex; align-items: center; gap: 20px; }
+.admin-skill-sheet-actions > p { color: var(--admin-muted); font-size: 10px; line-height: 1.8; }
 .admin-hidden-username { display: none; }
 @media (max-width: 1150px) {
   .admin-shell { grid-template-columns: 190px minmax(0,1fr); }
@@ -157,4 +168,10 @@ body:has(.admin-app)::before { display: none; }
   .admin-save-bar { flex-wrap: wrap; }
   .admin-save-bar > .admin-button { margin-left: auto; }
   .admin-password-card { padding: 23px 18px; }
+  .admin-skill-sheet-card { grid-template-columns: 58px minmax(0,1fr); gap: 18px; padding: 22px 18px; }
+  .admin-skill-sheet-mark { width: 58px; height: 72px; font-size: 9px; }
+  .admin-skill-sheet-summary { grid-template-columns: minmax(0,1fr); }
+  .admin-skill-sheet-summary > div { border-right: 0; border-bottom: 1px solid var(--admin-border); padding: 14px 4px; }
+  .admin-skill-sheet-summary > div:last-child { border-bottom: 0; }
+  .admin-skill-sheet-actions { align-items: stretch; flex-direction: column; }
 }

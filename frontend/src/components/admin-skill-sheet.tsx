@@ -45,16 +45,16 @@ export function AdminSkillSheet({ api, enabled, onBusy }: Props) {
   }
 
   return <section aria-labelledby="skill-sheet-heading">
-    <div className="admin-section-heading"><div><span className="admin-kicker">EXPORT</span><h1 id="skill-sheet-heading">スキルシート</h1><p>公開中のスキルと実績を、職務経歴を含むDOCXにまとめます。</p></div></div>
+    <div className="admin-section-heading"><div><span className="admin-kicker">EXPORT</span><h1 id="skill-sheet-heading">スキルシート</h1><p>公開中のスキルと実績を、職務経歴を含むPDFにまとめます。</p></div></div>
     <div className="admin-skill-sheet-card">
-      <div className="admin-skill-sheet-mark" aria-hidden="true">DOCX</div>
+      <div className="admin-skill-sheet-mark" aria-hidden="true">PDF</div>
       <div><h2>最新のスキルシートをダウンロード</h2><p>ダウンロード直前に管理APIを読み直すため、保存済みの最新内容が反映されます。</p></div>
       {summary && <dl className="admin-skill-sheet-summary">
         <div><dt>スキルカテゴリ</dt><dd>{summary.skillCategories}件</dd></div><div><dt>実績・経歴</dt><dd>{summary.projects}件</dd></div><div><dt>確認日時</dt><dd>{summary.generatedAt.toLocaleString("ja-JP")}</dd></div>
       </dl>}
       {error && <p className="admin-alert admin-alert-error" role="alert">{error}</p>}
       {notice && <p className="admin-alert admin-alert-success" role="status">{notice}</p>}
-      <div className="admin-skill-sheet-actions"><button type="button" className="admin-button" disabled={loading || !enabled} onClick={download}>{loading ? "最新データを確認中…" : "DOCXをダウンロード"}</button><p>公開中の項目だけを使用し、ファイルはこのブラウザ内で生成します。</p></div>
+      <div className="admin-skill-sheet-actions"><button type="button" className="admin-button" disabled={loading || !enabled} onClick={download}>{loading ? "最新データを確認中…" : "PDFをダウンロード"}</button><p>公開中の項目だけを使用し、ファイルはこのブラウザ内で生成します。日本語フォントはM PLUS 1p（SIL OFL 1.1）を使用しています。</p></div>
     </div>
   </section>;
 }

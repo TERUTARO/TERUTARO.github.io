@@ -21,10 +21,12 @@ def main():
     if any(admin.get(key)!=value for key,value in expected.items()):parser.error('Admin configuration does not match Terraform outputs.')
     client=session.client('s3');bucket=config['admin_bucket_name'];client.head_bucket(Bucket=bucket,ExpectedBucketOwner=args.allowed_account_id)
     assets=[(p,p.relative_to(directory).as_posix()) for p in (directory/'_next/static').rglob('*') if p.is_file()]
+    assets += [(p,p.relative_to(directory).as_posix()) for p in (directory/'assets/skill-sheet').rglob('*') if p.is_file()]
     assets += [(setting,'admin-config.json'),(html,'admin.html')]
     for source,key in assets:
         content_type=mimetypes.guess_type(key)[0] or 'application/octet-stream'
-        client.put_object(Bucket=bucket,Key=key,Body=source.read_bytes(),ContentType=content_type,CacheControl='public,max-age=31536000,immutable' if key.startswith('_next/static/') else 'no-store',ExpectedBucketOwner=args.allowed_account_id)
+        immutable=key.startswith('_next/static/') or key.startswith('assets/skill-sheet/')
+        client.put_object(Bucket=bucket,Key=key,Body=source.read_bytes(),ContentType=content_type,CacheControl='public,max-age=31536000,immutable' if immutable else 'no-store',ExpectedBucketOwner=args.allowed_account_id)
     session.client('cloudfront').create_invalidation(DistributionId=config['admin_distribution_id'],InvalidationBatch={'Paths':{'Quantity':3,'Items':['/','/admin.html','/admin-config.json']},'CallerReference':'admin-'+str(time.time_ns())})
     print(f'Uploaded {len(assets)} files. Admin URL: '+config['admin_url'])
 if __name__=='__main__':main()
